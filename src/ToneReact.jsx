@@ -62,14 +62,23 @@ class Tone extends Component {
     constructor(props){
         super(props);
         this.state={
-          morse: []
+          morse: [],
+          //tone times
+          dot_time: 0.070,
+          dash_time: 0.21,
+          inter_elem_time: 0.090,
+          space_time: 0.49,
+          // Initial delay before starting morse code sequence
+          initial_delay: 0.1,
+          // Track whether morse code is running
+          running: false, 
         };
+      
       this.char_to_morse = char_to_morse ;
   
       this.getMorse = this.getMorse.bind(this);
-      }
+    }
 
- 
 getMorse() {
   var message = "hi"
   var messageUpper = message.toUpperCase();
