@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-import {Tone , char_to_morse} from '/home/ayelet/projects/telebazz-sender/src/ToneReact.jsx';
+import {Tone , char_to_morse} from '../../ToneReact.jsx';
 // import './App.css';
 
 

@@ -6,8 +6,6 @@ import React, { Component } from 'react';
      constructor(props)
      {
          super(props);
-         
-         this.updateInputValue=this.updateInputValue.bind(this);
      }
     
   render() {
@@ -19,7 +17,7 @@ import React, { Component } from 'react';
                 <br />
                 <button id="play" onClick="play_morse_sequence();">Play Morse Sequence</button>
                 <button onClick="longTone();">Tone</button>
-                <button onChange={this.updateInputValue}>send</button>
+                <button>send</button>
       </div>
     );
   }
