@@ -110,9 +110,7 @@ export class Tone extends Component {
             <button onClick="play_sos();">SOS</button> <br /> <br />
             <button onClick="play_ilu();">I love you</button> <br /> <br />
             <button onClick="play_hello();">Hello</button> <br /> <br />
-            <Link to="/Newmessage">
-              <button >write a new message</button>
-            </Link>
+          
           </div>
         </div>
         <br />
