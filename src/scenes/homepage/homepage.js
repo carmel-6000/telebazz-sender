@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import {Tone , char_to_morse} from '../../ToneReact.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 // import './App.css';
@@ -12,6 +11,8 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
           <p>
             Hey TeleBuzz
           </p>
+          <button type="button" className="btn btn-primary">Primary</button>
+
           <Link to="/Newmessage">
               <button >write a new message</button>
             </Link>
@@ -19,7 +20,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
     );
   }
 }
-
 
 export class Morse extends Component {
   render() {
