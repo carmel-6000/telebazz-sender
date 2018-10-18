@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Tone , char_to_morse} from '../../ToneReact.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-// import './App.css';
 
 
  export class Homepage extends Component {
@@ -10,11 +9,15 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
       <div>
         <Nav/>
           <p>
-            Hey TeleBuzz
+            Favorites
+          
           </p>
+        <FavList/>
+        <hr/> <hr/>
         <List/>
+        <br/>
           <Link to="/Newmessage">
-          <button type="button" className="btn btn-primary">Write a new massagedsvfdvf</button>
+          <button type="button" className="btn btn-primary">Write a new massage</button>
             </Link>
 
       </div>
@@ -23,21 +26,28 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 }
 
 
-export class List extends Component {
+export class FavList extends Component {
   render() {
     return (
-      <div className="list-group">
-  <a href="#" className="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
 
-  
-  <a href="#" className="list-group-item list-group-item-action list-group-item-primary">This is a primary list group item <EditButton/> </a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-secondary">This is a secondary list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-success">This is a success list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-danger">This is a danger list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-warning">This is a warning list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-info">This is a info list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-light">This is a light list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-dark">This is a dark list group item</a>
+<div>
+  <ul className="list-group center align-items-center">
+    <li className="list-group-item row list-group-item-action ">
+    <a className="col-md-6"> <StartButton/> </a>
+      <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
+      <a className="col-md-6"><EditButton/></a>
+      </li>
+      <li className="list-group-item row list-group-item-action">
+      <a className="col-md-6"> <StartButton/> </a>
+      <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
+      <a className="col-md-6"><EditButton/></a>
+      </li>
+      <li className="list-group-item row list-group-item-action">
+      <a className="col-md-6"> <StartButton/> </a>
+      <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
+      <a className="col-md-6"><EditButton/></a>
+      </li>
+  </ul>
 </div>
 
     );
@@ -45,27 +55,70 @@ export class List extends Component {
 }
 
 
+export class List extends Component {
+  render() {
+    return (
+
+<div>
+  <ul className="list-group center align-items-center">
+    <li className="list-group-item row list-group-item-action">
+    <a className="col-md-6"> <StartButton/> </a>
+      <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
+      <a className="col-md-6"><EditButton/></a>
+      </li>
+      <li className="list-group-item row list-group-item-action ">
+      <a className="col-md-6"> <StartButton/> </a>
+      <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
+      <a className="col-md-6"><EditButton/></a>
+      </li>
+      <li className="list-group-item row list-group-item-action">
+      <a className="col-md-6"> <StartButton/> </a>
+      <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
+      <a className="col-md-6"><EditButton/></a>
+      </li>
+  </ul>
+</div>
+
+    );
+  }
+}
+
 export class EditButton extends Component {
   render() {
     return (
-      <div>
-         <div className="dropdown">
-      <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span>
+
+
+         <span className="dropdown">
+      <button className="btn btn-sm btn-secondary dropdown-toggle btn pull-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         
       </button>
-      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <span className="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a className="dropdown-item" href="#">Edit</a>
         <a className="dropdown-item" href="#">Delete</a>
         <a className="dropdown-item" href="#">Add to favorite</a>
-      </div>
-    </div>
-
-      </div>
+      </span>
+    </span>
+      </span>
+      
+   
     );
   }
 }
 
 
+export class StartButton extends Component {
+  render() {
+    return (
+    <span> 
+    <button className="btn btn-sm btn-success btn pull-right" type="button">
+       <i class="fas fa-angle-left"></i>
+   </button> 
+   </span>
+   
+    );
+  }
+}
 // export class eeee extends Component {
 //   render() {
 //     return (
