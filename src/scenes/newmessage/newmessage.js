@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
- import './newmessage.css';
 
  export class Newmessage extends Component {
      constructor(props)
