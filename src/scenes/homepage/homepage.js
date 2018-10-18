@@ -14,7 +14,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
           </p>
         <List/>
           <Link to="/Newmessage">
-          <button type="button" className="btn btn-primary">Write a new massage</button>
+          <button type="button" className="btn btn-primary">Write a new massagedsvfdvf</button>
             </Link>
 
       </div>
