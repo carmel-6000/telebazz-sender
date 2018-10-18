@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
  export class Newmessage extends Component {
      constructor(props)
      {

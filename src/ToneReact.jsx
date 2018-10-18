@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-//import {Newmessage} from 'newmessage.js';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-//import { Newmessage } from './scenes/newmessage/newmessage.js';
-
 
 export const char_to_morse = {
   "!": "-.-.--",
