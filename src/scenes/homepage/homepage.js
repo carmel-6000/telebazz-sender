@@ -3,21 +3,47 @@ import {Tone , char_to_morse} from '../../ToneReact.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 
+let messagesInfo = [
+  {
+    ID: 0,
+    name: "האמבולנס בדרך",
+    description: "בלה בלה בלה בלה בלה בלה בלה" ,
+    color: null,
+    icon: "ambulance"
+  },
+  {
+    ID: 1,
+    name: "קח את התרופות",
+    description: "בלה בלה בלה בלה בלה בלה בלה" ,
+    color: null,
+    icon: "capsules"
+  },
+  {
+    ID: 2,
+    name: "הקנאביס שלך מחכה",
+    description: "בלה בלה בלה בלה בלה בלה בלה" ,
+    color: null,
+    icon: "cannabis"
+  }
+]
+
+
  export class Homepage extends Component {
+   
   render() {
     return (
       <div>
         <Nav/>
-          <p>
-            Favorites
-          
-          </p>
-        <FavList/>
+          <p> Favorites </p> 
+          <div>
+            {messagesInfo.map((message) => <FavoriteList  itemID={message.ID} name={message.name}  description={message.description}  icon={message.icon} color={message.color} />)}
+          </div>
         <hr/> <hr/>
+        
         <List/>
         <br/>
           <Link to="/Newmessage">
-          <button type="button" className="btn btn-primary">Write a new massage</button>
+          <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף הודעה</button>
             </Link>
 
       </div>
@@ -25,34 +51,26 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
   }
 }
 
-
-export class FavList extends Component {
+export class FavoriteList extends Component {
   render() {
     return (
+<div className="list-group">
+ 
+  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div className="d-flex w-100 justify-content-between">
+   
+    <EditButton messageID={messagesInfo.ID} />  
+      <h4 className="mb-3 ">{this.props.name} </h4>
+      <i className={"fas fa-" + this.props.icon + " fa-3x"}/>
+    </div> 
+   <p className="mb-1"> {this.props.description} </p>
+  </a>
 
-<div>
-  <ul className="list-group center align-items-center">
-    <li className="list-group-item row list-group-item-action ">
-    <a className="col-md-6"> <StartButton/> </a>
-      <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
-      <a className="col-md-6"><EditButton/></a>
-      </li>
-      <li className="list-group-item row list-group-item-action">
-      <a className="col-md-6"> <StartButton/> </a>
-      <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
-      <a className="col-md-6"><EditButton/></a>
-      </li>
-      <li className="list-group-item row list-group-item-action">
-      <a className="col-md-6"> <StartButton/> </a>
-      <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
-      <a className="col-md-6"><EditButton/></a>
-      </li>
-  </ul>
 </div>
 
     );
   }
-}
+ }
 
 
 export class List extends Component {
@@ -170,7 +188,7 @@ export class Nav extends Component {
             <form className="form-inline my-2 my-lg-0">
                 <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
                 <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>\
+            </form>
         
         </div> 
     </nav>
