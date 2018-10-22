@@ -1,0 +1,28 @@
+#color{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+#deafultimg{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+#textmessage{
+   margin-bottom: 10%;
+}
+#pictures{
+    margin-bottom: 10%;
+}
+#colorselect{
+    margin-bottom: 10%;
+}
+.newmess
+{
+    margin-right:10%;
+    margin-left:10%;
+    margin-top: 10%;
+}
+h2{
+    color:#62346B;
+}
+
