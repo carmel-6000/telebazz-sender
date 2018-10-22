@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import './newmessage.css';
-=======
->>>>>>> 88512dd5b237a979b9c93e2723ece95883894814
 
 
  export class Newmessage extends Component {

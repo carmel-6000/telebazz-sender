@@ -76,19 +76,116 @@ export class FavoriteList extends Component {
 export class List extends Component {
   render() {
     return (
-      <div className="list-group">
-  <a href="#" className="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-
-  
-  <a href="#" className="list-group-item list-group-item-action list-group-item-primary">This is a primary list group item <EditButton/> </a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-secondary">This is a secondary list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-success">This is a success list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-danger">This is a danger list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-warning">This is a warning list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-info">This is a info list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-light">This is a light list group item</a>
-  <a href="#" className="list-group-item list-group-item-action list-group-item-dark">This is a dark list group item</a>
-</div>
+      <div>
+      <ul class="list-group center align-items-center">
+        <li class="list-group-item row list-group-item-action">
+          <a class="col-md-6">
+            <span>
+              <button class="btn btn-sm btn-success btn pull-right" type="button">
+                <i class="fas fa-angle-left" />
+              </button>
+            </span>
+          </a>
+          <a class="col-md-6">משהו פחות חשוב בלה בלה</a>
+          <a class="col-md-6">
+            <span>
+              <span class="dropdown">
+                <button
+                  class="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                />
+                <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">
+                    Edit
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Delete
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Add to favorite
+                  </a>
+                </span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="list-group-item row list-group-item-action ">
+          <a class="col-md-6">
+          
+            <span>
+              <button class="btn btn-sm btn-success btn pull-right" type="button">
+                <i class="fas fa-angle-left" />
+              </button>
+            </span>
+          </a>
+          <a class="col-md-6">משהו פחות חשוב בלה בלה</a>
+          <a class="col-md-6">
+            <span>
+              <span class="dropdown">
+                <button
+                  class="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                />
+                <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">
+                    Edit
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Delete
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Add to favorite
+                  </a>
+                </span>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li class="list-group-item row list-group-item-action">
+          <a class="col-md-6">
+            <span>
+              <button class="btn btn-sm btn-success btn pull-right" type="button">
+                <i class="fas fa-angle-left" />
+              </button>
+            </span>
+          </a>
+          <a class="col-md-6">משהו פחות חשוב בלה בלה</a>
+          <a class="col-md-6">
+            <span>
+              <span class="dropdown">
+                <button
+                  class="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                />
+                <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">
+                    Edit
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Delete
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Add to favorite
+                  </a>
+                </span>
+              </span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
     );
   }
