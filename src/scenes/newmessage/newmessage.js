@@ -1,5 +1,41 @@
 import React, { Component } from 'react';
 import './newmessage.css';
+import {Link} from 'react-router-dom';
+// import data from '../data.json';
+
+let icomname=["microscope","anchor","basketball-ball","hourglass","bolt","award","bed","cannabis","fire","home","drumstick-bite","ghost","toilet-paper"];
+let deafultcolors=[{
+  colorname:"blue" ,
+  colorclass:"btn btn-outline-primary",
+  colorvalue:"#0000FF"
+
+},
+{
+  colorname:"grey" ,
+  colorclass:"btn btn-outline-secondary",
+  colorvalue:"#808080"
+},
+{
+  colorname:"green" ,
+  colorclass:"btn btn-outline-success",
+  colorvalue:"#008000"
+},
+{
+  colorname:"red" ,
+  colorclass:"btn btn-outline-danger",
+  colorvalue:"#dc3545"
+},
+{
+  colorname:"yellow" ,
+  colorclass:"btn btn-outline-warning",
+  colorvalue:"#FFFF00"
+},
+{
+  colorname:"black" ,
+  colorclass:"btn btn-outline-dark",
+  colorvalue:"#0000FF"
+}];
+ 
 
 
  export class Newmessage extends Component {
@@ -7,33 +43,43 @@ import './newmessage.css';
      {
          super(props);
          this.state={
+           name:'',
            color:'#000000',
            favorite:false,
            inputtext:'',
-           icon:''
+           icon:'anchor',
+
          }
          this.addtofavorite=this.addtofavorite.bind(this);
-         this.getcolor=this.getcolor.bind(this);
+         this.updatechosencolor=this.updatechosencolor.bind(this);
          this.updatecolor=this.updatecolor.bind(this);
          this.updatetext=this.updatetext.bind(this);
          this.updateimg=this.updateimg.bind(this);
          this.checkcondutions=this.checkcondutions.bind(this);
+         this.savedata=this.savedata.bind(this);
+         this.updatename=this.updatename.bind(this);
      }
-     getcolor(event)
+    
+     updatechosencolor(event)
     {
       this.setState({color:event.target.value});
     }
     addtofavorite()
     {
-          this.setState({favorite:true});
+      this.setState({favorite:!this.state.favorite});
+
     }
     updatecolor(newcolor)
     {
-        this.setState({color:newcolor});
+      this.setState({color:newcolor});
+    }
+    updatename(event)
+    {
+      this.setState({name:event.target.value});
     }
     updatetext(event)
     {
-        this.setState({inputtext:event.target.value});
+      this.setState({inputtext:event.target.value});
     }
     checkcondutions()
     {
@@ -42,93 +88,159 @@ import './newmessage.css';
         alert("to many characters!");
       }
     }
-    updateimg(classimg)
+    updateimg(iconimg)
     {
-
+      this.setState({icon:iconimg});
+    }
+    savedata()
+    {
+      console.log("entered");
+        let newmessage={
+          name: this.state.name,
+          description: this.state.inputtext ,
+          color: this.state.color,
+          icon: this.state.icon,
+          ID : Date.now()
+        };
+        console.log("before", localStorage);
+        const key = this.state.favorite ? "favmessages": "messages";
+        let addnewmessageST = localStorage.getItem(key);
+        let  addnewmessagesARR =[];
+        if(addnewmessageST)
+        {
+              let addnewmessagesOB = JSON.parse(addnewmessageST);
+            addnewmessagesARR = Object.keys(addnewmessagesOB).map(obj =>addnewmessagesOB[obj]);
+        }
+      
+        addnewmessagesARR.push(newmessage);
+         localStorage.setItem(key,JSON.stringify(addnewmessagesARR));
+          console.log("after", localStorage);
     }
     
   render() {
     
-    console.log(this.state.color);
-    console.log(this.state.inputtext);
+    // console.log("color:"+this.state.color);
+    // console.log("message:"+this.state.inputtext);
+    // console.log("icon:"+this.state.icon);
+    // console.log("fav?"+this.state.favorite);
     return (
       <div className="newmess">
+      <div id="textmessage">
+                    <label>Message Name:</label>
+                    <i class="fas fa-allergies"></i>
+                    <input type="text" id="input_header" onChange={this.updatename}/>
+                    <br />
+                </div>
                 <div id="textmessage">
-                    <label>Write message here...</label>
+                    <label>Message Description:</label>
                     <i class="fas fa-allergies"></i>
                     <input type="text" id="input_msg" onChange={this.updatetext}/>
                     <br />
                 </div>
-                
-                <div id="colorselect">
+
+                    <div id="colorselect">
                     <h2>choose a color</h2>
                     <div id="color">
-                        <button type="button" class="btn btn-outline-primary" colorvalue="#0000FF" >blue</button>
-                        <button type="button" class="btn btn-outline-secondary" colorvalue="#808080" onClick={()=>this.updatecolor(this.colorvalue)}>grey</button>
-                          <button type="button" class="btn btn-outline-success" colorvalue="#008000" onClick={()=>this.updatecolor(this.colorvalue)}>green</button>
-                        <button type="button" class="btn btn-outline-danger" colorvalue="#dc3545" onClick={()=>this.updatecolor(this.colorvalue)}>red</button>
-                        <button type="button" class="btn btn-outline-warning" colorvalue="#FFFF00" onClick={()=>this.updatecolor(this.colorvalue)}>yellow</button>
-                        <button type="button" class="btn btn-outline-dark" colorvalue="#000000" onClick={(newcolor)=>this.updatecolor(this.colorvalue)}>black</button>
+                        <Colors updatecolor={this.updatecolor}/>
+                       
                     </div>
                     <p>create your color:</p>
-                    <input type="color" value={this.state.value} onChange={this.getcolor}/>
+                    <input type="color" value={this.state.value} onChange={this.updatechosencolor}/>
                 </div>
 
 
                   <div id="pictures">
                       <h2>choose a picture</h2>
                     <div id="deafultimg">
-                            <button type="button" class="btn btn-default btn-sm"  >
-                                <i class="fab fa-angellist"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                                <i class="far fa-angry"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-bed"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-balance-scale"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-award"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-birthday-cake"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                              <i class="fas fa-bolt"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm" >
-                            <i class="fas fa-book"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-anchor"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-birthday-cake"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-bomb"></i>
-                          </button>
-                          <button type="button" class="btn btn-default btn-sm">
-                            <i class="fas fa-basketball-ball" ></i>
-                          </button>
+                         <Icons updateimg = {this.updateimg}/>
+                          
                      </div>
-                     <button >for more</button>
+                     <Link to="/Newmessage/Iconpage">
+                            <button >for more</button>
+                     </Link>
                   </div>
 
                   <div id="favorite">
-                       <br></br><button type="button" class="btn btn-primary btn-lg btn-block">add to favorite</button>
-                          
+                       <Favoritebutton onChange={this.addtofavorite}/>
                   </div>
 
                 {/* <button id="play" onClick="play_morse_sequence();">Play Morse Sequence</button>
                 <button onClick="longTone();">Tone</button> */}
-                <br></br><button type="button" class="btn btn-secondary btn-lg btn-block" >send</button>
+                <br></br>
+                
+                <Link to="/">
+                <button type="submit" class="btn btn-secondary btn-lg btn-block" onClick={this.savedata}>send</button>
+          </Link>
+                {/* <h2>{this.state.speed}</h2> */}
       </div>
     );
   }
 }
 
+class Icons extends Component {
+  
+  render(){
+    return(
+      <div>
+      {icomname.map((currimage)=><Icon iconimage={currimage} onClick={()=>this.props.updateimg(currimage)}/>)}
+      </div>
+    );
+    
+  }
+  
+}
+class Icon extends Component {
+  
+  render(){
+    return(
+      <button type="button" class="btn btn-default "  onClick={this.props.onClick}>
+          <i class={"fas fa-" + this.props.iconimage}></i>
+      </button>
+    );
+    
+  }
+  
+}
+
+
+class Colors extends Component{
+  render(){
+    return(
+     <div>
+        {deafultcolors.map((currcolor)=>
+        <Color
+         colorname={currcolor.colorname}
+         colorclass={currcolor.colorclass}
+         colorvalue={currcolor.colorvalue}
+          onClick={()=>this.props.updatecolor(currcolor.colorvalue)}/>)}
+     </div>
+     
+    );
+  }
+}
+
+class Color extends Component{
+  render(){
+    return(
+      <button type="button" 
+            className={this.props.colorclass} 
+            onClick={this.props.onClick}>
+            {this.props.colorname}
+      </button>
+    );
+  }
+}
+
+class Favoritebutton extends Component{
+  
+  render(){
+    return(
+      <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked" onChange={this.props.onChange}/>
+          <label class="custom-control-label" for="defaultUnchecked">Add to favorite</label>
+      </div>
+    
+    );
+  }
+}
 export default Newmessage;

@@ -1,50 +1,64 @@
 import React, { Component } from 'react';
-import {Tone , char_to_morse} from '../../ToneReact.jsx';
+// import {Tone , char_to_morse} from '../../ToneReact.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 // import './App.css';
-
-
-let messagesInfo = [
-  {
-    ID: 0,
-    name: "האמבולנס בדרך",
-    description: "בלה בלה בלה בלה בלה בלה בלה" ,
-    color: null,
-    icon: "ambulance"
-  },
-  {
-    ID: 1,
-    name: "קח את התרופות",
-    description: "בלה בלה בלה בלה בלה בלה בלה" ,
-    color: null,
-    icon: "capsules"
-  },
-  {
-    ID: 2,
-    name: "הקנאביס שלך מחכה",
-    description: "בלה בלה בלה בלה בלה בלה בלה" ,
-    color: null,
-    icon: "cannabis"
-  }
-]
+import data from '../data.json';
 
 
  export class Homepage extends Component {
-   
+   constructor(props)
+   {
+     super(props);
+     this.state={
+      messagesInfo :[]
+     }
+ 
+     this.deletemessage=this.deletemessage.bind(this);
+   }
+   deletemessage(itemID)
+   {
+     let tempmessage=[]
+      this.state.messagesInfo.map(currMg =>{
+      
+      
+      if(currMg.ID !== itemID){
+          tempmessage.push(currMg);
+          
+      }
+    })
+      localStorage.setItem("favmessages",JSON.stringify(tempmessage));
+      this.setState({messagesInfo:tempmessage});
+       console.log("after", localStorage);
+ 
+
+   }
+   componentDidMount()
+   {
+        let messageST=localStorage.getItem("favmessages");
+        if(messageST)
+        {
+              let messagesOB = JSON.parse(messageST);
+              const messagesInfo = Object.keys(messagesOB).map(obj =>messagesOB[obj]);
+              this.setState({messagesInfo});
+        }
+   }
   render() {
+
+   
+    console.log("data",data);
     return (
       <div>
         <Nav/>
           <p> Favorites </p> 
           <div>
-            {messagesInfo.map((message) => <FavoriteList  itemID={message.ID} name={message.name}  description={message.description}  icon={message.icon} color={message.color} />)}
+            {this.state.messagesInfo.map((message) => <FavoriteList itemID={message.ID} name={message.name}  description={message.description}  icon={message.icon} color={message.color} deletemessage={this.deletemessage} />)}
           </div>
         <hr/> <hr/>
         
         <List/>
           <Link to="/Newmessage">
           <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף הודעה</button>
-            </Link>
+          </Link>
 
       </div>
     );
@@ -56,10 +70,11 @@ export class FavoriteList extends Component {
     return (
 <div className="list-group">
  
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+  <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
     <div className="d-flex w-100 justify-content-between">
    
-    <EditButton messageID={messagesInfo.ID} />  
+    <EditButton itemID={this.props.itemID} deletemessage={this.props.deletemessage}/>  
+    
       <h4 className="mb-3 ">{this.props.name} </h4>
       <i className={"fas fa-" + this.props.icon + " fa-3x"}/>
     </div> 
@@ -74,38 +89,39 @@ export class FavoriteList extends Component {
 
 
 export class List extends Component {
+ 
   render() {
     return (
       <div>
-      <ul class="list-group center align-items-center">
-        <li class="list-group-item row list-group-item-action">
-          <a class="col-md-6">
+      <ul className="list-group center align-items-center">
+        <li className="list-group-item row list-group-item-action">
+          <a className="col-md-6">
             <span>
-              <button class="btn btn-sm btn-success btn pull-right" type="button">
-                <i class="fas fa-angle-left" />
+              <button className="btn btn-sm btn-success btn pull-right" type="button">
+                <i className="fas fa-angle-left" />
               </button>
             </span>
           </a>
-          <a class="col-md-6">משהו פחות חשוב בלה בלה</a>
-          <a class="col-md-6">
+          <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
+          <a className="col-md-6">
             <span>
-              <span class="dropdown">
+              <span className="dropdown">
                 <button
-                  class="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
+                  className="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
                   type="button"
                   id="dropdownMenuButton"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
                 />
-                <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">
+                <span className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a className="dropdown-item" href="#">
                     Edit
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Delete
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Add to favorite
                   </a>
                 </span>
@@ -113,35 +129,35 @@ export class List extends Component {
             </span>
           </a>
         </li>
-        <li class="list-group-item row list-group-item-action ">
-          <a class="col-md-6">
+        <li className="list-group-item row list-group-item-action ">
+          <a className="col-md-6">
           
             <span>
-              <button class="btn btn-sm btn-success btn pull-right" type="button">
-                <i class="fas fa-angle-left" />
+              <button className="btn btn-sm btn-success btn pull-right" type="button">
+                <i className="fas fa-angle-left" />
               </button>
             </span>
           </a>
-          <a class="col-md-6">משהו פחות חשוב בלה בלה</a>
-          <a class="col-md-6">
+          <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
+          <a className="col-md-6">
             <span>
-              <span class="dropdown">
+              <span className="dropdown">
                 <button
-                  class="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
+                  className="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
                   type="button"
                   id="dropdownMenuButton"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
                 />
-                <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">
+                <span className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a className="dropdown-item" href="#">
                     Edit
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Delete
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Add to favorite
                   </a>
                 </span>
@@ -149,34 +165,34 @@ export class List extends Component {
             </span>
           </a>
         </li>
-        <li class="list-group-item row list-group-item-action">
-          <a class="col-md-6">
+        <li className="list-group-item row list-group-item-action">
+          <a className="col-md-6">
             <span>
-              <button class="btn btn-sm btn-success btn pull-right" type="button">
-                <i class="fas fa-angle-left" />
+              <button className="btn btn-sm btn-success btn pull-right" type="button">
+                <i className="fas fa-angle-left" />
               </button>
             </span>
           </a>
-          <a class="col-md-6">משהו פחות חשוב בלה בלה</a>
-          <a class="col-md-6">
+          <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
+          <a className="col-md-6">
             <span>
-              <span class="dropdown">
+              <span className="dropdown">
                 <button
-                  class="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
+                  className="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
                   type="button"
                   id="dropdownMenuButton"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
                 />
-                <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">
+                <span className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a className="dropdown-item" href="#">
                     Edit
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Delete
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Add to favorite
                   </a>
                 </span>
@@ -194,6 +210,7 @@ export class List extends Component {
 
 export class EditButton extends Component {
   render() {
+    
     return (
       <div>
          <div className="dropdown">
@@ -201,8 +218,8 @@ export class EditButton extends Component {
         
       </button>
       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a className="dropdown-item" href="#">Edit</a>
-        <a className="dropdown-item" href="#">Delete</a>
+        <a  className="dropdown-item" href="#">Edit</a>
+        <a onClick={() => this.props.deletemessage(this.props.itemID)} className="dropdown-item" href="#">Delete</a>
         <a className="dropdown-item" href="#">Add to favorite</a>
       </div>
     </div>
@@ -275,18 +292,18 @@ export class Nav extends Component {
 }
 
 
-export class Morse extends Component {
-  render() {
-    return (
-      <div>
-          <p>
-            Hey TeleBuzz
-          </p>
-          <h1>Morse Code Generator </h1>
-          <Tone/>
-      </div>
-    );
-  }
-}
+// export class Morse extends Component {
+//   render() {
+//     return (
+//       <div>
+//           <p>
+//             Hey TeleBuzz
+//           </p>
+//           <h1>Morse Code Generator </h1>
+//           <Tone/>
+//       </div>
+//     );
+//   }
+// }
 
 export default Homepage;
