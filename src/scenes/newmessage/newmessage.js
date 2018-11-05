@@ -1,39 +1,51 @@
 import React, { Component } from 'react';
 import './newmessage.css';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 // import data from '../data.json';
+import {BrowserRouter as Router, Link} from 'react-router-dom';
 
-let icomname=["microscope","anchor","basketball-ball","hourglass","bolt","award","bed","cannabis","fire","home","drumstick-bite","ghost","toilet-paper"];
-let deafultcolors=[{
-  colorname:"blue" ,
-  colorclass:"btn btn-outline-primary",
-  colorvalue:"#0000FF"
+let icomname=[
+  "microscope",
+  "anchor",
+  "basketball-ball",
+  "hourglass",
+  "bolt",
+  "award",
+  "bed",
+  "cannabis",
+  "fire",
+  "home",
+  "drumstick-bite",
+  "ghost",
+  "toilet-paper"
+];
+
+let deafultcolors=[
+{
+  colorclass:"default",
+  colorvalue:"#f8f9fa"
+},
+{
+  colorclass:"primary",
+  colorvalue:"#007bff"
 
 },
 {
-  colorname:"grey" ,
-  colorclass:"btn btn-outline-secondary",
-  colorvalue:"#808080"
+  colorclass:"success",
+  colorvalue:"#28a745"
 },
 {
-  colorname:"green" ,
-  colorclass:"btn btn-outline-success",
-  colorvalue:"#008000"
+
+  colorclass:"info",
+  colorvalue:"#17a2b8"
 },
 {
-  colorname:"red" ,
-  colorclass:"btn btn-outline-danger",
+  colorclass:"warning",
+  colorvalue:"#ffc107"
+},
+{
+  colorclass:"danger",
   colorvalue:"#dc3545"
-},
-{
-  colorname:"yellow" ,
-  colorclass:"btn btn-outline-warning",
-  colorvalue:"#FFFF00"
-},
-{
-  colorname:"black" ,
-  colorclass:"btn btn-outline-dark",
-  colorvalue:"#0000FF"
 }];
  
 
@@ -44,8 +56,8 @@ let deafultcolors=[{
          super(props);
          this.state={
            name:'',
-           color:'#000000',
-           favorite:false,
+           color:'nulll',
+           favorite: false,
            inputtext:'',
            icon:'anchor',
 
@@ -59,6 +71,26 @@ let deafultcolors=[{
          this.savedata=this.savedata.bind(this);
          this.updatename=this.updatename.bind(this);
      }
+     componentWillMount()
+    {
+      if(this.props.match.params.id )
+      {
+        let editmessageST = localStorage.getItem("Editmessages");
+        if(editmessageST)
+        {
+         let editmessageOB = JSON.parse(editmessageST);
+       
+         this.setState({inputtext:editmessageOB.description});
+         this.setState({name:editmessageOB.name});
+         this.setState({color:editmessageOB.color});
+         this.setState({favorite:editmessageOB.favorite});
+         
+         this.setState({icon:editmessageOB.icon});
+        
+        }
+      }
+       
+    }
     
      updatechosencolor(event)
     {
@@ -73,6 +105,7 @@ let deafultcolors=[{
     {
       this.setState({color:newcolor});
     }
+
     updatename(event)
     {
       this.setState({name:event.target.value});
@@ -85,7 +118,7 @@ let deafultcolors=[{
     {
       if(this.state.inputtext.length >10)
       {
-        alert("to many characters!");
+        alert("too many characters!");
       }
     }
     updateimg(iconimg)
@@ -94,64 +127,99 @@ let deafultcolors=[{
     }
     savedata()
     {
-      console.log("entered");
-        let newmessage={
+     
+      if(this.props.match.params.id) 
+      {
+        let editmessage={
           name: this.state.name,
           description: this.state.inputtext ,
           color: this.state.color,
           icon: this.state.icon,
-          ID : Date.now()
+          favorite:this.state.favorite,
+          ID : this.props.match.params.id
         };
-        console.log("before", localStorage);
+       
         const key = this.state.favorite ? "favmessages": "messages";
-        let addnewmessageST = localStorage.getItem(key);
-        let  addnewmessagesARR =[];
-        if(addnewmessageST)
-        {
-              let addnewmessagesOB = JSON.parse(addnewmessageST);
-            addnewmessagesARR = Object.keys(addnewmessagesOB).map(obj =>addnewmessagesOB[obj]);
-        }
-      
-        addnewmessagesARR.push(newmessage);
-         localStorage.setItem(key,JSON.stringify(addnewmessagesARR));
-          console.log("after", localStorage);
+        let editmessageST = localStorage.getItem(key);
+        let  editmessagesARR =[];
+            
+            //convert string to object of objects
+            let editmessagesOB = JSON.parse(editmessageST); 
+            //convert object of objects to array of objects
+            editmessagesARR = Object.keys(editmessagesOB).map(obj =>editmessagesOB[obj]);  
+            let index=editmessagesARR.findIndex((element)=>{return editmessage.ID == element.ID});
+            editmessagesARR[index]=editmessage;
+            localStorage.setItem("favmessages",JSON.stringify(editmessagesARR));
+          
+      }
+      else
+      {
+            let newmessage={
+              name: this.state.name,
+              description: this.state.inputtext ,
+              color: this.state.color,
+              icon: this.state.icon,
+              favorite:this.state.favorite,
+              ID : Date.now()
+            };
+            
+            const key = this.state.favorite ? "favmessages": "messages";
+            let addnewmessageST = localStorage.getItem(key);
+            let  addnewmessagesARR =[];
+            if(addnewmessageST)
+            {
+                let addnewmessagesOB = JSON.parse(addnewmessageST);
+                addnewmessagesARR = Object.keys(addnewmessagesOB).map(obj =>addnewmessagesOB[obj]);
+            }
+          
+            addnewmessagesARR.push(newmessage);
+            localStorage.setItem(key,JSON.stringify(addnewmessagesARR));
+             
+      }
     }
-    
+
   render() {
     
-    // console.log("color:"+this.state.color);
-    // console.log("message:"+this.state.inputtext);
-    // console.log("icon:"+this.state.icon);
-    // console.log("fav?"+this.state.favorite);
+    console.log("color:"+this.state.color);
+    console.log("message:"+this.state.inputtext);
+    console.log("icon:"+this.state.icon);
+    console.log("fav?"+this.state.favorite);
+
     return (
-      <div className="newmess">
-      <div id="textmessage">
-                    <label>Message Name:</label>
-                    <i class="fas fa-allergies"></i>
-                    <input type="text" id="input_header" onChange={this.updatename}/>
-                    <br />
-                </div>
-                <div id="textmessage">
-                    <label>Message Description:</label>
-                    <i class="fas fa-allergies"></i>
-                    <input type="text" id="input_msg" onChange={this.updatetext}/>
-                    <br />
-                </div>
+    <div>
+      <NavBar/>
+    
+  <div className="container">
+    <div className="form-signin">
+       <label for="exampleInputEmail1 text-right">נושא ההודעה:</label>
+       <input type="text" onChange={this.updatename} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="הכנס נושא הודעה" value={this.state.name}/>
+       <small id="emailHelp" className="form-text text-muted">על ההודעה להיות קצרה ותמציתית.</small>
+    </div>
+    <br/>
 
-                    <div id="colorselect">
-                    <h2>choose a color</h2>
-                    <div id="color">
-                        <Colors updatecolor={this.updatecolor}/>
-                       
-                    </div>
-                    <p>create your color:</p>
-                    <input type="color" value={this.state.value} onChange={this.updatechosencolor}/>
-                </div>
+  <div>
+    <label for="exampleInputPassword1">תיאור ההודעה:</label>
+    <input type="text" onChange={this.updatetext} className="form-control" id="exampleInputPassword1" placeholder="תיאור תוכן ההודעה" value={this.state.inputtext}/>
+  </div>
+  <br/>
+  <i style={{color:this.state.color}} class={"fas fa-" + this.state.icon + " fa-5x"}/>
+  <div className="form-group">
+    <label for="exampleInputPassword1">בחר צבע אייקון:</label>      <input type="color" rgba value={this.state.value} onChange={this.updatechosencolor}/>
+
+    <br/>
+   <Colors updatecolor={this.updatecolor} />
+   <small id="emailHelp" className="form-text text-muted">ביכולתך לבחור בצבע מוכן מראש או לחילופין לבחור צבע מותאם אישית.</small>
+
+  </div>
+
+    <Favoritebutton favbutt={this.state.favorite} onChange={this.addtofavorite}/>
 
 
-                  <div id="pictures">
-                      <h2>choose a picture</h2>
-                    <div id="deafultimg">
+    </div>
+
+
+   <div id="pictures">
+  <div id="deafultimg">
                          <Icons updateimg = {this.updateimg}/>
                           
                      </div>
@@ -159,23 +227,34 @@ let deafultcolors=[{
                             <button >for more</button>
                      </Link>
                   </div>
-
-                  <div id="favorite">
-                       <Favoritebutton onChange={this.addtofavorite}/>
-                  </div>
-
-                {/* <button id="play" onClick="play_morse_sequence();">Play Morse Sequence</button>
-                <button onClick="longTone();">Tone</button> */}
-                <br></br>
                 
-                <Link to="/">
+              <Link to="/">
                 <button type="submit" class="btn btn-secondary btn-lg btn-block" onClick={this.savedata}>send</button>
-          </Link>
-                {/* <h2>{this.state.speed}</h2> */}
+              </Link>
       </div>
     );
   }
 }
+
+export class NavBar extends Component {
+  render() {
+    return (
+      <div>
+        <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
+        <a className="navbar-brand" href="#">Telebuzz</a>
+        <button className="navbar-toggler leftNavbarToggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span> 
+           <a href="/" className="text-light"><i class="fas fa-arrow-left"></i>  </a>
+            </span>
+        </button>
+    </nav>
+
+      </div>
+    );
+  }
+}
+
 
 class Icons extends Component {
   
@@ -187,10 +266,9 @@ class Icons extends Component {
     );
     
   }
-  
 }
+
 class Icon extends Component {
-  
   render(){
     return(
       <button type="button" class="btn btn-default "  onClick={this.props.onClick}>
@@ -203,30 +281,26 @@ class Icon extends Component {
 }
 
 
+
 class Colors extends Component{
   render(){
     return(
-     <div>
-        {deafultcolors.map((currcolor)=>
-        <Color
-         colorname={currcolor.colorname}
-         colorclass={currcolor.colorclass}
-         colorvalue={currcolor.colorvalue}
-          onClick={()=>this.props.updatecolor(currcolor.colorvalue)}/>)}
-     </div>
-     
-    );
+      <div>
+      {deafultcolors.map((currcolor)=>
+      <Color
+       colorclass={currcolor.colorclass}
+       colorvalue={currcolor.colorvalue}
+      onclicker={()=>this.props.updatecolor(currcolor.colorvalue)}/>)}
+
+   </div>
+       );
   }
 }
 
 class Color extends Component{
   render(){
     return(
-      <button type="button" 
-            className={this.props.colorclass} 
-            onClick={this.props.onClick}>
-            {this.props.colorname}
-      </button>
+      <button type="button" onClick={this.props.onclicker} className={"btn btn-circle btn-" + this.props.colorclass}/>
     );
   }
 }
@@ -236,11 +310,18 @@ class Favoritebutton extends Component{
   render(){
     return(
       <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="defaultUnchecked" onChange={this.props.onChange}/>
-          <label class="custom-control-label" for="defaultUnchecked">Add to favorite</label>
+          <input type="checkbox" class="custom-control-input" id="defaultUnchecked" checked={this.props.favbutt} onChange={this.props.onChange}/>
+          <label class="custom-control-label pull-right" for="defaultUnchecked">הוספה למועדפים:</label>
       </div>
-    
     );
   }
 }
+
+
+
+///////////////////TOM S SHIT 
+
+
+
+
 export default Newmessage;

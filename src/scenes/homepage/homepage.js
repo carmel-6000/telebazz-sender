@@ -14,6 +14,7 @@ import data from '../data.json';
      }
  
      this.deletemessage=this.deletemessage.bind(this);
+     this.editmessage=this.editmessage.bind(this);
    }
    deletemessage(itemID)
    {
@@ -28,10 +29,24 @@ import data from '../data.json';
     })
       localStorage.setItem("favmessages",JSON.stringify(tempmessage));
       this.setState({messagesInfo:tempmessage});
-       console.log("after", localStorage);
  
 
    }
+
+   editmessage(itemID)
+   {
+    const key = "Editmessages";
+    let Editmessage={};
+    this.state.messagesInfo.map(currMg =>{
+      if(currMg.ID === itemID){
+        Editmessage=Object.assign({},currMg);
+          
+      }
+    })
+    localStorage.setItem(key,JSON.stringify(Editmessage));
+   }
+
+
    componentDidMount()
    {
         let messageST=localStorage.getItem("favmessages");
@@ -44,14 +59,12 @@ import data from '../data.json';
    }
   render() {
 
-   
-    console.log("data",data);
-    return (
+       return (
       <div>
         <Nav/>
           <p> Favorites </p> 
           <div>
-            {this.state.messagesInfo.map((message) => <FavoriteList itemID={message.ID} name={message.name}  description={message.description}  icon={message.icon} color={message.color} deletemessage={this.deletemessage} />)}
+            {this.state.messagesInfo.map((message) => <FavoriteList itemID={message.ID} name={message.name}  description={message.description}  icon={message.icon} color={message.color} deletemessage={this.deletemessage} editmessage={this.editmessage} />)}
           </div>
         <hr/> <hr/>
         
@@ -73,10 +86,10 @@ export class FavoriteList extends Component {
   <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
     <div className="d-flex w-100 justify-content-between">
    
-    <EditButton itemID={this.props.itemID} deletemessage={this.props.deletemessage}/>  
+    <EditButton itemID={this.props.itemID} deletemessage={this.props.deletemessage} editmessage={this.props.editmessage}/>  
     
       <h4 className="mb-3 ">{this.props.name} </h4>
-      <i className={"fas fa-" + this.props.icon + " fa-3x"}/>
+      <i  style={{color:this.props.color}} className={"fas fa-" + this.props.icon + " fa-3x"}/>
     </div> 
    <p className="mb-1"> {this.props.description} </p>
   </a>
@@ -218,7 +231,10 @@ export class EditButton extends Component {
         
       </button>
       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a  className="dropdown-item" href="#">Edit</a>
+      <Link to= {`/Newmessage/${this.props.itemID}`}>
+        <a onClick={() => this.props.editmessage(this.props.itemID)} className="dropdown-item" href="#">Edit</a>
+      </Link>
+
         <a onClick={() => this.props.deletemessage(this.props.itemID)} className="dropdown-item" href="#">Delete</a>
         <a className="dropdown-item" href="#">Add to favorite</a>
       </div>

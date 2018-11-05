@@ -1,87 +1,47 @@
-colors{
-    display: grid;
-    grid-template-columns: auto auto auto;
+.container {
+  padding:10% 10%;
+  text-align: right !important;
 }
 
-#deafultimg{
-    display: grid;
-    grid-template-columns: auto auto auto;
-}
-#textmessage{
-   margin-bottom: 10%;
-}
-#pictures{
-    margin-bottom: 10%;
-}
-#colorselect{
-    margin-bottom: 10%;
-}
-.newmess
-{
-    margin-right:10%;
-    margin-left:10%;
-    margin-top: 10%;
-}
-h2{
-    color:#62346B;
+
+.btn-circle {
+  width: 25px;
+  height: 25px;
+  padding: 6px 0px;
+  margin: 1%;
+  border-radius: 50%;
+  line-height: 1.42857;
 }
 
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
+.custom-control-label {
+  left: 0 !important;
+}
+
+input[type="color"] {
+	-webkit-appearance: none;
+  border: none;
+  width: 35px;
+  height: 35px;
+  margin: 8%;
+  margin: 0% 2% 5% 0%;
+  border-radius: 50%;
+  border: 1px solid;
+  padding: 2px;
+  line-height: 1.42857;
+  background-image: repeating-linear-gradient(to right,
+  #fdfdfd 2px);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  line-height: 1.42857;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 50%;
   
-  .switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  input:checked + .slider {
-    background-color: #2196F3;
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }
+
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+
+}
+
