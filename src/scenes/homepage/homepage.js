@@ -10,53 +10,124 @@ import data from '../data.json';
    {
      super(props);
      this.state={
+      favmessagesInfo: [],
       messagesInfo :[]
      }
  
      this.deletemessage=this.deletemessage.bind(this);
      this.editmessage=this.editmessage.bind(this);
+     this.changelocation=this.changelocation.bind(this);
    }
-   deletemessage(itemID)
+
+
+
+   deletemessage(itemID, favorite)
    {
      let tempmessage=[]
-      this.state.messagesInfo.map(currMg =>{
-      
-      
-      if(currMg.ID !== itemID){
-          tempmessage.push(currMg);
+
+     if (favorite) {
+      this.state.favmessagesInfo.map(currMg => {
+       if (currMg.ID !== itemID) {
+                tempmessage.push(currMg);
           
-      }
-    })
-      localStorage.setItem("favmessages",JSON.stringify(tempmessage));
-      this.setState({messagesInfo:tempmessage});
- 
+              }
+            })
+             localStorage.setItem("favmessages", JSON.stringify(tempmessage));
+             this.setState({ favmessagesInfo: tempmessage });
+           }
+           else {
+             this.state.messagesInfo.map(currMg => {
+               if (currMg.ID !== itemID) {
+                 tempmessage.push(currMg);
+       
+               }
+             })
+             localStorage.setItem("messages", JSON.stringify(tempmessage));
+             this.setState({ messagesInfo: tempmessage });
+           }  
 
    }
 
-   editmessage(itemID)
-   {
+   editmessage(itemID, favorite) {
     const key = "Editmessages";
-    let Editmessage={};
-    this.state.messagesInfo.map(currMg =>{
-      if(currMg.ID === itemID){
-        Editmessage=Object.assign({},currMg);
-          
-      }
-    })
-    localStorage.setItem(key,JSON.stringify(Editmessage));
-   }
+    let Editmessage = {};
+    if(favorite)
+    {
+        this.state.favmessagesInfo.map(currMg => {
+          if (currMg.ID === itemID) {
+            Editmessage = Object.assign({}, currMg);
 
+          }
+        })
+        localStorage.setItem(key,JSON.stringify(Editmessage));
+    }
+    else{
+      this.state.messagesInfo.map(currMg => {
+        if (currMg.ID === itemID) {
+          Editmessage = Object.assign({}, currMg);
 
-   componentDidMount()
-   {
-        let messageST=localStorage.getItem("favmessages");
-        if(messageST)
-        {
-              let messagesOB = JSON.parse(messageST);
-              const messagesInfo = Object.keys(messagesOB).map(obj =>messagesOB[obj]);
-              this.setState({messagesInfo});
         }
-   }
+      })
+      localStorage.setItem(key,JSON.stringify(Editmessage));
+    }
+  }
+
+
+  
+  changelocation(Itemid,favorite)
+  {
+    let key = favorite ? "favmessages": "messages";
+    let editmessageST = localStorage.getItem(key);
+    let  editmessagesARR =[];
+    let tempmessage=[];
+         
+    //convert string to object of objects
+    let editmessagesOB = JSON.parse(editmessageST); 
+    //convert object of objects to array of objects
+    editmessagesARR = Object.keys(editmessagesOB).map(obj =>editmessagesOB[obj]); 
+
+    editmessagesARR.map(currMg => {
+          if (currMg.ID === Itemid) {
+                console.log("ltlg");
+                tempmessage=Object.assign({},currMg);
+                tempmessage.favorite=!favorite;
+          }
+          });
+        this.deletemessage(Itemid,favorite);
+
+        key = favorite ?  "messages":"favmessages";
+        editmessageST = localStorage.getItem(key);
+        //convert string to object of objects
+        editmessagesOB = JSON.parse(editmessageST); 
+        //convert object of objects to array of objects
+        editmessagesARR = Object.keys(editmessagesOB).map(obj =>editmessagesOB[obj]);
+        editmessagesARR.push(tempmessage);
+        localStorage.setItem(key,JSON.stringify(editmessagesARR));
+
+        if(tempmessage.favorite)
+            this.setState({favmessagesInfo:editmessagesARR});
+        else
+            this.setState({messagesInfo:editmessagesARR});
+    
+}
+
+  componentDidMount() {
+    let messageST = localStorage.getItem("favmessages");
+    if (messageST) {
+      let messagesOB = JSON.parse(messageST);
+      const favmessagesInfo = Object.keys(messagesOB).map(obj => messagesOB[obj]);
+      this.setState({ favmessagesInfo });
+    }
+
+    messageST = localStorage.getItem("messages");
+    if (messageST) {
+      let messagesOB = JSON.parse(messageST);
+      const messagesInfo = Object.keys(messagesOB).map(obj => messagesOB[obj]);
+      this.setState({ messagesInfo });
+    }
+
+  }
+
   render() {
 
        return (
@@ -64,12 +135,16 @@ import data from '../data.json';
         <Nav/>
           <p> Favorites </p> 
           <div>
-            {this.state.messagesInfo.map((message) => <FavoriteList itemID={message.ID} name={message.name}  description={message.description}  icon={message.icon} color={message.color} deletemessage={this.deletemessage} editmessage={this.editmessage} />)}
+          {this.state.favmessagesInfo.map((message) => <FavoriteList favorite={message.favorite} itemID={message.ID} name={message.name} description={message.description} icon={message.icon} color={message.color} deletemessage={this.deletemessage} editmessage={this.editmessage} changelocation={this.changelocation}/>)}
           </div>
         <hr/> <hr/>
+        <p> More </p>
+        <div>
+          {this.state.messagesInfo.map((message) => <List favorite={message.favorite} itemID={message.ID} name={message.name} description={message.description} icon={message.icon} color={message.color} deletemessage={this.deletemessage} editmessage={this.editmessage} changelocation={this.changelocation}/>)}
+        </div>
+
         <div className="container">
 
-        <List/>
           <Link to="/Newmessage">
           <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף הודעה</button>
           </Link>
@@ -88,7 +163,7 @@ export class FavoriteList extends Component {
   <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
     <div className="d-flex w-100 justify-content-between">
    
-    <EditButton itemID={this.props.itemID} deletemessage={this.props.deletemessage} editmessage={this.props.editmessage}/>  
+    <EditButton itemID={this.props.itemID} deletemessage={this.props.deletemessage} editmessage={this.props.editmessage} favorite={this.props.favorite} changelocation={this.props.changelocation}/>
     
       <h4 className="mb-3 ">{this.props.name} </h4>
       <i  style={{color:this.props.color}} className={"fas fa-" + this.props.icon + " fa-3x"}/>
@@ -103,124 +178,25 @@ export class FavoriteList extends Component {
  }
 
 
-export class List extends Component {
- 
+ export class List extends Component {
   render() {
     return (
-      <div>
-      <ul className="list-group center align-items-center">
-        <li className="list-group-item row list-group-item-action">
-          <a className="col-md-6">
-            <span>
-              <button className="btn btn-sm btn-success btn pull-right" type="button">
-                <i className="fas fa-angle-left" />
-              </button>
-            </span>
-          </a>
-          <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
-          <a className="col-md-6">
-            <span>
-              <span className="dropdown">
-                <button
-                  className="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                />
-                <span className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a className="dropdown-item" href="#">
-                    Edit
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Delete
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Add to favorite
-                  </a>
-                </span>
-              </span>
-            </span>
-          </a>
-        </li>
-        <li className="list-group-item row list-group-item-action ">
-          <a className="col-md-6">
-          
-            <span>
-              <button className="btn btn-sm btn-success btn pull-right" type="button">
-                <i className="fas fa-angle-left" />
-              </button>
-            </span>
-          </a>
-          <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
-          <a className="col-md-6">
-            <span>
-              <span className="dropdown">
-                <button
-                  className="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                />
-                <span className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a className="dropdown-item" href="#">
-                    Edit
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Delete
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Add to favorite
-                  </a>
-                </span>
-              </span>
-            </span>
-          </a>
-        </li>
-        <li className="list-group-item row list-group-item-action">
-          <a className="col-md-6">
-            <span>
-              <button className="btn btn-sm btn-success btn pull-right" type="button">
-                <i className="fas fa-angle-left" />
-              </button>
-            </span>
-          </a>
-          <a className="col-md-6">משהו פחות חשוב בלה בלה</a>
-          <a className="col-md-6">
-            <span>
-              <span className="dropdown">
-                <button
-                  className="btn btn-sm btn-secondary dropdown-toggle btn pull-right"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                />
-                <span className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a className="dropdown-item" href="#">
-                    Edit
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Delete
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Add to favorite
-                  </a>
-                </span>
-              </span>
-            </span>
-          </a>
-        </li>
-      </ul>
-    </div>
+      <div className="list-group">
 
-    );
+        <a href="#" className="list-group-item list-group-item-action flex-column align-items-start">
+          <div className="d-flex w-100 justify-content-between">
+
+            <EditButton itemID={this.props.itemID} deletemessage={this.props.deletemessage} editmessage={this.props.editmessage} favorite={this.props.favorite} changelocation={this.props.changelocation}/>
+
+            <h4 className="mb-3 ">{this.props.name} </h4>
+            <i style={{ color: this.props.color }} className={"fas fa-" + this.props.icon + " fa-3x"} />
+          </div>
+          <p className="mb-1"> {this.props.description} </p>
+        </a>
+      </div>);
   }
 }
+
 
 
 export class EditButton extends Component {
@@ -233,14 +209,15 @@ export class EditButton extends Component {
         
       </button>
       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <Link to= {`/Newmessage/${this.props.itemID}`}>
-        <a onClick={() => this.props.editmessage(this.props.itemID)} className="dropdown-item" href="#">Edit</a>
-      </Link>
+            <Link to={`/Newmessage/${this.props.itemID}`}>
+              <a onClick={() => this.props.editmessage(this.props.itemID, this.props.favorite)} className="dropdown-item" href="#">Edit</a>
+            </Link>
 
-        <a onClick={() => this.props.deletemessage(this.props.itemID)} className="dropdown-item" href="#">Delete</a>
-        <a className="dropdown-item" href="#">Add to favorite</a>
-      </div>
-    </div>
+            <a onClick={() => this.props.deletemessage(this.props.itemID, this.props.favorite)} className="dropdown-item" href="#">Delete</a>
+            <a onClick={() =>this.props.changelocation(this.props.itemID, this.props.favorite)} className="dropdown-item" href="#"  >add to favorite</a>
+
+          </div>
+        </div>
 
       </div>
     );

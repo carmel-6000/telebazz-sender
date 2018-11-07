@@ -59,7 +59,7 @@ export class Newmessage extends Component {
       favorite: false,
       inputtext: '',
       icon: 'anchor',
-
+      favatfirst: false
     }
     this.addtofavorite = this.addtofavorite.bind(this);
     this.updatechosencolor = this.updatechosencolor.bind(this);
@@ -81,6 +81,7 @@ export class Newmessage extends Component {
         this.setState({ color: editmessageOB.color });
         this.setState({ favorite: editmessageOB.favorite });
         this.setState({ icon: editmessageOB.icon });
+        this.setState({favatfirst: editmessageOB.favorite});
 
       }
     }
@@ -112,54 +113,91 @@ export class Newmessage extends Component {
   updateimg(iconimg) {
     this.setState({ icon: iconimg });
   }
-  savedata() {
-
-    if (this.props.match.params.id) {
-      let editmessage = {
-        name: this.state.name,
-        description: this.state.inputtext,
-        color: this.state.color,
-        icon: this.state.icon,
-        favorite: this.state.favorite,
-        ID: this.props.match.params.id
-      };
-
-      const key = this.state.favorite ? "favmessages" : "messages";
-      let editmessageST = localStorage.getItem(key);
-      let editmessagesARR = [];
-
-      //convert string to object of objects
-      let editmessagesOB = JSON.parse(editmessageST);
-      //convert object of objects to array of objects
-      editmessagesARR = Object.keys(editmessagesOB).map(obj => editmessagesOB[obj]);
-      let index = editmessagesARR.findIndex((element) => { return editmessage.ID == element.ID });
-      editmessagesARR[index] = editmessage;
-      localStorage.setItem("favmessages", JSON.stringify(editmessagesARR));
-
-    }
-    else {
-      let newmessage = {
-        name: this.state.name,
-        description: this.state.inputtext,
-        color: this.state.color,
-        icon: this.state.icon,
-        favorite: this.state.favorite,
-        ID: Date.now()
-      };
-
-      const key = this.state.favorite ? "favmessages" : "messages";
-      let addnewmessageST = localStorage.getItem(key);
-      let addnewmessagesARR = [];
-      if (addnewmessageST) {
-        let addnewmessagesOB = JSON.parse(addnewmessageST);
-        addnewmessagesARR = Object.keys(addnewmessagesOB).map(obj => addnewmessagesOB[obj]);
+  savedata()
+    {
+      console.log(this.state.name);
+      if(this.props.match.params.id) //כדי לערוך את ההודעה
+      {
+        let editmessage={
+          name: this.state.name,
+          description: this.state.inputtext ,
+          color: this.state.color,
+          icon: this.state.icon,
+          favorite:this.state.favorite,
+          ID : this.props.match.params.id
+        };
+       
+       
+          let key = this.state.favatfirst ? "favmessages": "messages";
+          let editmessageST = localStorage.getItem(key);
+          let  editmessagesARR =[];
+              
+              //convert string to object of objects
+              let editmessagesOB = JSON.parse(editmessageST); 
+              //convert object of objects to array of objects
+              editmessagesARR = Object.keys(editmessagesOB).map(obj =>editmessagesOB[obj]);  
+              let tempmessage=[];
+              
+              
+              
+                
+                  if(editmessage.favorite !== this.state.favatfirst) //edit the fav button
+                  {
+                    editmessagesARR.map(currMg => {
+                      if (currMg.ID !== editmessage.ID) {
+                        tempmessage.push(currMg);
+              
+                      }
+                    })
+                    localStorage.setItem(key, JSON.stringify(tempmessage));
+                    
+                    key=this.state.favorite ? "favmessages": "messages";
+                    editmessageST = localStorage.getItem(key);
+                    editmessagesARR =[];
+                    //convert string to object of objects
+                  editmessagesOB = JSON.parse(editmessageST); 
+                  //convert object of objects to array of objects
+                  editmessagesARR = Object.keys(editmessagesOB).map(obj =>editmessagesOB[obj]);  
+                  editmessagesARR.push(editmessage);
+                  localStorage.setItem(key,JSON.stringify(editmessagesARR));
+                  
+                  }
+                    else
+                    {
+                      editmessagesARR.map(obj =>console.log(JSON.stringify(obj)) );
+        
+                      let index=editmessagesARR.findIndex((element)=>{return editmessage.ID == element.ID});
+                      editmessagesARR[index]=editmessage;
+            
+                      editmessagesARR.map(obj =>console.log(JSON.stringify(obj)) );
+                      localStorage.setItem(key,JSON.stringify(editmessagesARR));
+                    } let index=editmessagesARR.f
+              
+        }
+        
+      
+      else //כדי ליצור הודעה חדשה
+      {      let newmessage={
+              name: this.state.name,
+              description: this.state.inputtext ,
+              color: this.state.color,
+              icon: this.state.icon,
+              favorite:this.state.favorite,
+              ID : Date.now()
+            };
+            const key = this.state.favorite ? "favmessages": "messages";
+            let addnewmessageST = localStorage.getItem(key);
+            let  addnewmessagesARR =[];
+            if(addnewmessageST)
+            {
+                let addnewmessagesOB = JSON.parse(addnewmessageST);
+                addnewmessagesARR = Object.keys(addnewmessagesOB).map(obj =>addnewmessagesOB[obj]);
+            }
+            addnewmessagesARR.push(newmessage);
+            localStorage.setItem(key,JSON.stringify(addnewmessagesARR));     
       }
+    } 
 
-      addnewmessagesARR.push(newmessage);
-      localStorage.setItem(key, JSON.stringify(addnewmessagesARR));
-
-    }
-  }
 
   render() {
     console.log("message:" + this.state.name);
