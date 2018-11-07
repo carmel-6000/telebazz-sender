@@ -3,8 +3,6 @@ import './iconpage.css';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 
-const categories = ["בעלי חיים", "סכנות", "דת", "מקומות", "תרופות", "אוכל", "אנשים"]
-
 let icons = {
   "בעלי חיים": ["cat", "dog", "horse"],
   "סכנות": ["fire", "bolt", "ghost"],
@@ -21,8 +19,12 @@ export class Iconpage extends Component {
     super(props);
     this.state = {
       categoryFilter: [],
+      choosenIcon: "deafult"
     }
     this.filterCategory = this.filterCategory.bind(this);
+    this.savenewicon=this.savenewicon.bind(this);
+    this.seticon=this.seticon.bind(this);
+    this.savenewicon=this.savenewicon.bind(this);
   }
 
 
@@ -30,7 +32,7 @@ export class Iconpage extends Component {
     let checked = event.target.checked;
     let categoryID =event.target.id; 
 
-    console.log(checked);
+    //console.log(checked);
     if (checked === true && this.state.categoryFilter.includes(categoryID) === false) {
       this.setState({
         categoryFilter: [...this.state.categoryFilter, categoryID]
@@ -53,10 +55,21 @@ export class Iconpage extends Component {
     }
   }
 
+  savenewicon() {
+
+  }
+
+
+  seticon(newIcon)
+  {
+    console.log(newIcon);
+      this.setState({choosenIcon:newIcon});
+  }
+
 
   render() {
-    
-    console.log(this.state.categoryFilter);
+    console.log(this.state.choosenIcon);
+    //console.log(this.state.categoryFilter);
     return (
       <div>
         <NavBar />
@@ -74,13 +87,13 @@ export class Iconpage extends Component {
           <div className="scrollIcons">
           <div class="row">
             <div class="col-sm">
-              <Icons categoryFilter={this.state.categoryFilter} />
+              <Icons categoryFilter={this.state.categoryFilter} setIcon={this.setIcon}/>
             </div>
           </div>
           </div>
           <br />
           <Link to="/Newmessage">
-          <button type="button" class="btn btn-info  btn-lg btn-block">המשך </button>
+          <button type="button" class="btn btn-info btn-lg btn-block">המשך </button>
           </Link>
         </div>
       </div>
@@ -93,7 +106,7 @@ class Filter extends Component {
 
   render() {
     return (
-      <button class="dropdown-item" type="button">
+      <button class="dropdown-item" type="button" >
         <input class="checkboxer" onChange={this.props.filterCategory} id={this.props.category} type="checkbox" />
         <label>
           {this.props.category}
@@ -132,7 +145,7 @@ class Icons extends Component {
       return (
         Object.keys(icons).map(
           (category) => icons[category].map(
-            (icon) => <Icon iconimage={icon} category={category} />)
+            (icon) => <Icon iconimage={icon} category={category} setIcon={() => this.props.setIcon(category.iconimage)}/>)
 
         )
       );
@@ -141,7 +154,10 @@ class Icons extends Component {
       return (
         this.props.categoryFilter.map(
           (category) => icons[category].map(
-            (icon) => <Icon iconimage={icon} category={category} />)
+            
+            (icon) =>
+          
+             <Icon iconimage={icon} category={category} onclicker={() => this.props.onclick(category.iconimage)}/>)
         )
       );
     }
@@ -159,7 +175,7 @@ class Icons extends Component {
 class Icon extends Component {
   render() {
     return (
-      <button id={this.props.category} type="button" class="btn btn-default iconButton" >
+      <button id={this.props.category} type="button" class="btn btn-default iconButton" onClick={this.setIcon}>
 
         <i class={"fas fa-" + this.props.iconimage + " fa-3x"}></i>
       </button>

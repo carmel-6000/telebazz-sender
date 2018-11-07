@@ -245,11 +245,12 @@ export class Newmessage extends Component {
           <div class="row">
             <div class="col-11 text-center">
             <i style={{ color: this.state.color }} class={"fas fa-" + this.state.icon + " fa-5x pull-left"} /> <br/>
-            {/* <input type="color" rgba value={this.state.value} onChange={this.updatechosencolor} /> */}
               <br/>
               <Link to="/Newmessage/Iconpage">
                 <button type="button" class="btn btn-info " > <i class="fas fa-pencil-alt"></i> שנה אייקון</button>
               </Link>
+            
+          
             </div>
           </div>
 
@@ -258,7 +259,10 @@ export class Newmessage extends Component {
           <div className="form-group">
 
             <br />
+            {/* <input type="color" rgba value={this.state.value} onChange={this.updatechosencolor} /> */}
+
             <Colors updatecolor={this.updatecolor} />
+            
             <small id="emailHelp" className="form-text text-muted text-center ">ביכולתך לבחור בצבע מוכן מראש או לחילופין לבחור צבע מותאם אישית.</small>
 
           </div>
@@ -269,12 +273,12 @@ export class Newmessage extends Component {
         </div>
 
 
-        {/* <div id="pictures">
+        <div id="pictures">
   <div id="deafultimg">
                          <Icons updateimg = {this.updateimg}/>
                           
                      </div>
-                  </div> */}
+                  </div>
 
         <Link to="/">
           <button type="submit" class="btn btn-secondary btn-lg btn-block" onClick={this.savedata}>send</button>
@@ -304,27 +308,27 @@ export class NavBar extends Component {
 }
 
 
-// class Icons extends Component {
+class Icons extends Component {
 
-//   render(){
-//     return(
-//       <div>
-//       {icomname.map((currimage)=><Icon iconimage={currimage} onClick={()=>this.props.updateimg(currimage)}/>)}
-//       </div>
-//     );
+  render(){
+    return(
+      <div>
+      {icomname.map((currimage)=><Icon iconimage={currimage} onClick={()=>this.props.updateimg(currimage)}/>)}
+      </div>
+    );
 
-//   }
-// }
+  }
+}
 
-// class Icon extends Component {
-//   render(){
-//     return(
-//       <button type="button" class="btn btn-default "  onClick={this.props.onClick}>
-//           <i class={"fas fa-" + this.props.iconimage}></i>
-//       </button>
-//     );
-//   }
-// }
+class Icon extends Component {
+  render(){
+    return(
+      <button type="button" class="btn btn-default "  onClick={this.props.onClick}>
+          <i class={"fas fa-" + this.props.iconimage}></i>
+      </button>
+    );
+  }
+}
 
 
 class Colors extends Component {
