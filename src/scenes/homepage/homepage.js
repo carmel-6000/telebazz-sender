@@ -67,11 +67,13 @@ import data from '../data.json';
             {this.state.messagesInfo.map((message) => <FavoriteList itemID={message.ID} name={message.name}  description={message.description}  icon={message.icon} color={message.color} deletemessage={this.deletemessage} editmessage={this.editmessage} />)}
           </div>
         <hr/> <hr/>
-        
+        <div className="container">
+
         <List/>
           <Link to="/Newmessage">
           <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף הודעה</button>
           </Link>
+          </div>
 
       </div>
     );
