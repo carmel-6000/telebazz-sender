@@ -59,7 +59,9 @@ export class Newmessage extends Component {
       favorite: false,
       inputtext: '',
       icon: 'anchor',
-      favatfirst: false
+      favatfirst: false ,
+      specialicon:false,
+      ID:Date.now()
     }
     this.addtofavorite = this.addtofavorite.bind(this);
     this.updatechosencolor = this.updatechosencolor.bind(this);
@@ -69,9 +71,11 @@ export class Newmessage extends Component {
     this.checkcondutions = this.checkcondutions.bind(this);
     this.savedata = this.savedata.bind(this);
     this.updatename = this.updatename.bind(this);
+    this.changeIcon=this.changeIcon.bind(this);
   }
   componentWillMount() {
-    if (this.props.match.params.id) {
+    
+    if (this.props.match.params.id ) {
       let editmessageST = localStorage.getItem("Editmessages");
       if (editmessageST) {
         let editmessageOB = JSON.parse(editmessageST);
@@ -82,9 +86,39 @@ export class Newmessage extends Component {
         this.setState({ favorite: editmessageOB.favorite });
         this.setState({ icon: editmessageOB.icon });
         this.setState({favatfirst: editmessageOB.favorite});
-
+        this.setState({ID:this.props.match.params.id})
+        this.setState({specialicon:editmessageOB.specialicon})
       }
     }
+   
+
+  }
+  changeIcon()
+  {
+    let editmessageOB={};
+    let editmessageST = localStorage.getItem("Editmessages");
+    if (!editmessageST){
+      editmessageOB = {
+        name: this.state.name,
+        description: this.state.inputtext ,
+        color: this.state.color,
+        icon: this.state.icon,
+        favorite:this.state.favorite,
+        ID :this.state.ID,
+        specialicon:true
+      };
+   } 
+      else
+      {
+        editmessageOB=JSON.parse(editmessageST);
+        //editmessageOB.ID=this.props.match.params.id ;
+      }
+    localStorage.setItem("Editmessages", JSON.stringify(editmessageOB));
+    this.setState({specialicon:true});
+    console.log("newmessage page"+localStorage.getItem("Editmessages"));     
+
+    
+
 
   }
 
@@ -124,10 +158,11 @@ export class Newmessage extends Component {
           color: this.state.color,
           icon: this.state.icon,
           favorite:this.state.favorite,
-          ID : this.props.match.params.id
+          ID : this.state.ID,
+          specialicon:this.state.specialicon
         };
        
-       
+        
           let key = this.state.favatfirst ? "favmessages": "messages";
           let editmessageST = localStorage.getItem(key);
           let  editmessagesARR =[];
@@ -137,10 +172,11 @@ export class Newmessage extends Component {
               //convert object of objects to array of objects
               editmessagesARR = Object.keys(editmessagesOB).map(obj =>editmessagesOB[obj]);  
               let tempmessage=[];
-              
-              
-              
-                
+              if(this.state.specialicon)
+              {
+                editmessage.specialicon=false;
+                editmessagesARR.push(editmessage);
+              }
                   if(editmessage.favorite !== this.state.favatfirst) //edit the fav button
                   {
                     editmessagesARR.map(currMg => {
@@ -160,7 +196,7 @@ export class Newmessage extends Component {
                   editmessagesARR = Object.keys(editmessagesOB).map(obj =>editmessagesOB[obj]);  
                   editmessagesARR.push(editmessage);
                   localStorage.setItem(key,JSON.stringify(editmessagesARR));
-                  
+                 
                   }
                     else
                     {
@@ -171,7 +207,8 @@ export class Newmessage extends Component {
             
                       editmessagesARR.map(obj =>console.log(JSON.stringify(obj)) );
                       localStorage.setItem(key,JSON.stringify(editmessagesARR));
-                    } let index=editmessagesARR.f
+                    } 
+                   
               
         }
         
@@ -183,8 +220,10 @@ export class Newmessage extends Component {
               color: this.state.color,
               icon: this.state.icon,
               favorite:this.state.favorite,
-              ID : Date.now()
+              ID : this.state.ID,
+              specialicon:false
             };
+            console.log(this.state.specialicon);
             const key = this.state.favorite ? "favmessages": "messages";
             let addnewmessageST = localStorage.getItem(key);
             let  addnewmessagesARR =[];
@@ -200,12 +239,12 @@ export class Newmessage extends Component {
 
 
   render() {
-    console.log("message:" + this.state.name);
-    console.log("description:" + this.state.inputtext);
-    console.log("icon:" + this.state.icon);
-    console.log("color:" + this.state.color);
-    console.log("is favorite?" + this.state.favorite);
-
+    // console.log("message:" + this.state.name);
+    // console.log("description:" + this.state.inputtext);
+    // console.log("icon:" + this.state.icon);
+    // console.log("color:" + this.state.color);
+    // console.log("is favorite?" + this.state.favorite);
+    console.log(this.props.match.params.id);
     return (
       <div>
         <NavBar />
@@ -246,8 +285,9 @@ export class Newmessage extends Component {
             <div class="col-11 text-center">
             <i style={{ color: this.state.color }} class={"fas fa-" + this.state.icon + " fa-5x pull-left"} /> <br/>
               <br/>
-              <Link to="/Newmessage/Iconpage">
-                <button type="button" class="btn btn-info " > <i class="fas fa-pencil-alt"></i> שנה אייקון</button>
+              
+              <Link to={`/Newmessage/Iconpage/${ this.state.ID }`}>
+                <button type="button" class="btn btn-info " onClick={this.changeIcon}> <i class="fas fa-pencil-alt"></i> שנה אייקון</button>
               </Link>
             
           

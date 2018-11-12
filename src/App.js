@@ -20,6 +20,7 @@ class App extends Component {
           <Route exact path="/Newmessage" component={Newmessage}/>
           <Route exact path="/Newmessage/Iconpage" component={Iconpage}/>
           <Route exact path="/Newmessage/:id" component={Newmessage}/>
+          <Route exact path="/Newmessage/Iconpage/:id" component={Iconpage}/>
         </Switch>
       </div>
     );

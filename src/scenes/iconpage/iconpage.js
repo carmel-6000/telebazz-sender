@@ -19,11 +19,11 @@ export class Iconpage extends Component {
     super(props);
     this.state = {
       categoryFilter: [],
-      choosenIcon: "deafult"
+      choosenIcon: ""
     }
     this.filterCategory = this.filterCategory.bind(this);
-    this.savenewicon=this.savenewicon.bind(this);
-    this.seticon=this.seticon.bind(this);
+    
+    this.setIcon=this.setIcon.bind(this);
     this.savenewicon=this.savenewicon.bind(this);
   }
 
@@ -32,7 +32,6 @@ export class Iconpage extends Component {
     let checked = event.target.checked;
     let categoryID =event.target.id; 
 
-    //console.log(checked);
     if (checked === true && this.state.categoryFilter.includes(categoryID) === false) {
       this.setState({
         categoryFilter: [...this.state.categoryFilter, categoryID]
@@ -56,13 +55,23 @@ export class Iconpage extends Component {
   }
 
   savenewicon() {
-
+    const key = "Editmessages";
+    let currmessST=localStorage.getItem(key);
+    let currmessOB = JSON.parse(currmessST);
+    if(this.state.choosenIcon != "")
+    {
+      console.log("gfv");
+      currmessOB.icon=this.state.choosenIcon;
+    } 
+    localStorage.setItem(key,JSON.stringify(currmessOB));
+    console.log(JSON.stringify(currmessOB));
+    this.setIcon("");
+    console.log("icon page"+localStorage.getItem("Editmessages"));
   }
 
 
-  seticon(newIcon)
+  setIcon(newIcon)
   {
-    console.log(newIcon);
       this.setState({choosenIcon:newIcon});
   }
 
@@ -87,13 +96,13 @@ export class Iconpage extends Component {
           <div className="scrollIcons">
           <div class="row">
             <div class="col-sm">
-              <Icons categoryFilter={this.state.categoryFilter} setIcon={this.setIcon}/>
+              <Icons categoryFilter={this.state.categoryFilter} setIcon={this.setIcon} savenewicon={this.savenewicon}/>
             </div>
           </div>
           </div>
           <br />
-          <Link to="/Newmessage">
-          <button type="button" class="btn btn-info btn-lg btn-block">המשך </button>
+          <Link to={`/Newmessage/${this.props.match.params.id }`}>
+          <button type="button" class="btn btn-info btn-lg btn-block" onClick={this.savenewicon}>המשך </button>
           </Link>
         </div>
       </div>
@@ -145,7 +154,7 @@ class Icons extends Component {
       return (
         Object.keys(icons).map(
           (category) => icons[category].map(
-            (icon) => <Icon iconimage={icon} category={category} setIcon={() => this.props.setIcon(category.iconimage)}/>)
+            (icon) => <Icon iconimage={icon} category={category} setIcon={() => this.props.setIcon(icon)} savenewicon={()=> this.props.savenewicon()}/>)
 
         )
       );
@@ -157,7 +166,7 @@ class Icons extends Component {
             
             (icon) =>
           
-             <Icon iconimage={icon} category={category} onclicker={() => this.props.onclick(category.iconimage)}/>)
+             <Icon iconimage={icon} category={category} setIcon={() => this.props.setIcon(category.iconimage)} savenewicon={()=> this.props.savenewicon()}/>)
         )
       );
     }
@@ -175,7 +184,7 @@ class Icons extends Component {
 class Icon extends Component {
   render() {
     return (
-      <button id={this.props.category} type="button" class="btn btn-default iconButton" onClick={this.setIcon}>
+      <button onClick={this.props.setIcon} id={this.props.category} type="button" class="btn btn-default iconButton" >
 
         <i class={"fas fa-" + this.props.iconimage + " fa-3x"}></i>
       </button>

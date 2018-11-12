@@ -110,7 +110,11 @@ import data from '../data.json';
             this.setState({messagesInfo:editmessagesARR});
     
 }
-
+  componentWillMount()
+  {
+    let key="Editmessages";
+    localStorage.setItem(key,"");
+  }
   componentDidMount() {
     let messageST = localStorage.getItem("favmessages");
     if (messageST) {
