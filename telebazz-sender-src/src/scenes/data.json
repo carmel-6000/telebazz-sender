@@ -1,0 +1,22 @@
+{
+    
+"favMessages": [
+    {
+        "ID": 0,
+        "name": "האמבולנס בדרך",
+        "description": "בלה בלה בלה בלה בלה בלה בלה" ,
+        "color": null,
+        "icon": "ambulance"
+      }
+],
+"messages":[
+    {
+        "ID": 1,
+        "name": "Go home",
+        "description": "בלה בלה בלה בלה בלה בלה בלה" ,
+        "color": null,
+        "icon": "home"
+      }
+
+]
+}

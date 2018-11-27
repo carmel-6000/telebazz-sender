@@ -1,0 +1,38 @@
+
+.dropdown-item {
+text-align:center !important ;
+padding: 6% 0%;
+}
+
+
+.checkboxer {
+color: blue;
+margin-left: 7%;
+
+}
+.dropdown-menu-center {
+    left: 50% !important;
+    right: auto !important;
+    text-align: center !important;
+    transform: translate(-50%, 0) !important;
+    top: 120% !important;
+  }
+  
+
+.iconButton {
+    padding: 5%;
+    margin: 1%;
+    background-color: rgb(255, 255, 255);
+}
+  
+
+.scrollIcons {
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10%;
+    width: 100%;
+    height: 400px;
+    overflow: auto;
+    align-items: center;
+    padding: 0% 5%;
+
+}
