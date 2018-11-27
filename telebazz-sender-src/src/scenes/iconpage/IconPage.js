@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './iconpage.css';
+import './IconPage.css';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 
@@ -14,70 +14,73 @@ let icons = {
   "חפצים": ["toilet-paper", "bed", "basketball-ball", "microscope"]
 }
 
-export class Iconpage extends Component {
+export class IconPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       categoryFilter: [],
-      choosenIcon: ""
+      chosenIcon: ""
     }
     this.filterCategory = this.filterCategory.bind(this);
-    
-    this.setIcon=this.setIcon.bind(this);
-    this.savenewicon=this.savenewicon.bind(this);
+
+    this.setIcon = this.setIcon.bind(this);
+    this.savenewicon = this.savenewicon.bind(this);
   }
 
 
   filterCategory(event) {
     let checked = event.target.checked;
-    let categoryID =event.target.id; 
+    let categoryID = event.target.id;
 
     if (checked === true && this.state.categoryFilter.includes(categoryID) === false) {
       this.setState({
         categoryFilter: [...this.state.categoryFilter, categoryID]
       })
-    } 
-    
-    
-    
+    }
+
+
+
     else {
-      let currentIndex = this.state.categoryFilter.findIndex(function(element) {
+      let currentIndex = this.state.categoryFilter.findIndex(function (element) {
         return element === categoryID;
-      }); 
+      });
       if (currentIndex < 0) {
         return
       } else {
         let updatedCategoryFilter = this.state.categoryFilter;
-        updatedCategoryFilter.splice(currentIndex,1);
-        this.setState({categoryFilter: updatedCategoryFilter});
+        updatedCategoryFilter.splice(currentIndex, 1);
+        this.setState({ categoryFilter: updatedCategoryFilter });
       }
     }
   }
 
   savenewicon() {
-    const key = "Editmessages";
-    let currmessST=localStorage.getItem(key);
+    const key = "Editmessage"; //Editmessages
+    let currmessST = localStorage.getItem(key);
+    console.log("currmessST: ", currmessST);
     let currmessOB = JSON.parse(currmessST);
-    if(this.state.choosenIcon != "")
-    {
-      console.log("gfv");
-      currmessOB.icon=this.state.choosenIcon;
-    } 
-    localStorage.setItem(key,JSON.stringify(currmessOB));
+    console.log("currmessOB: ", currmessOB);
+    if (this.state.chosenIcon !== "") {
+      currmessOB.icon = this.state.chosenIcon;
+    }
+    localStorage.setItem(key, JSON.stringify(currmessOB));
     console.log(JSON.stringify(currmessOB));
     this.setIcon("");
-    console.log("icon page"+localStorage.getItem("Editmessages"));
+    console.log("icon page" + localStorage.getItem("Editmessage")); //Editmessages
   }
 
 
-  setIcon(newIcon)
-  {
-      this.setState({choosenIcon:newIcon});
+  setIcon(chosenIcon) {
+    console.log("IconPage: setIcon: chosenIcon: ", chosenIcon);
+    //updates setState too late - not in callback function
+    this.setState({ chosenIcon },
+      console.log("after setState: ", this.state.chosenIcon)
+    );
   }
 
 
   render() {
-    console.log(this.state.choosenIcon);
+    console.log(this.state.chosenIcon);
     //console.log(this.state.categoryFilter);
     return (
       <div>
@@ -94,15 +97,24 @@ export class Iconpage extends Component {
           </div>
           <br />
           <div className="scrollIcons">
-          <div class="row">
-            <div class="col-sm">
-              <Icons categoryFilter={this.state.categoryFilter} setIcon={this.setIcon} savenewicon={this.savenewicon}/>
+            <div class="row">
+              <div class="col-sm">
+                <Icons
+                  categoryFilter={this.state.categoryFilter}
+                  setIcon={this.setIcon}
+                  savenewicon={this.savenewicon}
+                />
+              </div>
             </div>
           </div>
-          </div>
           <br />
-          <Link to={`/Newmessage/${this.props.match.params.id }`}>
-          <button type="button" class="btn btn-info btn-lg btn-block" onClick={this.savenewicon}>המשך </button>
+          <Link to={`/NewMessage/${this.props.match.params.id}`}>
+            <button
+              type="button"
+              class="btn btn-info btn-lg btn-block"
+              onClick={this.savenewicon}>
+              המשך
+            </button>
           </Link>
         </div>
       </div>
@@ -135,7 +147,7 @@ export class NavBar extends Component {
           <button className="navbar-toggler leftNavbarToggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span>
-              <a href="/Newmessage" className="text-light"><i class="fas fa-arrow-left"></i>  </a>
+              <a href="/NewMessage" className="text-light"><i class="fas fa-arrow-left"></i>  </a>
             </span>
           </button>
         </nav>
@@ -154,7 +166,16 @@ class Icons extends Component {
       return (
         Object.keys(icons).map(
           (category) => icons[category].map(
-            (icon) => <Icon iconimage={icon} category={category} setIcon={() => this.props.setIcon(icon)} savenewicon={()=> this.props.savenewicon()}/>)
+            (icon) =>
+              <Icon
+                iconimage={icon}
+                category={category}
+                setIcon={() => {
+                  this.props.setIcon(icon);
+                  console.log("Icons: icon: ", icon);
+                }}
+                savenewicon={() => this.props.savenewicon()}
+              />)
 
         )
       );
@@ -163,10 +184,14 @@ class Icons extends Component {
       return (
         this.props.categoryFilter.map(
           (category) => icons[category].map(
-            
+
             (icon) =>
-          
-             <Icon iconimage={icon} category={category} setIcon={() => this.props.setIcon(category.iconimage)} savenewicon={()=> this.props.savenewicon()}/>)
+              <Icon
+                iconimage={icon}
+                category={category}
+                setIcon={() => this.props.setIcon(category.iconimage)}
+                savenewicon={() => this.props.savenewicon()}
+              />)
         )
       );
     }
@@ -184,7 +209,11 @@ class Icons extends Component {
 class Icon extends Component {
   render() {
     return (
-      <button onClick={this.props.setIcon} id={this.props.category} type="button" class="btn btn-default iconButton" >
+      <button
+        onClick={this.props.setIcon}
+        id={this.props.category}
+        type="button"
+        class="btn btn-default iconButton" >
 
         <i class={"fas fa-" + this.props.iconimage + " fa-3x"}></i>
       </button>

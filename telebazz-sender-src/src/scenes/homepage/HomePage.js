@@ -7,7 +7,7 @@ import { RegMsg } from "./RegMsg";
 import { Nav } from "./Nav";
 
 
-export class Homepage extends Component {
+export class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -99,7 +99,7 @@ export class Homepage extends Component {
 
         <div className="container">
 
-          <Link to="/Newmessage">
+          <Link to="/NewMessage">
             <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף הודעה</button>
           </Link>
         </div>
@@ -122,4 +122,4 @@ export class Homepage extends Component {
 //   }
 // }
 
-export default Homepage;
+export default HomePage;

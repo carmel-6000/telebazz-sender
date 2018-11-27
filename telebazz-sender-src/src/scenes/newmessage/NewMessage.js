@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import './newmessage.css';
+import './NewMessage.css';
 // import {Link} from 'react-router-dom';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { NavBar } from "./NavBar";
 import { Icons } from "./Icons";
 import { Colors } from "./Colors";
-import { Favoritebutton } from "./Favoritebutton";
+import { FavoriteButton } from "./FavoriteButton";
 
 
-export class Newmessage extends Component {
+export class NewMessage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,14 +28,14 @@ export class Newmessage extends Component {
     this.updateheader = this.updateheader.bind(this);
     this.updateimg = this.updateimg.bind(this);
     this.checkcondutions = this.checkcondutions.bind(this);
-    this.savedata=this.savedata.bind(this);
+    this.savedata = this.savedata.bind(this);
   }
 
-  
+
   componentWillMount() {
-    
-    if (this.props.match.params.id ) {
-      let key="Editmessage";
+
+    if (this.props.match.params.id) {
+      let key = "Editmessage";
       let editmessageST = localStorage.getItem(key);
       if (editmessageST) {
         let editmessageOB = JSON.parse(editmessageST);
@@ -44,10 +44,10 @@ export class Newmessage extends Component {
         this.setState({ color: editmessageOB.color });
         this.setState({ isFav: editmessageOB.isFav });
         this.setState({ icon: editmessageOB.icon });
-        this.setState({favatfirst: editmessageOB.isFav});
-        this.setState({itemID:this.props.match.params.id});
-        this.setState({specialicon:editmessageOB.specialicon});
-        
+        this.setState({ favatfirst: editmessageOB.isFav });
+        this.setState({ itemID: this.props.match.params.id });
+        this.setState({ specialicon: editmessageOB.specialicon });
+
       }
     }
 
@@ -79,43 +79,41 @@ export class Newmessage extends Component {
     this.setState({ icon: iconimg });
   }
 
-  savedata()
-  {
-    let key="messages";
-    let msg={
-      header:this.state.header,
-      description:this.state.description,
-      isFav:this.state.isFav,
-      itemID:this.state.itemID,
-      icon:this.state.icon,
-      color:this.state.color
+  savedata() {
+    let key = "messages";
+    let msg = {
+      header: this.state.header,
+      description: this.state.description,
+      isFav: this.state.isFav,
+      itemID: this.state.itemID,
+      icon: this.state.icon,
+      color: this.state.color
     }
-    let messagesArr=[];
-    let tempmessage=[];
+    let messagesArr = [];
+    let tempmessage = [];
     let messageST = localStorage.getItem(key);
     if (messageST) {
       let messagesOB = JSON.parse(messageST);
-       messagesArr = Object.keys(messagesOB).map(obj => messagesOB[obj]);
+      messagesArr = Object.keys(messagesOB).map(obj => messagesOB[obj]);
     }
-    if(this.props.match.params.id)
-    {
-      
+    if (this.props.match.params.id) {
+
       messagesArr.map(currmsg => {
 
-        if(currmsg.itemID == this.props.match.params.id){
+        if (currmsg.itemID == this.props.match.params.id) {
           tempmessage.push(msg);
         }
-        else{
+        else {
           tempmessage.push(currmsg);
         }
       });
       localStorage.setItem(key, JSON.stringify(tempmessage));
     }
-    else{
+    else {
       messagesArr.push(msg);
       localStorage.setItem(key, JSON.stringify(messagesArr));
     }
-   
+
   }
 
   render() {
@@ -148,8 +146,14 @@ export class Newmessage extends Component {
               <i style={{ color: this.state.color }} class={"fas fa-" + this.state.icon + " fa-5x pull-left"} /> <br />
               <br />
 
-              <Link to={`/Newmessage/Iconpage/${this.state.itemID}`}>
-                <button type="button" class="btn btn-info " onClick={this.changeIcon}> <i class="fas fa-pencil-alt"></i> שנה אייקון</button>
+              <Link to={`/NewMessage/IconPage/${this.state.itemID}`}>
+                <button
+                  type="button"
+                  class="btn btn-info ">
+                  {/* onClick={this.changeIcon}> */}
+                  <i class="fas fa-pencil-alt"></i>
+                  שנה אייקון
+                </button>
               </Link>
 
 
@@ -167,7 +171,7 @@ export class Newmessage extends Component {
 
           </div>
 
-          <Favoritebutton favbutt={this.state.isFav} onChange={this.addtofavorite} />
+          <FavoriteButton favbutt={this.state.isFav} onChange={this.addtofavorite} />
 
 
         </div>
@@ -188,4 +192,4 @@ export class Newmessage extends Component {
   }
 }
 
-export default Newmessage;
+export default NewMessage;

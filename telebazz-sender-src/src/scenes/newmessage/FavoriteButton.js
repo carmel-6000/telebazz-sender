@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class Favoritebutton extends Component {
+export class FavoriteButton extends Component {
 
     render() {
       return (
