@@ -1,36 +1,36 @@
 
-telbazz-sender-src/deploy-cordova.sh
+telebazz-sender-src/deploy-cordova.sh
 
 
-telbazz-sender-target/platforms/
-telbazz-sender-target/node_modules/
-telbazz-sender-target/package-lock.json
-telbazz-sender-traget/www
+telebazz-sender-target/platforms/
+telebazz-sender-target/node_modules/
+telebazz-sender-target/package-lock.json
+telebazz-sender-traget/www
 
 # Project source (react.js) .gitignore files
 #See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-telbazz-sender-src/node_modules
+telebazz-sender-src/node_modules
 
 # testing
-telbazz-sender-src/coverage
+telebazz-sender-src/coverage
 
 # production
-telbazz-sender-src/build
+telebazz-sender-src/build
 
 # misc
-telbazz-sender-src/.DS_Store
-telbazz-sender-src/.env.local
-telbazz-sender-src/.env.development.local
-telbazz-sender-src/.env.test.local
-telbazz-sender-src/.env.production.local
+telebazz-sender-src/.DS_Store
+telebazz-sender-src/.env.local
+telebazz-sender-src/.env.development.local
+telebazz-sender-src/.env.test.local
+telebazz-sender-src/.env.production.local
 
-telbazz-sender-src/npm-debug.log*
-telbazz-sender-src/yarn-debug.log*
-telbazz-sender-src/yarn-error.log*
+telebazz-sender-src/npm-debug.log*
+telebazz-sender-src/yarn-debug.log*
+telebazz-sender-src/yarn-error.log*
 
-telbazz-sender-src/package-lock.json
+telebazz-sender-src/package-lock.json
 
 
-
+./node_modules
