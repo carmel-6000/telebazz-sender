@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 // import Tone from './ToneReact';
-import { IconPage } from "./scenes/iconpage/IconPage";
+import { IconPage } from "./scenes/icon_page/IconPage";
 import { Route , Switch } from 'react-router-dom'
-import { HomePage } from './scenes/homepage/HomePage.js';
-import { NewMessage } from './scenes/newmessage/NewMessage.js';
+import { HomePage } from './scenes/home_page/HomePage.js';
+import { NewMessage } from './scenes/new_message/NewMessage.js';
 
 import './App.css';
 

@@ -185,7 +185,12 @@ export class NewMessage extends Component {
         </div>
 
         <Link to="/">
-          <button type="submit" class="btn btn-secondary btn-lg btn-block" onClick={this.savedata}>send</button>
+          <button
+            type="submit"
+            class="btn btn-secondary btn-lg btn-block"
+            onClick={this.savedata}>
+            send
+          </button>
         </Link>
       </div>
     );

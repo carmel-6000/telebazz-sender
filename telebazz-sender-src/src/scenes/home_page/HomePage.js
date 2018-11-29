@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import {Tone , char_to_morse} from '../../ToneReact.jsx';
+import {Tone , char_to_morse} from '../../encode_message/Tone.jsx';
 import { Link } from 'react-router-dom';
 //import data from '../data.json';
 import { FavoriteMsg } from "./FavoriteMsg";
@@ -86,6 +86,14 @@ export class HomePage extends Component {
     });
     return (
       <div>
+        <Tone />
+      </div>
+    );
+
+
+    /*
+    return (
+      <div>
         <Nav />
         <p> Favorites </p>
         <div>
@@ -98,28 +106,30 @@ export class HomePage extends Component {
         </div> 
 
         <div className="container">
-
+          <Tone />
           <Link to="/NewMessage">
             <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף הודעה</button>
           </Link>
         </div>
       </div>
     );
+    
+    */
   }
 }
 
-// export class Morse extends Component {
-//   render() {
-//     return (
-//       <div>
-//           <p>
-//             Hey TeleBuzz
-//           </p>
-//           <h1>Morse Code Generator </h1>
-//           <Tone/>
-//       </div>
-//     );
-//   }
-// }
+/*export class Morse extends Component {
+  render() {
+    return (
+      <div>
+          <p>
+            Hey TeleBuzz
+          </p>
+          <h1>Morse Code Generator </h1>
+          <Tone/>
+      </div>
+    );
+  }
+}*/
 
 export default HomePage;
