@@ -29,24 +29,29 @@ let deafultcolors = [
   }];
 
 export class Colors extends Component {
-    render() {
-      return (
-        <div>
-          {deafultcolors.map((currcolor) =>
-            <Color
-              colorclass={currcolor.colorclass}
-              colorvalue={currcolor.colorvalue}
-              onclicker={() => this.props.updatecolor(currcolor.colorvalue)} />)}
-  
-        </div>
-      );
-    }
+  render() {
+    return (
+      <div>
+        {deafultcolors.map((currcolor) =>
+          <Color
+            colorclass={currcolor.colorclass}
+            colorvalue={currcolor.colorvalue}
+            onclicker={() => this.props.updatecolor(currcolor.colorvalue)}
+          />
+        )}
+      </div>
+    );
   }
-  
-  class Color extends Component {
-    render() {
-      return (
-        <button type="button" onClick={this.props.onclicker} className={"btn btn-circle btn-" + this.props.colorclass} />
-      );
-    }
+}
+
+class Color extends Component {
+  render() {
+    return (
+      <button
+        type="button"
+        onClick={this.props.onclicker}
+        className={"btn btn-circle btn-" + this.props.colorclass}
+      />
+    );
   }
+}

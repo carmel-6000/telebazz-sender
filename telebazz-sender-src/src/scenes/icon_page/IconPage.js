@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './IconPage.css';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { NavBar } from '../new_message/NavBar.js'
 
 
 let icons = {
@@ -60,7 +61,9 @@ export class IconPage extends Component {
     console.log("currmessST: ", currmessST);
     let currmessOB = JSON.parse(currmessST);
     console.log("currmessOB: ", currmessOB);
-    if (this.state.chosenIcon !== "") {
+    if(currmessOB=="")
+    currmessOB={};
+    if (this.state.chosenIcon != "") {
       currmessOB.icon = this.state.chosenIcon;
     }
     localStorage.setItem(key, JSON.stringify(currmessOB));
@@ -84,7 +87,7 @@ export class IconPage extends Component {
     //console.log(this.state.categoryFilter);
     return (
       <div>
-        <NavBar />
+        <NavBar history={this.props.history}/>
         <div className="container">
           <h3>איזה אייקון תרצו להציג?</h3>
           <div class="dropdown show text-center">
@@ -108,7 +111,8 @@ export class IconPage extends Component {
             </div>
           </div>
           <br />
-          <Link to={`/NewMessage/${this.props.match.params.id}`}>
+          <Link to={`/EditMessage/${this.props.match.params.id}`}>
+          {/* ${this.props.match.params.id} */}
             <button
               type="button"
               class="btn btn-info btn-lg btn-block"
@@ -136,28 +140,6 @@ class Filter extends Component {
     );
   }
 }
-
-
-export class NavBar extends Component {
-  render() {
-    return (
-      <div>
-        <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
-          <a className="navbar-brand" href="#">Telebuzz</a>
-          <button className="navbar-toggler leftNavbarToggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span>
-              <a href="/NewMessage" className="text-light"><i class="fas fa-arrow-left"></i>  </a>
-            </span>
-          </button>
-        </nav>
-
-      </div>
-    );
-  }
-}
-
-
 
 class Icons extends Component {
 

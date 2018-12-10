@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {Tone , char_to_morse} from '../../encode_message/Tone.jsx';
+import { MorseCode, char_to_morse } from '../../encode_message/MorseCode.jsx';
 import { Link } from 'react-router-dom';
 //import data from '../data.json';
 import { FavoriteMsg } from "./FavoriteMsg";
 import { RegMsg } from "./RegMsg";
-import { Nav } from "./Nav";
+// import { Nav } from "./Nav";
+import { NavBar } from '../new_message/NavBar.js';
 
 
 export class HomePage extends Component {
@@ -18,58 +19,57 @@ export class HomePage extends Component {
     this.changelocation = this.changelocation.bind(this);
   }
   componentDidMount() {
-    let key="messages";
+    let key = "messages";
     let messageST = localStorage.getItem(key);
     if (messageST) {
       let messagesOB = JSON.parse(messageST);
       const messages = Object.keys(messagesOB).map(obj => messagesOB[obj]);
       this.setState({ messages });
     }
-    localStorage.setItem("Editmessage",JSON.stringify(""));
+    localStorage.setItem("Editmessage", JSON.stringify(""));
   }
   deletemessage(event, itemID, isFav) {
-      event.preventDefault();
-      let key="messages";
-      let messages=this.state.messages;
-      let updatemessages=[];
-      messages.map(msg => {
-        if(msg.itemID !== itemID){
-          updatemessages.push(msg);
+    event.preventDefault();
+    let key = "messages";
+    let messages = this.state.messages;
+    let updatemessages = [];
+    messages.map(msg => {
+      if (msg.itemID !== itemID) {
+        updatemessages.push(msg);
       }
     });
     localStorage.setItem(key, JSON.stringify(updatemessages));
-    this.setState({messages:updatemessages});
+    this.setState({ messages: updatemessages });
   }
 
   editmessage(itemID, isFav) {
-    let key="Editmessage";
-    let editmsg={};
+    let key = "Editmessage";
+    let editmsg = {};
     this.state.messages.map(currmsg => {
-      if(currmsg.itemID === itemID)
-      {
-          editmsg=Object.assign({},currmsg);
+      if (currmsg.itemID === itemID) {
+        editmsg = Object.assign({}, currmsg);
       }
-    } );
-    localStorage.setItem(key,JSON.stringify(editmsg));
+    });
+    localStorage.setItem(key, JSON.stringify(editmsg));
 
   }
 
   changelocation(event, Itemid, isFav) {
     event.preventDefault();
-    let key="messages";
-    let messages=this.state.messages;
-    let updatemessages=[];
+    let key = "messages";
+    let messages = this.state.messages;
+    let updatemessages = [];
     messages.map(msg => {
       updatemessages.push(msg);
-      if(msg.itemID === Itemid){
-        updatemessages[updatemessages.length-1].isFav=!isFav;
+      if (msg.itemID === Itemid) {
+        updatemessages[updatemessages.length - 1].isFav = !isFav;
 
-    }
-    //tempmessage=Object.assign({},currMg);
-  });
-  localStorage.setItem(key, JSON.stringify(updatemessages));
-  this.setState({messages:updatemessages});
-  
+      }
+      //tempmessage=Object.assign({},currMg);
+    });
+    localStorage.setItem(key, JSON.stringify(updatemessages));
+    this.setState({ messages: updatemessages });
+
   }
 
   render() {
@@ -84,52 +84,31 @@ export class HomePage extends Component {
       else
         regmessages.push(<RegMsg key={key} isFav={message.isFav} itemID={message.itemID} header={message.header} description={message.description} icon={message.icon} color={message.color} deletemessage={this.deletemessage} editmessage={this.editmessage} changelocation={this.changelocation} />);
     });
-    return (
-      <div>
-        <Tone />
-      </div>
-    );
 
-
-    /*
     return (
-      <div>
-        <Nav />
-        <p> Favorites </p>
-        <div>
+      <div style={{ textAlign: "right" }}>
+        {/* <Nav /> */}
+        <NavBar />
+        <p> מועדפים </p>
+        <div style={{ textAlign: "center" }}>
           {favmessages}
         </div>
-        <hr /> <hr />
-        <p> More </p>
-        <div>
+
+        <br />
+
+        <p> עוד הודעות </p>
+        <div style={{ textAlign: "center" }} >
           {regmessages}
-        </div> 
+        </div>
 
         <div className="container">
-          <Tone />
           <Link to="/NewMessage">
             <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף הודעה</button>
           </Link>
         </div>
       </div>
     );
-    
-    */
   }
 }
-
-/*export class Morse extends Component {
-  render() {
-    return (
-      <div>
-          <p>
-            Hey TeleBuzz
-          </p>
-          <h1>Morse Code Generator </h1>
-          <Tone/>
-      </div>
-    );
-  }
-}*/
 
 export default HomePage;

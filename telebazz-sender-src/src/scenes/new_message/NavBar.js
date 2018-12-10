@@ -1,21 +1,52 @@
 import React, { Component } from 'react';
 
 export class NavBar extends Component {
-    render() {
+  constructor(props) {
+    super(props);
+    this.click = this.click.bind(this);
+  }
+  click() {
+    if (this.props.history.location.pathname.includes("NewMessage") || this.props.history.location.pathname.includes("EditMessage")) {
+      this.props.history.replace("/");
+    } else {
+      this.props.history.goBack();
+    }
+  }
+
+  render() {
+    if (this.props.history === undefined) {
       return (
         <div>
           <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
             <a className="navbar-brand" href="#">Telebuzz</a>
-            <button className="navbar-toggler leftNavbarToggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-              aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          </nav>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
+            <a className="navbar-brand" href="#">Telebuzz</a>
+            <button
+              className="navbar-toggler leftNavbarToggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarsExampleDefault"
+              aria-controls="navbarsExampleDefault"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
               <span>
-                <a href="/" className="text-light"><i class="fas fa-arrow-left"></i>  </a>
+                <button
+                  onClick={this.click}
+                  className="text-light">
+                  <i class="fas fa-arrow-left" />
+                </button>
               </span>
             </button>
           </nav>
-  
+
         </div>
       );
     }
   }
-  
+}
