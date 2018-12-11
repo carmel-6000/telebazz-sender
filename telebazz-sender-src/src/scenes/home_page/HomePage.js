@@ -29,7 +29,8 @@ export class HomePage extends Component {
       this.setState({ messages });
     }
 
-    localStorage.setItem("Editmessage", JSON.stringify(""));
+    localStorage.setItem("EditMessage", JSON.stringify(""));
+    localStorage.setItem("NewMessage", JSON.stringify({}));
   }
 
   deletemessage(event, itemID, isFav) {
@@ -49,7 +50,7 @@ export class HomePage extends Component {
   }
 
   editmessage(itemID, isFav) {
-    let key = "Editmessage";
+    let key = "EditMessage";
     let editmsg = {};
 
     this.state.messages.map(currmsg => {
@@ -136,7 +137,7 @@ export class HomePage extends Component {
 
         <div className="container">
           <Link to="/NewMessage">
-            <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף הודעה</button>
+            <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף/י הודעה</button>
           </Link>
         </div>
       </div>

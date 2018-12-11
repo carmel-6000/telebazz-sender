@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
 import './IconPage.css';
 import { Link } from 'react-router-dom';
-import { NavBar } from '../new_message/NavBar.js'
-
-let icons = {
-  "בעלי חיים": ["cat", "dog", "horse"],
-  "סכנות": ["fire", "bolt", "ghost"],
-  "דת": ["cross", "menorah", "pray", "bible"],
-  "רפואה": ["pills", "cannabis", "capsules"],
-  "אוכל": ["lemon", "drumstick-bite", "cookie"],
-  "אנשים": ["user-injured", "user-tie", "blind"],
-  "מקומות": ["university", "church", "hospital", "home"],
-  "חפצים": ["toilet-paper", "bed", "basketball-ball", "microscope"]
-}
+import { NavBar } from '../new_message/NavBar.js';
+import iconsObj from './iconsObj';
+import { Filter } from './Filter';
+import { Icons } from './Icons';
 
 export class IconPage extends Component {
   constructor(props) {
@@ -51,7 +43,7 @@ export class IconPage extends Component {
   }
 
   savenewicon() {
-    const key = "Editmessage"; //Editmessages
+    const key = this.props.match.params.id ? "EditMessage" : "NewMessage"; 
     let currmessST = localStorage.getItem(key);
     let currmessOB = JSON.parse(currmessST);
 
@@ -63,7 +55,7 @@ export class IconPage extends Component {
 
     localStorage.setItem(key, JSON.stringify(currmessOB));
     this.setIcon("");
-    console.log("icon page" + localStorage.getItem("Editmessage")); //Editmessages
+    console.log("icon page" + localStorage.getItem(key)); 
   }
 
   setIcon(chosenIcon) {
@@ -90,7 +82,7 @@ export class IconPage extends Component {
               סנן
             </a>
             <div class="dropdown-menu dropdown-menu-center " aria-labelledby="dropdownMenuLink">
-              {Object.keys(icons).map((category) =>
+              {Object.keys(iconsObj).map((category) =>
                 <Filter
                   isCategryChecked={this.state.isCategryChecked}
                   filterCategory={this.filterCategory}
@@ -112,7 +104,7 @@ export class IconPage extends Component {
             </div>
           </div>
           <br />
-          <Link to={`/EditMessage/${this.props.match.params.id}`}>
+          <Link to={`${this.props.match.params.id ? `/EditMessage/${this.props.match.params.id}` : '/NewMessage'}`}>
             <button
               type="button"
               class="btn btn-info btn-lg btn-block"
@@ -126,77 +118,4 @@ export class IconPage extends Component {
   }
 }
 
-class Filter extends Component {
-  render() {
-    return (
-      <button class="dropdown-item" type="button" >
-        <input
-          class="checkboxer"
-          onChange={this.props.filterCategory}
-          id={this.props.category}
-          type="checkbox"
-        />
-        <label>
-          {this.props.category}
-        </label>
-      </button>
-    );
-  }
-}
-
-class Icons extends Component {
-  checkCategoryFilter() {
-    if (this.props.categoryFilter.length === 0) {
-      return (
-        Object.keys(icons).map(
-          (category) => icons[category].map(
-            (icon) =>
-              <Icon
-                iconimage={icon}
-                category={category}
-                setIcon={() => this.props.setIcon(icon)}
-                savenewicon={() => this.props.savenewicon()}
-              />
-          )
-        )
-      );
-    } else {
-      return (
-        this.props.categoryFilter.map(
-          (category) => icons[category].map(
-            (icon) =>
-              <Icon
-                iconimage={icon}
-                category={category}
-                setIcon={() => this.props.setIcon(category.iconimage)}
-                savenewicon={() => this.props.savenewicon()}
-              />
-          )
-        )
-      );
-    }
-  }
-
-  render() {
-    return (
-      <div>
-        {this.checkCategoryFilter()}
-      </div>
-    );
-  }
-}
-
-class Icon extends Component {
-  render() {
-    return (
-      <button
-        onClick={this.props.setIcon}
-        id={this.props.category}
-        type="button"
-        class="btn btn-default iconButton" >
-
-        <i class={"fas fa-" + this.props.iconimage + " fa-3x"}></i>
-      </button>
-    );
-  }
-}
+export default IconPage;

@@ -7,13 +7,8 @@ export class NavBar extends Component {
   }
 
   click() {
-    if (this.props.history.location.pathname.includes("IconPage")) {
-      
-      // Retrieve the object from storage
-      var retrievedMessageInfo = localStorage.getItem('messageInfo');
-      console.log('retrievedMessageInfo: ', JSON.parse(retrievedMessageInfo));
+    if (this.props.history.location.pathname.includes("IconPage")) {     
       this.props.history.goBack();
-
     } else if (this.props.history.location.pathname.includes("NewMessage") || this.props.history.location.pathname.includes("EditMessage")) {
       this.props.history.replace("/");
     } else {

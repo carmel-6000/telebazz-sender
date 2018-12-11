@@ -34,20 +34,24 @@ export class NewMessage extends Component {
 
 
   componentWillMount() {
+    let key = "NewMessage";
     if (this.props.match.params.id) {
-      let key = "Editmessage";
-      let editmessageST = localStorage.getItem(key);
-      if (editmessageST) {
-        let editmessageOB = JSON.parse(editmessageST);
-        this.setState({ description: editmessageOB.description });
-        this.setState({ header: editmessageOB.header });
-        this.setState({ color: editmessageOB.color });
-        this.setState({ isFav: editmessageOB.isFav });
-        this.setState({ icon: editmessageOB.icon });
-        this.setState({ favatfirst: editmessageOB.isFav });
-        this.setState({ itemID: this.props.match.params.id });
-        this.setState({ specialicon: editmessageOB.specialicon });
-      }
+      key = "EditMessage";
+    }
+
+    let messageST = localStorage.getItem(key);
+    if (messageST) {
+      let messageOB = JSON.parse(messageST);
+      this.setState({
+        description: messageOB.description,
+        header: messageOB.header,
+        color: messageOB.color,
+        isFav: messageOB.isFav,
+        icon: messageOB.icon,
+        favatfirst: messageOB.isFav,
+        itemID: this.props.match.params.id ? this.props.match.params.id : Date.now(),
+        specialicon: messageOB.specialicon
+      });
     }
   }
 
