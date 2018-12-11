@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 //import data from '../data.json';
 // import { Nav } from "./Nav";
 import {Message} from "./Message";
-import { NavBar } from '../new_message/NavBar.js';
+import { NavBar } from '../message_page/NavBar.js';
 
 
 export class HomePage extends Component {

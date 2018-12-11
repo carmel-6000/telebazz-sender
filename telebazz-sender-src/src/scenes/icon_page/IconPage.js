@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './IconPage.css';
 import { Link } from 'react-router-dom';
-import { NavBar } from '../new_message/NavBar.js';
+import { NavBar } from '../message_page/NavBar.js';
 import iconsObj from './iconsObj';
 import { Filter } from './Filter';
 import { Icons } from './Icons';

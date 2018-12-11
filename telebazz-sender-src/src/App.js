@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { IconPage } from "./scenes/icon_page/IconPage";
 import { Route, HashRouter, Switch } from 'react-router-dom'
 import { HomePage } from './scenes/home_page/HomePage.js';
-import { Message } from './scenes/new_message/Message.js';
+import { Message } from './scenes/message_page/Message.js';
 
 import './App.css';
 
