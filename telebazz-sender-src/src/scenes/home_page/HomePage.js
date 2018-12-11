@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { MorseCode, char_to_morse } from '../../encode_message/MorseCode.jsx';
 import { Link } from 'react-router-dom';
 //import data from '../data.json';
-import { FavoriteMsg } from "./FavoriteMsg";
-import { RegMsg } from "./RegMsg";
 // import { Nav } from "./Nav";
+import {Message} from "./Message";
 import { NavBar } from '../new_message/NavBar.js';
 
 
@@ -14,30 +13,37 @@ export class HomePage extends Component {
     this.state = {
       messages: ''
     }
+
     this.deletemessage = this.deletemessage.bind(this);
     this.editmessage = this.editmessage.bind(this);
     this.changelocation = this.changelocation.bind(this);
   }
+
   componentDidMount() {
     let key = "messages";
     let messageST = localStorage.getItem(key);
+
     if (messageST) {
       let messagesOB = JSON.parse(messageST);
       const messages = Object.keys(messagesOB).map(obj => messagesOB[obj]);
       this.setState({ messages });
     }
+
     localStorage.setItem("Editmessage", JSON.stringify(""));
   }
+
   deletemessage(event, itemID, isFav) {
     event.preventDefault();
     let key = "messages";
     let messages = this.state.messages;
     let updatemessages = [];
+
     messages.map(msg => {
       if (msg.itemID !== itemID) {
         updatemessages.push(msg);
       }
     });
+
     localStorage.setItem(key, JSON.stringify(updatemessages));
     this.setState({ messages: updatemessages });
   }
@@ -45,13 +51,14 @@ export class HomePage extends Component {
   editmessage(itemID, isFav) {
     let key = "Editmessage";
     let editmsg = {};
+
     this.state.messages.map(currmsg => {
       if (currmsg.itemID === itemID) {
         editmsg = Object.assign({}, currmsg);
       }
     });
-    localStorage.setItem(key, JSON.stringify(editmsg));
 
+    localStorage.setItem(key, JSON.stringify(editmsg));
   }
 
   changelocation(event, Itemid, isFav) {
@@ -59,6 +66,7 @@ export class HomePage extends Component {
     let key = "messages";
     let messages = this.state.messages;
     let updatemessages = [];
+
     messages.map(msg => {
       updatemessages.push(msg);
       if (msg.itemID === Itemid) {
@@ -67,9 +75,9 @@ export class HomePage extends Component {
       }
       //tempmessage=Object.assign({},currMg);
     });
+
     localStorage.setItem(key, JSON.stringify(updatemessages));
     this.setState({ messages: updatemessages });
-
   }
 
   render() {
@@ -79,10 +87,35 @@ export class HomePage extends Component {
 
     msgkeys.forEach(key => {
       let message = this.state.messages[key];
-      if (message.isFav)
-        favmessages.push(<FavoriteMsg key={key} isFav={message.isFav} itemID={message.itemID} header={message.header} description={message.description} icon={message.icon} color={message.color} deletemessage={this.deletemessage} editmessage={this.editmessage} changelocation={this.changelocation} />);
-      else
-        regmessages.push(<RegMsg key={key} isFav={message.isFav} itemID={message.itemID} header={message.header} description={message.description} icon={message.icon} color={message.color} deletemessage={this.deletemessage} editmessage={this.editmessage} changelocation={this.changelocation} />);
+      if (message.isFav) {
+        favmessages.push(
+          <Message
+            key={key}
+            isFav={message.isFav}
+            itemID={message.itemID}
+            header={message.header}
+            description={message.description}
+            icon={message.icon}
+            color={message.color}
+            deletemessage={this.deletemessage}
+            editmessage={this.editmessage}
+            changelocation={this.changelocation}
+          />);
+      } else {
+        regmessages.push(
+          <Message
+            key={key}
+            isFav={message.isFav}
+            itemID={message.itemID}
+            header={message.header}
+            description={message.description}
+            icon={message.icon}
+            color={message.color}
+            deletemessage={this.deletemessage}
+            editmessage={this.editmessage}
+            changelocation={this.changelocation}
+          />);
+      }
     });
 
     return (

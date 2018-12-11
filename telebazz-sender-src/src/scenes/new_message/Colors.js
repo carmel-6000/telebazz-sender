@@ -26,7 +26,8 @@ let deafultcolors = [
   {
     colorclass: "danger",
     colorvalue: "#dc3545"
-  }];
+  }
+];
 
 export class Colors extends Component {
   render() {

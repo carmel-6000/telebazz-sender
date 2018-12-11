@@ -3,7 +3,6 @@ import './IconPage.css';
 import { Link } from 'react-router-dom';
 import { NavBar } from '../new_message/NavBar.js'
 
-
 let icons = {
   "בעלי חיים": ["cat", "dog", "horse"],
   "סכנות": ["fire", "bolt", "ghost"],
@@ -22,12 +21,11 @@ export class IconPage extends Component {
       categoryFilter: [],
       chosenIcon: ""
     }
-    this.filterCategory = this.filterCategory.bind(this);
 
+    this.filterCategory = this.filterCategory.bind(this);
     this.setIcon = this.setIcon.bind(this);
     this.savenewicon = this.savenewicon.bind(this);
   }
-
 
   filterCategory(event) {
     let checked = event.target.checked;
@@ -37,16 +35,13 @@ export class IconPage extends Component {
       this.setState({
         categoryFilter: [...this.state.categoryFilter, categoryID]
       })
-    }
-
-
-
-    else {
+    } else {
       let currentIndex = this.state.categoryFilter.findIndex(function (element) {
         return element === categoryID;
       });
+
       if (currentIndex < 0) {
-        return
+        return;
       } else {
         let updatedCategoryFilter = this.state.categoryFilter;
         updatedCategoryFilter.splice(currentIndex, 1);
@@ -58,44 +53,50 @@ export class IconPage extends Component {
   savenewicon() {
     const key = "Editmessage"; //Editmessages
     let currmessST = localStorage.getItem(key);
-    console.log("currmessST: ", currmessST);
     let currmessOB = JSON.parse(currmessST);
-    console.log("currmessOB: ", currmessOB);
-    if(currmessOB=="")
-    currmessOB={};
+
+    if (currmessOB == "")
+      currmessOB = {};
     if (this.state.chosenIcon != "") {
       currmessOB.icon = this.state.chosenIcon;
     }
+
     localStorage.setItem(key, JSON.stringify(currmessOB));
-    console.log(JSON.stringify(currmessOB));
     this.setIcon("");
     console.log("icon page" + localStorage.getItem("Editmessage")); //Editmessages
   }
 
-
   setIcon(chosenIcon) {
-    console.log("IconPage: setIcon: chosenIcon: ", chosenIcon);
-    //updates setState too late - not in callback function
     this.setState({ chosenIcon },
       console.log("after setState: ", this.state.chosenIcon)
     );
   }
 
-
   render() {
-    console.log(this.state.chosenIcon);
-    //console.log(this.state.categoryFilter);
     return (
       <div>
-        <NavBar history={this.props.history}/>
+        <NavBar history={this.props.history} />
         <div className="container">
           <h3>איזה אייקון תרצו להציג?</h3>
           <div class="dropdown show text-center">
-            <a class="btn btn-secondary dropdown-toggle " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a
+              class="btn btn-secondary dropdown-toggle "
+              href="#"
+              role="button"
+              id="dropdownMenuLink"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false">
               סנן
             </a>
             <div class="dropdown-menu dropdown-menu-center " aria-labelledby="dropdownMenuLink">
-              {Object.keys(icons).map((category) => <Filter isCategryChecked={this.state.isCategryChecked} filterCategory={this.filterCategory} category={category} />)}
+              {Object.keys(icons).map((category) =>
+                <Filter
+                  isCategryChecked={this.state.isCategryChecked}
+                  filterCategory={this.filterCategory}
+                  category={category}
+                />
+              )}
             </div>
           </div>
           <br />
@@ -112,7 +113,6 @@ export class IconPage extends Component {
           </div>
           <br />
           <Link to={`/EditMessage/${this.props.match.params.id}`}>
-          {/* ${this.props.match.params.id} */}
             <button
               type="button"
               class="btn btn-info btn-lg btn-block"
@@ -122,17 +122,20 @@ export class IconPage extends Component {
           </Link>
         </div>
       </div>
-
     );
   }
 }
 
 class Filter extends Component {
-
   render() {
     return (
       <button class="dropdown-item" type="button" >
-        <input class="checkboxer" onChange={this.props.filterCategory} id={this.props.category} type="checkbox" />
+        <input
+          class="checkboxer"
+          onChange={this.props.filterCategory}
+          id={this.props.category}
+          type="checkbox"
+        />
         <label>
           {this.props.category}
         </label>
@@ -142,7 +145,6 @@ class Filter extends Component {
 }
 
 class Icons extends Component {
-
   checkCategoryFilter() {
     if (this.props.categoryFilter.length === 0) {
       return (
@@ -152,28 +154,24 @@ class Icons extends Component {
               <Icon
                 iconimage={icon}
                 category={category}
-                setIcon={() => {
-                  this.props.setIcon(icon);
-                  console.log("Icons: icon: ", icon);
-                }}
+                setIcon={() => this.props.setIcon(icon)}
                 savenewicon={() => this.props.savenewicon()}
-              />)
-
+              />
+          )
         )
       );
-    }
-    else {
+    } else {
       return (
         this.props.categoryFilter.map(
           (category) => icons[category].map(
-
             (icon) =>
               <Icon
                 iconimage={icon}
                 category={category}
                 setIcon={() => this.props.setIcon(category.iconimage)}
                 savenewicon={() => this.props.savenewicon()}
-              />)
+              />
+          )
         )
       );
     }
@@ -200,6 +198,5 @@ class Icon extends Component {
         <i class={"fas fa-" + this.props.iconimage + " fa-3x"}></i>
       </button>
     );
-
   }
 }

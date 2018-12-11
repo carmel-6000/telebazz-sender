@@ -5,8 +5,16 @@ export class NavBar extends Component {
     super(props);
     this.click = this.click.bind(this);
   }
+
   click() {
-    if (this.props.history.location.pathname.includes("NewMessage") || this.props.history.location.pathname.includes("EditMessage")) {
+    if (this.props.history.location.pathname.includes("IconPage")) {
+      
+      // Retrieve the object from storage
+      var retrievedMessageInfo = localStorage.getItem('messageInfo');
+      console.log('retrievedMessageInfo: ', JSON.parse(retrievedMessageInfo));
+      this.props.history.goBack();
+
+    } else if (this.props.history.location.pathname.includes("NewMessage") || this.props.history.location.pathname.includes("EditMessage")) {
       this.props.history.replace("/");
     } else {
       this.props.history.goBack();
@@ -26,7 +34,7 @@ export class NavBar extends Component {
       return (
         <div>
           <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
-            <a className="navbar-brand" href="#">Telebuzz</a>
+            <div className="navbar-brand" href="#">Telebuzz</div>
             <button
               className="navbar-toggler leftNavbarToggler"
               type="button"
@@ -36,15 +44,14 @@ export class NavBar extends Component {
               aria-expanded="false"
               aria-label="Toggle navigation">
               <span>
-                <button
+                <div
                   onClick={this.click}
                   className="text-light">
                   <i class="fas fa-arrow-left" />
-                </button>
+                </div>
               </span>
             </button>
           </nav>
-
         </div>
       );
     }

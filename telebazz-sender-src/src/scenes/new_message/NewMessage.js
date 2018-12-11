@@ -115,13 +115,30 @@ export class NewMessage extends Component {
     }
   }
 
+  changeIcon = () => {
+    var messageInfo = {
+      'header': this.state.header,
+      'description': this.state.description,
+      'color': this.state.color,
+      'favorite': this.state.isFav
+    };
+
+    // Put the object into storage
+    localStorage.setItem('messageInfo', JSON.stringify(messageInfo));
+
+    console.log("messageInfo: ", localStorage.messageInfo);
+
+    //route to icon page
+    window.location.href = `/#/NewMessage/IconPage/${this.state.itemID}`;
+  }
+
   render() {
     return (
       <div>
-        <NavBar history={this.props.history}/>
+        <NavBar history={this.props.history} />
 
         <div className="container">
-        
+
           <div className="form-signin">
             <label for="exampleInputEmail1 text-right">כותרת ההודעה:</label>
             <input
@@ -156,16 +173,26 @@ export class NewMessage extends Component {
             <div class="col-11 text-center">
               <i style={{ color: this.state.color }} class={"fas fa-" + this.state.icon + " fa-5x pull-left"} /> <br />
               <br />
-              <Link to={`/NewMessage/IconPage/${this.state.itemID}`}>
-                <button
-                  type="button"
-                  class="btn btn-info ">
-                  <i class="fas fa-pencil-alt"></i>
-                  שנה/י אייקון
+              {/* <Link to={`/NewMessage/IconPage/${this.state.itemID}`}> */}
+              <button
+                type="button"
+                class="btn btn-info "
+                onClick={this.changeIcon}>
+                <i class="fas fa-pencil-alt"></i>
+                שנה/י אייקון
                 </button>
-              </Link>
+              {/* </Link> */}
             </div>
           </div>
+
+          {/* the color picker */}
+          <input
+            type="color"
+            className="btn-circle"
+            rgba
+            value={this.state.color}
+            onChange={this.updatechosencolor}
+          />
 
           <div className="form-group">
             <br />
@@ -178,11 +205,11 @@ export class NewMessage extends Component {
         </div>
 
 
-        <div id="pictures">
+        {/* <div id="pictures">
           <div id="deafultimg">
             <Icons updateimg={this.updateimg} />
           </div>
-        </div>
+        </div> */}
 
         <Link to="/">
           <button
