@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './NewMessage.css';
+import './Message.css';
 import { Link } from 'react-router-dom';
 import { NavBar } from "./NavBar";
 import { Colors } from "./Colors";
