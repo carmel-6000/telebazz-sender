@@ -14,7 +14,7 @@ export class Icons extends Component {
                                 iconimage={icon}
                                 category={category}
                                 setIcon={() => this.props.setIcon(icon)}
-                                savenewicon={() => this.props.savenewicon()}
+                                saveNewIcon={() => this.props.saveNewIcon()}
                             />
                     )
                 )
@@ -28,7 +28,7 @@ export class Icons extends Component {
                                 iconimage={icon}
                                 category={category}
                                 setIcon={() => this.props.setIcon(category.iconimage)}
-                                savenewicon={() => this.props.savenewicon()}
+                                saveNewIcon={() => this.props.saveNewIcon()}
                             />
                     )
                 )

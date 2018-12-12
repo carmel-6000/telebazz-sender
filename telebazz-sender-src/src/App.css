@@ -7,6 +7,11 @@
   border-color: #ac93b7;
 }
 
+.btn-secondary.dropdown-toggle {
+  /* width: 30px; */
+  height: auto;
+}
+
 .show>.btn-secondary.dropdown-toggle {
   color: #fff;
   background-color: #74637b;

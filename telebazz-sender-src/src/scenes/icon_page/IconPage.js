@@ -16,7 +16,7 @@ export class IconPage extends Component {
 
     this.filterCategory = this.filterCategory.bind(this);
     this.setIcon = this.setIcon.bind(this);
-    this.savenewicon = this.savenewicon.bind(this);
+    this.saveNewIcon = this.saveNewIcon.bind(this);
   }
 
   filterCategory(event) {
@@ -28,7 +28,7 @@ export class IconPage extends Component {
         categoryFilter: [...this.state.categoryFilter, categoryID]
       })
     } else {
-      let currentIndex = this.state.categoryFilter.findIndex(function (element) {
+      let currentIndex = this.state.categoryFilter.findIndex((element) => {
         return element === categoryID;
       });
 
@@ -42,7 +42,7 @@ export class IconPage extends Component {
     }
   }
 
-  savenewicon() {
+  saveNewIcon() {
     const key = this.props.match.params.id ? "EditMessage" : "NewMessage"; 
     let currmessST = localStorage.getItem(key);
     let currmessOB = JSON.parse(currmessST);
@@ -98,7 +98,7 @@ export class IconPage extends Component {
                 <Icons
                   categoryFilter={this.state.categoryFilter}
                   setIcon={this.setIcon}
-                  savenewicon={this.savenewicon}
+                  saveNewIcon={this.saveNewIcon}
                 />
               </div>
             </div>
@@ -108,7 +108,7 @@ export class IconPage extends Component {
             <button
               type="button"
               class="btn btn-info btn-lg btn-block"
-              onClick={this.savenewicon}>
+              onClick={this.saveNewIcon}>
               המשך
             </button>
           </Link>

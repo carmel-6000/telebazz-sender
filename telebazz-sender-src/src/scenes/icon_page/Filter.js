@@ -4,17 +4,17 @@ import './IconPage.css';
 export class Filter extends Component {
     render() {
         return (
-            <button class="dropdown-item" type="button" >
+            <div class="dropdown-item">
                 <input
                     class="checkboxer"
                     onChange={this.props.filterCategory}
                     id={this.props.category}
                     type="checkbox"
                 />
-                <label>
+                <label for={this.props.category}>
                     {this.props.category}
                 </label>
-            </button>
+            </div>
         );
     }
 }

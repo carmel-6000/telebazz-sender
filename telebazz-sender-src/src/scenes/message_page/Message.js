@@ -77,7 +77,16 @@ export class Message extends Component {
         this.setState({ isFav: !this.state.isFav });
     }
 
-    savedata = () => {
+    validateMessageData = () => {
+        if(!this.state.header|| !this.state.description) {
+            return;
+        }else{
+            window.location.href = "/";
+            this.saveMessageData();
+        }
+    }
+
+    saveMessageData = () => {
         let key = "messages";
         let msg = {
           header: this.state.header,
@@ -183,14 +192,14 @@ export class Message extends Component {
 
                 </div>
 
-                <Link to="/">
+                {/* <Link to="/"> */}
                     <button
                         type="submit"
                         class="btn btn-secondary btn-lg btn-block"
-                        onClick={this.savedata}>
+                        onClick={this.validateMessageData}>
                         {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                     </button>
-                </Link>
+                {/* </Link> */}
 
             </div>
 
