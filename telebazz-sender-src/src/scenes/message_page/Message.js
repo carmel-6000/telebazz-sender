@@ -77,48 +77,39 @@ export class Message extends Component {
         this.setState({ isFav: !this.state.isFav });
     }
 
-    validateMessageData = () => {
-        if(!this.state.header|| !this.state.description) {
-            return;
-        }else{
-            window.location.href = "/";
-            this.saveMessageData();
-        }
-    }
-
     saveMessageData = () => {
         let key = "messages";
         let msg = {
-          header: this.state.header,
-          description: this.state.description,
-          isFav: this.state.isFav,
-          itemID: this.state.itemID,
-          icon: this.state.icon,
-          color: this.state.color
+            header: this.state.header,
+            description: this.state.description,
+            isFav: this.state.isFav,
+            itemID: this.state.itemID,
+            icon: this.state.icon,
+            color: this.state.color
         }
         let messagesArr = [];
         let tempmessage = [];
         let messageST = localStorage.getItem(key);
-    
+
         if (messageST) {
-          let messagesOB = JSON.parse(messageST);
-          messagesArr = Object.keys(messagesOB).map(obj => messagesOB[obj]);
+            let messagesOB = JSON.parse(messageST);
+            messagesArr = Object.keys(messagesOB).map(obj => messagesOB[obj]);
         }
-    
+
         if (this.props.match.params.id) {
-          messagesArr.map(currmsg => {
-            if (currmsg.itemID == this.props.match.params.id) {
-              tempmessage.push(msg);
-            } else {
-              tempmessage.push(currmsg);
-            }
-          });
-          localStorage.setItem(key, JSON.stringify(tempmessage));
+            messagesArr.map(currmsg => {
+                if (currmsg.itemID == this.props.match.params.id) {
+                    tempmessage.push(msg);
+                } else {
+                    tempmessage.push(currmsg);
+                }
+            });
+            localStorage.setItem(key, JSON.stringify(tempmessage));
         } else {
-          messagesArr.push(msg);
-          localStorage.setItem(key, JSON.stringify(messagesArr));
+            messagesArr.push(msg);
+            localStorage.setItem(key, JSON.stringify(messagesArr));
         }
-      }
+    }
 
     render() {
         return (
@@ -162,7 +153,7 @@ export class Message extends Component {
                         <div class="col-11 text-center">
                             <i style={{ color: this.state.color }} class={"fas fa-" + this.state.icon + " fa-5x pull-left"} /> <br />
                             <br />
-                            <Link to={`/${this.state.key}/IconPage${this.state.key === "EditMessage" ? "/"+this.state.itemID : ""}`}>
+                            <Link to={`/${this.state.key}/IconPage${this.state.key === "EditMessage" ? "/" + this.state.itemID : ""}`}>
                                 <button
                                     type="button"
                                     class="btn btn-info ">
@@ -192,15 +183,21 @@ export class Message extends Component {
 
                 </div>
 
-                {/* <Link to="/"> */}
-                    <button
+                {this.state.header && this.state.description ?
+                    <Link to="/">
+                        <button
+                            type="submit"
+                            class="btn btn-secondary btn-lg btn-block"
+                            onClick={this.saveMessageData}>
+                            {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
+                        </button>
+                    </Link>
+                    : <button
+                        disabled
                         type="submit"
-                        class="btn btn-secondary btn-lg btn-block"
-                        onClick={this.validateMessageData}>
+                        class="btn btn-secondary btn-lg btn-block">
                         {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
-                    </button>
-                {/* </Link> */}
-
+                    </button>}
             </div>
 
         );
