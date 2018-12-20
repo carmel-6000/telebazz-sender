@@ -3,7 +3,7 @@ import { MorseCode, char_to_morse } from '../../encode_message/MorseCode.jsx';
 import { Link } from 'react-router-dom';
 //import data from '../data.json';
 // import { Nav } from "./Nav";
-import {Message} from "./Message";
+import { Message } from "./Message";
 import { NavBar } from '../message_page/NavBar.js';
 
 
@@ -27,7 +27,12 @@ export class HomePage extends Component {
       let messagesOB = JSON.parse(messageST);
       const messages = Object.keys(messagesOB).map(obj => messagesOB[obj]);
       this.setState({ messages });
-    }
+    } /*else {
+      window.NativeStorage.getItem(key,
+        (arr) => { this.setState({ messages: arr }) },
+        (error) => { console.log("homepage: cant access native storage: ", error) }
+      );
+    }*/
 
     localStorage.setItem("EditMessage", JSON.stringify(""));
     localStorage.setItem("NewMessage", JSON.stringify({}));

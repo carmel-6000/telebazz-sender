@@ -23,7 +23,7 @@ export class IconPage extends Component {
     let checked = event.target.checked;
     let categoryID = event.target.id;
 
-    if (checked === true && this.state.categoryFilter.includes(categoryID) === false) {
+    if (checked && !this.state.categoryFilter.includes(categoryID)) {
       this.setState({
         categoryFilter: [...this.state.categoryFilter, categoryID]
       })
@@ -43,7 +43,7 @@ export class IconPage extends Component {
   }
 
   saveNewIcon() {
-    const key = this.props.match.params.id ? "EditMessage" : "NewMessage"; 
+    const key = this.props.match.params.id ? "EditMessage" : "NewMessage";
     let currmessST = localStorage.getItem(key);
     let currmessOB = JSON.parse(currmessST);
 
@@ -55,7 +55,7 @@ export class IconPage extends Component {
 
     localStorage.setItem(key, JSON.stringify(currmessOB));
     this.setIcon("");
-    console.log("icon page" + localStorage.getItem(key)); 
+    console.log("icon page" + localStorage.getItem(key));
   }
 
   setIcon(chosenIcon) {
