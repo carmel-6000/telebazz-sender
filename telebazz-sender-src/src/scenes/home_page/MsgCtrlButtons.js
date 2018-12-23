@@ -17,7 +17,7 @@ export class MsgCtrlButtons extends Component {
 
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <Link to={`/EditMessage/${this.props.itemID}`}>
-                            <button onClick={() => this.props.editmessage(this.props.itemID, this.props.isFav)} className="dropdown-item btn btn-primary" >ערוך/י</button>
+                            <button onClick={() => this.props.editmessage(this.props.itemID)} className="dropdown-item btn btn-primary" >ערוך/י</button>
                         </Link>
 
                         <button onClick={(e) => this.props.deletemessage(e, this.props.itemID, this.props.isFav)} className="dropdown-item btn btn-primary" >מחק/י</button>

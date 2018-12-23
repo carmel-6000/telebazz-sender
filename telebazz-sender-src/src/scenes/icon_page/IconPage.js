@@ -70,9 +70,9 @@ export class IconPage extends Component {
         <NavBar history={this.props.history} />
         <div className="container">
           <h3>איזה אייקון תרצו להציג?</h3>
-          <div class="dropdown show text-center">
+          <div className="dropdown show text-center">
             <a
-              class="btn btn-secondary dropdown-toggle "
+              className="btn btn-secondary dropdown-toggle "
               href="#"
               role="button"
               id="dropdownMenuLink"
@@ -81,7 +81,7 @@ export class IconPage extends Component {
               aria-expanded="false">
               סנן
             </a>
-            <div class="dropdown-menu dropdown-menu-center " aria-labelledby="dropdownMenuLink">
+            <div className="dropdown-menu dropdown-menu-center " aria-labelledby="dropdownMenuLink">
               {Object.keys(iconsObj).map((category) =>
                 <Filter
                   isCategryChecked={this.state.isCategryChecked}
@@ -93,8 +93,8 @@ export class IconPage extends Component {
           </div>
           <br />
           <div className="scrollIcons">
-            <div class="row">
-              <div class="col-sm">
+            <div className="row">
+              <div className="col-sm">
                 <Icons
                   categoryFilter={this.state.categoryFilter}
                   setIcon={this.setIcon}
@@ -107,7 +107,7 @@ export class IconPage extends Component {
           <Link to={`${this.props.match.params.id ? `/EditMessage/${this.props.match.params.id}` : '/NewMessage'}`}>
             <button
               type="button"
-              class="btn btn-info btn-lg btn-block"
+              className="btn btn-info btn-lg btn-block"
               onClick={this.saveNewIcon}>
               המשך
             </button>

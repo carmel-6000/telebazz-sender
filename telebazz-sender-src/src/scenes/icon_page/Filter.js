@@ -4,9 +4,9 @@ import './IconPage.css';
 export class Filter extends Component {
     render() {
         return (
-            <div class="dropdown-item">
+            <div className="dropdown-item">
                 <input
-                    class="checkboxer"
+                    className="checkboxer"
                     onChange={this.props.filterCategory}
                     id={this.props.category}
                     type="checkbox"

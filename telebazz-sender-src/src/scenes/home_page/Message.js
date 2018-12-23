@@ -6,7 +6,11 @@ export class Message extends Component {
     render() {
         return (
             <div className="list-group">
-                <Link to="/SendPage">
+                <Link
+                    to={`/SendPage/${this.props.itemID}`}
+                    query={{ itemID: this.props.itemID }} //this is props passed to SendPage 
+                    onClick={() => this.props.sendMessage(this.props.itemID)}
+                >
                     <div className="list-group-item list-group-item-action flex-column align-items-start">
                         <div className="d-flex w-100 justify-content-between">
                             <i style={{ color: this.props.color }} className={"fas fa-" + this.props.icon + " fa-3x"} />

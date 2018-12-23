@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import char_to_morse from "./morse_code_dict.js";
+import char_to_morse from "../scenes/send_page/morse_code_dict.js";
 // import { Tone } from "./Tone.min.js";
 
 export class MorseCode extends Component {
@@ -9,23 +9,27 @@ export class MorseCode extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      _textMessageInput: "the users input", //need to change!!
-      _codeMessageArray: [],
-      _codeIsRunning: false, // Track whether morse code is running
-      _initialDelay: 0.1, // Initial delay before starting morse code sequence
+      textMessageInput: "the users input", //need to change!!
+      codeMessageArray: [],
+      codeIsRunning: false, // Track whether morse code is running
+      initialDelay: 0.1, // Initial delay before starting morse code sequence
 
       //tone times
-      _dotTime: 0.070,
-      _spaceTime: 0.49, //_dotTime*7 
-      _dashTime: 0.21,
-      _interElemTime: 0.090,
+      dotTime: 0.070,
+      spaceTime: 0.49, //dotTime*7 
+      dashTime: 0.21,
+      interElemTime: 0.090,
     };
   }
 
+  componentWillMount() {
+    this.setState({ textMessageInput: this.props.header });
+  }
+
   textMessageToMorse = () => {
-    let message = this.state._textMessageInput;
+    let message = this.state.textMessageInput;
     let messageUpper = message.toUpperCase();
-    let codeMessageArray = this.state._codeMessageArray;
+    let codeMessageArray = this.state.codeMessageArray;
     console.log("messageUpper: ", messageUpper);
 
     for (let i = 0; i < messageUpper.length; i++) {
@@ -33,7 +37,7 @@ export class MorseCode extends Component {
     }
 
     console.log("codeMessageArray: ", codeMessageArray);
-    this.setState({ _codeMessageArray: codeMessageArray });
+    this.setState({ codeMessageArray: codeMessageArray });
   }
 
   tone_updateProgress = (time, pos, totalLength) => {
@@ -71,13 +75,13 @@ export class MorseCode extends Component {
   }
 
   tone_fin = (time) => {
-    this.setState({ _codeIsRunning: false });
+    this.setState({ codeIsRunning: false });
   }
 
   generateSequence = () => {
-    let codeMessageArray = this.state._codeMessageArray;
+    let codeMessageArray = this.state.codeMessageArray;
     let seq = [];
-    let initialDelay = this.state._initialDelay; // Our current time in the morse code sequence
+    let initialDelay = this.state.initialDelay; // Our current time in the morse code sequence
     let pos = 0;
 
     for (let i = 0; i < codeMessageArray.length; i++) {
@@ -87,8 +91,8 @@ export class MorseCode extends Component {
       if (codeChar === ' ') {
         // Push codeChar space
         seq.push({ "time": initialDelay, "func": this.tone_word_space });
-        this.tone_word_space();
-        initialDelay += this.state._space_time;
+        // this.tone_word_space();
+        initialDelay += this.state.space_time;
       } else {
         // We have a morse code codeChar
         if (typeof codeChar == 'undefined') {
@@ -100,18 +104,20 @@ export class MorseCode extends Component {
           if (char === '.') {
             // Push a tone_dot
             seq.push({ "time": initialDelay, "func": this.tone_dot });
-            this.tone_dot();
-            initialDelay += this.state._dotTime;
+            // this.tone_dot();
+            initialDelay += this.state.dotTime;
+            console.log("initialDelay: ", initialDelay);
+
           } else if (char === '-') {
             // Push tone_dash
             seq.push({ "time": initialDelay, "func": this.tone_dash });
-            this.tone_dash();
-            initialDelay += this.state._dashTime;
+            // this.tone_dash();
+            initialDelay += this.state.dashTime;
           } else {
             console.log('Unexpected character in morse code message:', char);
           }
           // Add inter element pause between characters
-          initialDelay += this.state._interElemTime;
+          initialDelay += this.state.interElemTime;
           pos += 1;
           // Add update to progress bar
           seq.push({
@@ -119,13 +125,13 @@ export class MorseCode extends Component {
             "func": this.tone_updateProgress,
             "msg_char": pos
           });
-          this.tone_updateProgress();
-          console.log("seq: ", seq);
+          // this.tone_updateProgress();
+          // console.log("seq: ", seq);
         }
         // Add inter-letter space
         if (i < codeMessageArray.length - 1 && codeMessageArray[i + 1] !== ' ') {
           seq.push({ "time": initialDelay, "func": this.tone_letter_space });
-          this.tone_letter_space();
+          // this.tone_letter_space();
           initialDelay += this.state.space_time;
         }
       }
@@ -149,28 +155,28 @@ export class MorseCode extends Component {
 
   playMorseSequence = () => {
     console.log("playMorseSequence");
-    if (!this.state._codeIsRunning) {
+    if (!this.state.codeIsRunning) {
       //TODO - stopMorse()
 
-      this.setState({ _codeIsRunning: true });
+      this.setState({ codeIsRunning: true });
       this.textMessageToMorse();
 
-      let codeMessageArray = this.state._codeMessageArray;
+      let codeMessageArray = this.state.codeMessageArray;
       let totalLength = codeMessageArray.join('').length - 1;
 
       this.tone_updateProgress(totalLength);
       this.generateSequence();
     } else {
-      console.log("morse code is running: ", this.state._codeIsRunning);
+      console.log("morse code is running: ", this.state.codeIsRunning);
     }
   }
 
   clearCodeText = () => {
-    this.setState({ _codeIsRunning: false, _codeMessageArray: [] });
+    this.setState({ codeIsRunning: false, codeMessageArray: [] });
   }
 
   render() {
-    if (!this.state._codeIsRunning) {
+    if (!this.state.codeIsRunning) {
       return (
         <div>
           <button onClick={this.playMorseSequence}>play morse sequence</button>
@@ -180,8 +186,8 @@ export class MorseCode extends Component {
       return (
         <div>
           <button onClick={this.clearCodeText}>clear morse</button>
-          <p id="msg">{this.state._textMessageInput}</p>
-          <div id="morse">{this.state._codeMessageArray}</div>
+          <p id="msg">{this.state.textMessageInput}</p>
+          <div id="morse">{this.state.codeMessageArray}</div>
         </div>
       );
     }

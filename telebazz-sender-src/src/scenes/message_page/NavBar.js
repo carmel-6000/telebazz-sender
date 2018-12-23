@@ -42,7 +42,7 @@ export class NavBar extends Component {
                 <div
                   onClick={this.click}
                   className="text-light">
-                  <i class="fas fa-arrow-left" />
+                  <i className="fas fa-arrow-left" />
                 </div>
               </span>
             </button>

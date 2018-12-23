@@ -17,7 +17,7 @@ export class MessagePage extends Component {
             favatfirst: false,
             itemID: Date.now(),
             key: "", //"NewMessage" || "EditMessage"
-            messageExists: false
+            messageExists: false,
         };
     }
 
@@ -179,7 +179,7 @@ export class MessagePage extends Component {
         let messageExists = this.state.messageExists;
         //check if the message header already exists in the saved messages
         messagesArr.map(currmsg => {
-            if (currmsg.header === this.state.header) {
+            if (currmsg.header === this.state.header && this.state.key === "NewMessage") {
                 messageExists = true;
                 this.setState({ messageExists });
             }
@@ -193,14 +193,14 @@ export class MessagePage extends Component {
             //if the message has an id then it is an "EditMessage" 
             if (this.props.match.params.id) {
                 messagesArr.map(currmsg => {
-                    if (currmsg.itemID === this.props.match.params.id) {
+                    if (currmsg.itemID == this.props.match.params.id) {
                         tempmessage.push(msg);
                     } else {
                         tempmessage.push(currmsg);
                     }
                 });
                 localStorage.setItem(key, JSON.stringify(tempmessage));
-            } else {
+            } else { //new message
                 messagesArr.push(msg);
                 localStorage.setItem(key, JSON.stringify(messagesArr));
             }
@@ -240,16 +240,16 @@ export class MessagePage extends Component {
                     <br />
                     <br />
 
-                    <div class="row">
-                        <div class="col-11 text-center">
-                            <i style={{ color: this.state.color }} class={"fas fa-" + this.state.icon + " fa-5x pull-left"} />
+                    <div className="row">
+                        <div className="col-11 text-center">
+                            <i style={{ color: this.state.color }} className={"fas fa-" + this.state.icon + " fa-5x pull-left"} />
                             <br /><br />
 
                             <Link to={`/${this.state.key}/IconPage${this.state.key === "EditMessage" ? "/" + this.state.itemID : ""}`}>
                                 <button
                                     type="button"
-                                    class="btn btn-info ">
-                                    <i class="fas fa-pencil-alt"></i>
+                                    className="btn btn-info ">
+                                    <i className="fas fa-pencil-alt"></i>
                                     שנה/י אייקון
                                 </button>
                             </Link>
@@ -277,7 +277,7 @@ export class MessagePage extends Component {
                     <Link to="/">
                         <button
                             type="submit"
-                            class="btn btn-secondary btn-lg btn-block"
+                            className="btn btn-secondary btn-lg btn-block"
                             onClick={this.saveMessageData}>
                             {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                         </button>
@@ -285,7 +285,7 @@ export class MessagePage extends Component {
                     : <button
                         disabled
                         type="submit"
-                        class="btn btn-secondary btn-lg btn-block">
+                        className="btn btn-secondary btn-lg btn-block">
                         {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                     </button>
                 }

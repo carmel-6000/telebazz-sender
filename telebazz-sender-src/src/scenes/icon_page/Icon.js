@@ -8,9 +8,9 @@ export class Icon extends Component {
                 onClick={this.props.setIcon}
                 id={this.props.category}
                 type="button"
-                class="btn btn-default iconButton" >
+                className="btn btn-default iconButton" >
 
-                <i class={"fas fa-" + this.props.iconimage + " fa-3x"}></i>
+                <i className={"fas fa-" + this.props.iconimage + " fa-3x"}></i>
             </button>
         );
     }

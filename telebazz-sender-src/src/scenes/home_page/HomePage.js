@@ -54,17 +54,17 @@ export class HomePage extends Component {
     this.setState({ messages: updatemessages });
   }
 
-  editmessage(itemID, isFav) {
+  editmessage(itemID) {
     let key = "EditMessage";
-    let editmsg = {};
+    let editMsg = {};
 
-    this.state.messages.map(currmsg => {
-      if (currmsg.itemID === itemID) {
-        editmsg = Object.assign({}, currmsg);
+    this.state.messages.map(currMsg => {
+      if (currMsg.itemID === itemID) {
+        editMsg = Object.assign({}, currMsg);
       }
     });
 
-    localStorage.setItem(key, JSON.stringify(editmsg));
+    localStorage.setItem(key, JSON.stringify(editMsg));
   }
 
   changelocation(event, Itemid, isFav) {
@@ -84,6 +84,19 @@ export class HomePage extends Component {
 
     localStorage.setItem(key, JSON.stringify(updatemessages));
     this.setState({ messages: updatemessages });
+  }
+
+  sendMessage = (itemID) => {
+    let key = "SendMessage";
+    let sendMsg = {};
+
+    this.state.messages.map(currMsg => {
+      if (currMsg.itemID === itemID) {
+        sendMsg = Object.assign({}, currMsg);
+      }
+    });
+
+    localStorage.setItem(key, JSON.stringify(sendMsg));
   }
 
   render() {
@@ -106,6 +119,7 @@ export class HomePage extends Component {
             deletemessage={this.deletemessage}
             editmessage={this.editmessage}
             changelocation={this.changelocation}
+            sendMessage={this.sendMessage}
           />);
       } else {
         regmessages.push(
@@ -120,6 +134,7 @@ export class HomePage extends Component {
             deletemessage={this.deletemessage}
             editmessage={this.editmessage}
             changelocation={this.changelocation}
+            sendMessage={this.sendMessage}
           />);
       }
     });

@@ -36,9 +36,9 @@ class Icon extends Component {
     return (
       <button
         type="button"
-        class="btn btn-default "
+        className="btn btn-default "
         onClick={this.props.onClick}>
-        <i class={"fas fa-" + this.props.iconimage} />
+        <i className={"fas fa-" + this.props.iconimage} />
       </button>
     );
   }

@@ -18,7 +18,7 @@ class App extends Component {
           <Route exact path="/NewMessage/IconPage" component={IconPage} />
           <Route exact path="/EditMessage/:id" component={MessagePage} />
           <Route exact path="/EditMessage/IconPage/:id" component={IconPage} />
-          <Route exact path="/SendPage" component={SendPage} />
+          <Route exact path="/SendPage/:id" component={SendPage} />
         </Switch>
       </div>
     );
