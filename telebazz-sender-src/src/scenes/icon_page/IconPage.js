@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './IconPage.css';
 import { Link } from 'react-router-dom';
-import { NavBar } from '../message_page/NavBar.js';
+import { NavBar } from '../../NavBar.js';
 import iconsObj from './iconsObj';
 import { Filter } from './Filter';
 import { Icons } from './Icons';
@@ -67,7 +67,7 @@ export class IconPage extends Component {
   render() {
     return (
       <div>
-        <NavBar history={this.props.history} />
+        <NavBar pageName="IconPage" history={this.props.history} />
         <div className="container">
           <h3>איזה אייקון תרצו להציג?</h3>
           <div className="dropdown show text-center">

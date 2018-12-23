@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import char_to_morse from "./morse_code_dict";
 
 export class Morse extends Component {
+    // The Morse Code tone to use, xHz sine wave
+    // static osc = new window.Tone.Oscillator(8000, "sine").toMaster();
+
     constructor(props) {
         super(props);
         this.state = {
@@ -19,7 +22,7 @@ export class Morse extends Component {
 
         for (let i = 0; i < messageUpper.length; i++) {
             if (messageUpper[i] === " ") {
-                codeArray.push(<br/>);
+                codeArray.push(<br />);
             } else {
                 codeArray.push(char_to_morse[messageUpper[i]] + " ");
             }
@@ -46,7 +49,7 @@ export class Morse extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.playMorseSequence}>Send</button>
+                {this.playMorseSequence()}
                 <br />
                 <h1>{this.state.showCode ? this.state.codeArray : ""}</h1>
             </div>

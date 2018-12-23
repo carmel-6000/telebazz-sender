@@ -23,7 +23,6 @@ export class Message extends Component {
                                 changelocation={this.props.changelocation}
                             />
                         </div>
-                        <p className="mb-1"> {this.props.description} </p>
                     </div>
                 </Link>
             </div>

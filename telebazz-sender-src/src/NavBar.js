@@ -7,7 +7,7 @@ export class NavBar extends Component {
   }
 
   click() {
-    if (this.props.history.location.pathname.includes("IconPage")) {     
+    if (this.props.history.location.pathname.includes("IconPage")) {
       this.props.history.goBack();
     } else if (this.props.history.location.pathname.includes("NewMessage") || this.props.history.location.pathname.includes("EditMessage")) {
       this.props.history.replace("/");
@@ -17,11 +17,30 @@ export class NavBar extends Component {
   }
 
   render() {
+    let pageName = this.props.pageName;
+    let displayPageName = '';
+    switch (pageName) {
+      case "HomePage":
+        displayPageName = "Telebuzz";
+        break;
+      case "NewMessage":
+        displayPageName = "הודעה חדשה";
+        break;
+      case "EditMessage":
+        displayPageName = "עריכת הודעה";
+        break;
+      case "IconPage":
+        displayPageName = "בחירת אייקון";
+        break;
+      default:
+        displayPageName = "";
+    }
+
     if (this.props.history === undefined) {
       return (
         <div>
           <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
-            <a className="navbar-brand" href="#">Telebuzz</a>
+            <a className="navbar-brand" href="#">{displayPageName}</a>
           </nav>
         </div>
       );
@@ -29,7 +48,7 @@ export class NavBar extends Component {
       return (
         <div>
           <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
-            <div className="navbar-brand" href="#">Telebuzz</div>
+            <div className="navbar-brand" href="#">{displayPageName}</div>
             <button
               className="navbar-toggler leftNavbarToggler"
               type="button"

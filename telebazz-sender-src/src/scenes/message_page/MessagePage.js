@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './MessagePage.css';
 import { Link } from 'react-router-dom';
-import { NavBar } from "./NavBar";
+import { NavBar } from "../../NavBar";
 import { Colors } from "./Colors";
 import { FavoriteButton } from "./FavoriteButton";
 
@@ -12,7 +12,6 @@ export class MessagePage extends Component {
             header: '',
             color: 'null',
             isFav: false,
-            description: '',
             icon: 'ghost',
             favatfirst: false,
             itemID: Date.now(),
@@ -31,7 +30,6 @@ export class MessagePage extends Component {
         if (messageST) {
             let messageOB = JSON.parse(messageST);
             this.setState({
-                description: messageOB.description,
                 header: messageOB.header,
                 color: messageOB.color,
                 isFav: messageOB.isFav || this.state.isFav,
@@ -134,7 +132,6 @@ export class MessagePage extends Component {
 
     updateLocalStorage = () => {
         let messageOB = {
-            description: this.state.description,
             header: this.state.header,
             color: this.state.color,
             isFav: this.state.isFav,
@@ -161,7 +158,6 @@ export class MessagePage extends Component {
         let key = "messages";
         let msg = {
             header: this.state.header,
-            description: this.state.description,
             isFav: this.state.isFav,
             itemID: this.state.itemID,
             icon: this.state.icon,
@@ -211,34 +207,21 @@ export class MessagePage extends Component {
         return (
 
             <div>
-                <NavBar history={this.props.history} />
+                <NavBar pageName={this.state.key} history={this.props.history} />
 
                 <div className="container">
 
-                    <label for="message-title text-right">כותרת ההודעה:</label>
+                    <label for="message-title text-right">ההודעה:</label>
                     <input
                         type="text"
                         onChange={(event) => this.updateInfoEvent("header", event)}
                         className="form-control"
                         id="message-title"
-                        placeholder="הכנס/י כותרת להודעה"
+                        placeholder="הכנס/י הודעה"
                         value={this.state.header}
                     />
-                    <small className="form-text text-muted">על הכותרת להיות קצרה ותמציתית.</small>
-                    <br />
-
-                    <label for="message-description">תוכן ההודעה:</label>
-                    <input
-                        type="text"
-                        onChange={(event) => this.updateInfoEvent("description", event)}
-                        className="form-control"
-                        id="message-description"
-                        placeholder="תוכן ההודעה"
-                        value={this.state.description}
-                    />
-
-                    <br />
-                    <br />
+                    <small className="form-text text-muted">על ההודעה להיות קצרה ותמציתית.</small>
+                    <br /><br />
 
                     <div className="row">
                         <div className="col-11 text-center">
@@ -273,10 +256,11 @@ export class MessagePage extends Component {
 
                 </div>
 
-                {this.state.header && this.state.description ?
+                {this.state.header ?
                     <Link to="/">
                         <button
                             type="submit"
+                            id="add-edit-btn"
                             className="btn btn-secondary btn-lg btn-block"
                             onClick={this.saveMessageData}>
                             {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
@@ -285,6 +269,7 @@ export class MessagePage extends Component {
                     : <button
                         disabled
                         type="submit"
+                        id="add-edit-btn"
                         className="btn btn-secondary btn-lg btn-block">
                         {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                     </button>

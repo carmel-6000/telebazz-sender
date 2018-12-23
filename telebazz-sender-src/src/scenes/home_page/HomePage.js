@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { MorseCode, char_to_morse } from '../../encode_message/MorseCode.jsx';
 import { Link } from 'react-router-dom';
 //import data from '../data.json';
 // import { Nav } from "./Nav";
 import { Message } from "./Message";
-import { NavBar } from '../message_page/NavBar.js';
+import { NavBar } from '../../NavBar.js';
 
 
 export class HomePage extends Component {
@@ -113,7 +112,6 @@ export class HomePage extends Component {
             isFav={message.isFav}
             itemID={message.itemID}
             header={message.header}
-            description={message.description}
             icon={message.icon}
             color={message.color}
             deletemessage={this.deletemessage}
@@ -128,7 +126,6 @@ export class HomePage extends Component {
             isFav={message.isFav}
             itemID={message.itemID}
             header={message.header}
-            description={message.description}
             icon={message.icon}
             color={message.color}
             deletemessage={this.deletemessage}
@@ -142,7 +139,7 @@ export class HomePage extends Component {
     return (
       <div style={{ textAlign: "right" }}>
         {/* <Nav /> */}
-        <NavBar />
+        <NavBar pageName="HomePage"/>
         <p> מועדפים </p>
         <div style={{ textAlign: "center" }}>
           {favmessages}
