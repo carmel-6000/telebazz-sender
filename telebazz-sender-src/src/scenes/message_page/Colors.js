@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './MessagePage.css';
 
 let deafultcolors = [
   {
@@ -32,7 +33,7 @@ let deafultcolors = [
 export class Colors extends Component {
   render() {
     return (
-      <div>
+      <div className="colors">
         {deafultcolors.map((currcolor) =>
           <Color
             colorclass={currcolor.colorclass}
@@ -49,6 +50,7 @@ class Color extends Component {
   render() {
     return (
       <button
+        id="color"
         type="button"
         onClick={this.props.onclicker}
         className={"btn btn-circle btn-" + this.props.colorclass}

@@ -16,7 +16,7 @@ export class MessagePage extends Component {
             favatfirst: false,
             itemID: Date.now(),
             key: "", //"NewMessage" || "EditMessage"
-            messageExists: false,
+            messageExists: false
         };
     }
 
@@ -240,17 +240,24 @@ export class MessagePage extends Component {
                     </div>
 
                     {/* the color picker */}
-                    <input
-                        type="color"
-                        className="btn-circle"
-                        rgba
-                        value={this.state.color}
-                        onChange={(event) => this.updateInfoEvent("color", event)}
-                    />
-                    <br />
 
-                    <Colors updatecolor={(color) => this.updateInfoValue("color", color)} />
+                    <div className="colors-container">
+                        <Colors updatecolor={(color) => this.updateInfoValue("color", color)} />
+
+                        <input
+                            id="color-picker"
+                            type="color"
+                            className="btn-circle"
+                            rgba
+                            value={this.state.color}
+                            onChange={(event) => this.updateInfoEvent("color", event)}
+                        />
+
+                        <br />
+                    </div>
                     <small className="form-text text-muted text-center ">ביכולתך לבחור בצבע מוכן מראש או לחילופין לבחור צבע מותאם אישית.</small>
+
+                    <br />
 
                     <FavoriteButton favbutt={this.state.isFav} onChange={this.addtofavorite} />
 

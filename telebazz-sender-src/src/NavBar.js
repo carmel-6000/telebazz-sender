@@ -17,6 +17,7 @@ export class NavBar extends Component {
   }
 
   render() {
+    //define the name of the page to show on the top navigation bar
     let pageName = this.props.pageName;
     let displayPageName = '';
     switch (pageName) {
