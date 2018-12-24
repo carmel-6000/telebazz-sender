@@ -87,10 +87,6 @@ input[type="color"]::-webkit-color-swatch {
   padding: 0;
 }
 
-/* #color-picker{
-  background-image: url('../../images/color-picker.jpg');
-} */
-
 .colors-container{
   padding:10% 10% 2% 10%;
   display: -webkit-inline-box;
