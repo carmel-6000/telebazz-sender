@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import './MessagePage.css';
 
 export class FavoriteButton extends Component {
 
   render() {
     return (
+      // <div>
+      //   <button className="add-to-favorites">הוספה למועדפים:</button>
+      // </div>
       <div className="custom-control custom-checkbox">
         <input
           type="checkbox"
@@ -15,7 +19,10 @@ export class FavoriteButton extends Component {
         <label
           className="custom-control-label pull-right"
           for="defaultUnchecked">
-          הוספה למועדפים:
+      <p className="somthing">
+      הוספה למועדפים:
+
+      </p>
         </label>
       </div>
     );

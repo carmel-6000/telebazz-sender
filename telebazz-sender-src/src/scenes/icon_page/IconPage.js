@@ -79,7 +79,7 @@ export class IconPage extends Component {
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false">
-              סנן
+              סנן/י
             </a>
             <div className="dropdown-menu dropdown-menu-center " aria-labelledby="dropdownMenuLink">
               {Object.keys(iconsObj).map((category) =>

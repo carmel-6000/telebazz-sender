@@ -5,7 +5,7 @@ export class MsgCtrlButtons extends Component {
     render() {
         return (
             <div>
-                <div className="dropdown">
+                <div className="dropdown-ctrl-message">
                     <button
                         className="btn btn-secondary dropdown-toggle"
                         type="button"

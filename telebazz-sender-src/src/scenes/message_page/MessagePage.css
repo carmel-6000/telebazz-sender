@@ -16,6 +16,13 @@
   left: 0 !important;
 }
 
+.custom-control-label::before, 
+.custom-control-label::after {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: -8px;
+}
+
 input[type="color"] {
 	-webkit-appearance: none;
   border: none;
@@ -43,18 +50,54 @@ input[type="color"]::-webkit-color-swatch {
   border-radius: 50%;
 }
 
-#add-edit-btn{
+/**/
+#color-picker-img {
+  height: 25px;
+  width: 25px;
+  object-fit: cover;
   position: absolute;
-  bottom: 0;
 }
 
-#color-picker{
-  background-image: url('../../images/color-picker.png');
+#color-picker { 
+  /* removes default styling from input color element */
+  padding: 0;
+  border: none; 
+  /* makes input (color swatch) 100% size of container */
+  /* position: absolute; */
+  width: 25px; 
+  height: 25px;
+  mix-blend-mode: hue;
+  cursor: pointer;
 }
+
+/* removes default styling from input color element */
+::-webkit-color-swatch {
+  border: none;
+}
+
+::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+::-moz-color-swatch,
+::-moz-focus-inner {
+  border: none;
+}
+
+::-moz-focus-inner {
+  padding: 0;
+}
+/**/
+
+/* #color-picker{
+  background-image: url('../../images/color-picker.jpg');
+} */
 
 .colors-container{
-  padding:10% 10%;
+  padding:10% 10% 2% 10%;
   display: -webkit-inline-box;
+  display: flex;
+  align-items: center;
 }
 
 .colors{
@@ -64,3 +107,14 @@ input[type="color"]::-webkit-color-swatch {
 #color{
   margin-left: 2%;
 }
+/* 
+.add-to-favorites{
+  position: relative;
+  width: 100%;
+  background-color: #4CAF50;
+  border: none;
+  color: #FFFFFF;
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+} */

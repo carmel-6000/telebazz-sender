@@ -221,7 +221,7 @@ export class MessagePage extends Component {
                         value={this.state.header}
                     />
                     <small className="form-text text-muted">על ההודעה להיות קצרה ותמציתית.</small>
-                    <br /><br />
+                    <br />
 
                     <div className="row">
                         <div className="col-11 text-center">
@@ -243,20 +243,21 @@ export class MessagePage extends Component {
 
                     <div className="colors-container">
                         <Colors updatecolor={(color) => this.updateInfoValue("color", color)} />
-
-                        <input
-                            id="color-picker"
-                            type="color"
-                            className="btn-circle"
-                            rgba
-                            value={this.state.color}
-                            onChange={(event) => this.updateInfoEvent("color", event)}
-                        />
-
-                        <br />
+                        <div>
+                            <img
+                                id="color-picker-img"
+                                src="/src/images/color-picker.jpg"
+                            />
+                            <input
+                                id="color-picker"
+                                className="btn-circle"
+                                onChange={(event) => this.updateInfoEvent("color", event)}
+                                type="color"
+                            />
+                        </div>
                     </div>
                     <small className="form-text text-muted text-center ">ביכולתך לבחור בצבע מוכן מראש או לחילופין לבחור צבע מותאם אישית.</small>
-
+                    
                     <br />
 
                     <FavoriteButton favbutt={this.state.isFav} onChange={this.addtofavorite} />
@@ -267,8 +268,7 @@ export class MessagePage extends Component {
                     <Link to="/">
                         <button
                             type="submit"
-                            id="add-edit-btn"
-                            className="btn btn-secondary btn-lg btn-block"
+                            className="btn btn-secondary btn-lg fixed-bottom btn-block"
                             onClick={this.saveMessageData}>
                             {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                         </button>
@@ -276,8 +276,7 @@ export class MessagePage extends Component {
                     : <button
                         disabled
                         type="submit"
-                        id="add-edit-btn"
-                        className="btn btn-secondary btn-lg btn-block">
+                        className="btn btn-secondary btn-lg fixed-bottom btn-block">
                         {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                     </button>
                 }
