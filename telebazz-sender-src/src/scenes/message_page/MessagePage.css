@@ -109,3 +109,8 @@ input[type="color"]::-webkit-color-swatch {
 .add-to-favorites-lable {
   margin-top: 3.5%;
 }
+
+.color-picker-container{
+  width: 25px;
+  height: 25px;
+}

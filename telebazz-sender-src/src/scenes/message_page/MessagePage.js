@@ -244,18 +244,10 @@ export class MessagePage extends Component {
                     <div className="colors-container">
                         <Colors updatecolor={(color) => this.updateInfoValue("color", color)} />
 
-                        {/* <input
-                            id="color-picker"
-                            type="color"
-                            className="btn-circle"
-                            rgba
-                            value={this.state.color}
-                            onChange={(event) => this.updateInfoEvent("color", event)}
-                        /> */}
-                        <div>
+                        <div className="color-picker-container">
                             <img
                                 id="color-picker-img"
-                                src="/src/images/color-picker.jpg"
+                                src={require('../../images/color-picker.png')}
                             />
                             <input
                                 id="color-picker"
@@ -267,7 +259,7 @@ export class MessagePage extends Component {
                         </div>
                     </div>
                     <small className="form-text text-muted text-center ">ביכולתך לבחור בצבע מוכן מראש או לחילופין לבחור צבע מותאם אישית.</small>
-                    
+
                     <br />
 
                     <FavoriteButton favbutt={this.state.isFav} onChange={this.addtofavorite} />
