@@ -147,7 +147,7 @@ export class HomePage extends Component {
 
         <br />
 
-        <p> עוד הודעות </p>
+        <p> ההודעות שלי </p>
         <div style={{ textAlign: "center" }} >
           {regmessages}
         </div>
