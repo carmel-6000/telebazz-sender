@@ -243,6 +243,15 @@ export class MessagePage extends Component {
 
                     <div className="colors-container">
                         <Colors updatecolor={(color) => this.updateInfoValue("color", color)} />
+
+                        {/* <input
+                            id="color-picker"
+                            type="color"
+                            className="btn-circle"
+                            rgba
+                            value={this.state.color}
+                            onChange={(event) => this.updateInfoEvent("color", event)}
+                        /> */}
                         <div>
                             <img
                                 id="color-picker-img"
@@ -251,6 +260,7 @@ export class MessagePage extends Component {
                             <input
                                 id="color-picker"
                                 className="btn-circle"
+                                value={this.state.color}
                                 onChange={(event) => this.updateInfoEvent("color", event)}
                                 type="color"
                             />
@@ -268,7 +278,7 @@ export class MessagePage extends Component {
                     <Link to="/">
                         <button
                             type="submit"
-                            className="btn btn-secondary btn-lg fixed-bottom btn-block"
+                            className="btn btn-secondary btn-lg btn-block fixed-bottom"
                             onClick={this.saveMessageData}>
                             {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                         </button>
@@ -276,7 +286,7 @@ export class MessagePage extends Component {
                     : <button
                         disabled
                         type="submit"
-                        className="btn btn-secondary btn-lg fixed-bottom btn-block">
+                        className="btn btn-secondary btn-lg btn-block fixed-bottom">
                         {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                     </button>
                 }

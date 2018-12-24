@@ -19,10 +19,9 @@ export class FavoriteButton extends Component {
         <label
           className="custom-control-label pull-right"
           for="defaultUnchecked">
-      <p className="somthing">
-      הוספה למועדפים:
-
-      </p>
+          <p className="add-to-favorites-lable">
+            הוספה למועדפים:
+          </p>
         </label>
       </div>
     );

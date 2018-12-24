@@ -33,6 +33,9 @@ export class NavBar extends Component {
       case "IconPage":
         displayPageName = "בחירת אייקון";
         break;
+      case "SendPage":
+        displayPageName = "שולח הודעה";
+        break;
       default:
         displayPageName = "";
     }
