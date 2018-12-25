@@ -15,35 +15,38 @@ export class IconPage extends Component {
       showMenu: false
     }
 
-    this.filterCategory = this.filterCategory.bind(this);
+    // this.filterCategory = this.filterCategory.bind(this);
     this.setIcon = this.setIcon.bind(this);
     this.saveNewIcon = this.saveNewIcon.bind(this);
     this.showMenu = this.showMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
   }
 
-  filterCategory(event) {
-    let checked = event.target.checked;
-    let categoryID = event.target.id;
-
-    if (checked && !this.state.categoryFilter.includes(categoryID)) {
-      this.setState({
-        categoryFilter: [...this.state.categoryFilter, categoryID]
-      })
-    } else {
-      let currentIndex = this.state.categoryFilter.findIndex((element) => {
-        return element === categoryID;
-      });
-
-      if (currentIndex < 0) {
-        return;
-      } else {
-        let updatedCategoryFilter = this.state.categoryFilter;
-        updatedCategoryFilter.splice(currentIndex, 1);
-        this.setState({ categoryFilter: updatedCategoryFilter });
-      }
-    }
+  updateCategoryFilter = (categoryFilter) => {
+    this.setState({categoryFilter});
   }
+  // filterCategory(event) {
+  //   let checked = event.target.checked;
+  //   let categoryID = event.target.id;
+
+  //   if (checked && !this.state.categoryFilter.includes(categoryID)) {
+  //     this.setState({
+  //       categoryFilter: [...this.state.categoryFilter, categoryID]
+  //     })
+  //   } else {
+  //     let currentIndex = this.state.categoryFilter.findIndex((element) => {
+  //       return element === categoryID;
+  //     });
+
+  //     if (currentIndex < 0) {
+  //       return;
+  //     } else {
+  //       let updatedCategoryFilter = this.state.categoryFilter;
+  //       updatedCategoryFilter.splice(currentIndex, 1);
+  //       this.setState({ categoryFilter: updatedCategoryFilter });
+  //     }
+  //   }
+  // }
 
   saveNewIcon() {
     const key = this.props.match.params.id ? "EditMessage" : "NewMessage";
@@ -76,13 +79,10 @@ export class IconPage extends Component {
   }
 
   closeMenu(event) {
-
     if (!this.dropdownMenu.contains(event.target)) {
-
       this.setState({ showMenu: false }, () => {
         document.removeEventListener('click', this.closeMenu);
       });
-
     }
   }
 
@@ -109,7 +109,8 @@ export class IconPage extends Component {
                 >
                   {Object.keys(iconsObj).map((category) =>
                     <Filter
-                      filterCategory={this.filterCategory}
+                      categoryFilter={this.state.categoryFilter}
+                      updateCategoryFilter={this.updateCategoryFilter}
                       category={category}
                     />
                   )}
