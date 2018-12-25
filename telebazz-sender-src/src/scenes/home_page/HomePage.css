@@ -2,12 +2,11 @@
     margin-top: 4%;
 }
 
-#dropdownMenuButton {
+#dropdownMessageCtrl {
     margin-top: 28%;
 }
 
 .dropdown-message-menu {
-    direction: ltr;
     background-color: blue; 
     position: fixed;
 }

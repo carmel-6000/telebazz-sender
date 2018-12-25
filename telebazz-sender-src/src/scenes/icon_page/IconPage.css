@@ -1,21 +1,23 @@
 
 .dropdown-item {
     text-align:center !important ;
-    padding: 6% 0%;
+    padding-left: 50%;
+    padding-top: 4%;
+    padding-bottom: 4%;
 }
 
-.checkboxer {
+/* .checkboxer {
     color: blue;
     margin-left: 7%;
-}
+} */
 
-.dropdown-menu-center {
+/* .dropdown-menu-center {
     left: 50% !important;
     right: auto !important;
     text-align: center !important;
     transform: translate(-50%, 0) !important;
     top: 120% !important;
-}
+} */
 
 .iconButton {
     padding: 5%;
@@ -31,4 +33,30 @@
     overflow: auto;
     align-items: center;
     padding: 0% 5%;
+}
+
+.custom-control-label {
+    left: 0 !important;
+}
+  
+.custom-control-label::before, 
+.custom-control-label::after {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: -8px;
+}
+
+.dropdown-filter-menu {
+    background-color: rgb(255, 255, 255); 
+    position: fixed;
+    z-index: 1;
+    transform: translate(-50%, 0) !important;
+    left: 50%;
+    width: 35%;
+    border: 1px solid rgb(218, 210, 210);
+    border-radius: 2%;
+}
+
+.icon-name {
+    margin-top: 4%;
 }

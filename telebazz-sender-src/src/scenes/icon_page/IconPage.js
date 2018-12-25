@@ -11,12 +11,15 @@ export class IconPage extends Component {
     super(props);
     this.state = {
       categoryFilter: [],
-      chosenIcon: ""
+      chosenIcon: "",
+      showMenu: false
     }
 
     this.filterCategory = this.filterCategory.bind(this);
     this.setIcon = this.setIcon.bind(this);
     this.saveNewIcon = this.saveNewIcon.bind(this);
+    this.showMenu = this.showMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
   }
 
   filterCategory(event) {
@@ -64,6 +67,25 @@ export class IconPage extends Component {
     );
   }
 
+  showMenu(event) {
+    event.preventDefault();
+
+    this.setState({ showMenu: true }, () => {
+      document.addEventListener('click', this.closeMenu);
+    });
+  }
+
+  closeMenu(event) {
+
+    if (!this.dropdownMenu.contains(event.target)) {
+
+      this.setState({ showMenu: false }, () => {
+        document.removeEventListener('click', this.closeMenu);
+      });
+
+    }
+  }
+
   render() {
     return (
       <div>
@@ -71,25 +93,48 @@ export class IconPage extends Component {
         <div className="container">
           <h3>איזה אייקון תרצו להציג?</h3>
           <div className="dropdown show text-center">
-            <a
+            <div>
+              <button
+                className="btn btn-secondary dropdown-toggle "
+                id="dropdownFilterIcon"
+                onClick={this.showMenu}>
+                סנן/י
+              </button>
+
+              {this.state.showMenu
+                ? <div className="dropdown-filter-menu"
+                  ref={(element) => {
+                    this.dropdownMenu = element;
+                  }}
+                >
+                  {Object.keys(iconsObj).map((category) =>
+                    <Filter
+                      filterCategory={this.filterCategory}
+                      category={category}
+                    />
+                  )}
+                </div>
+
+                : null
+              }
+            </div>
+            {/* <button
               className="btn btn-secondary dropdown-toggle "
-              href="#"
-              role="button"
               id="dropdownMenuLink"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false">
               סנן/י
-            </a>
+            </button>
             <div className="dropdown-menu dropdown-menu-center " aria-labelledby="dropdownMenuLink">
               {Object.keys(iconsObj).map((category) =>
                 <Filter
-                  isCategryChecked={this.state.isCategryChecked}
+                  // isCategryChecked={this.state.isCategryChecked}
                   filterCategory={this.filterCategory}
                   category={category}
                 />
               )}
-            </div>
+            </div> */}
           </div>
           <br />
           <div className="scrollIcons">
