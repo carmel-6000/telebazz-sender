@@ -10,3 +10,9 @@
     background-color: blue; 
     position: fixed;
 }
+
+.main-title-messages {
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 // import { Nav } from "./Nav";
 import { Message } from "./Message";
 import { NavBar } from '../../NavBar.js';
-
+import "./HomePage.css";
 
 export class HomePage extends Component {
   constructor(props) {
@@ -76,9 +76,7 @@ export class HomePage extends Component {
       updatemessages.push(msg);
       if (msg.itemID === Itemid) {
         updatemessages[updatemessages.length - 1].isFav = !isFav;
-
       }
-      //tempmessage=Object.assign({},currMg);
     });
 
     localStorage.setItem(key, JSON.stringify(updatemessages));
@@ -140,14 +138,12 @@ export class HomePage extends Component {
       <div style={{ textAlign: "right" }}>
         {/* <Nav /> */}
         <NavBar pageName="HomePage"/>
-        <p> מועדפים </p>
+        <p className="main-title-messages"> מועדפים </p>
         <div style={{ textAlign: "center" }}>
           {favmessages}
         </div>
 
-        <br />
-
-        <p> ההודעות שלי </p>
+        <p className="main-title-messages"> ההודעות שלי </p>
         <div style={{ textAlign: "center" }} >
           {regmessages}
         </div>

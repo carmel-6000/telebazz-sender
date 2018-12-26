@@ -23,30 +23,8 @@ export class IconPage extends Component {
   }
 
   updateCategoryFilter = (categoryFilter) => {
-    this.setState({categoryFilter});
+    this.setState({ categoryFilter });
   }
-  // filterCategory(event) {
-  //   let checked = event.target.checked;
-  //   let categoryID = event.target.id;
-
-  //   if (checked && !this.state.categoryFilter.includes(categoryID)) {
-  //     this.setState({
-  //       categoryFilter: [...this.state.categoryFilter, categoryID]
-  //     })
-  //   } else {
-  //     let currentIndex = this.state.categoryFilter.findIndex((element) => {
-  //       return element === categoryID;
-  //     });
-
-  //     if (currentIndex < 0) {
-  //       return;
-  //     } else {
-  //       let updatedCategoryFilter = this.state.categoryFilter;
-  //       updatedCategoryFilter.splice(currentIndex, 1);
-  //       this.setState({ categoryFilter: updatedCategoryFilter });
-  //     }
-  //   }
-  // }
 
   saveNewIcon() {
     const key = this.props.match.params.id ? "EditMessage" : "NewMessage";
@@ -65,9 +43,7 @@ export class IconPage extends Component {
   }
 
   setIcon(chosenIcon) {
-    this.setState({ chosenIcon },
-      console.log("after setState: ", this.state.chosenIcon)
-    );
+    this.setState({ chosenIcon });
   }
 
   showMenu(event) {
@@ -119,35 +95,20 @@ export class IconPage extends Component {
                 : null
               }
             </div>
-            {/* <button
-              className="btn btn-secondary dropdown-toggle "
-              id="dropdownMenuLink"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false">
-              סנן/י
-            </button>
-            <div className="dropdown-menu dropdown-menu-center " aria-labelledby="dropdownMenuLink">
-              {Object.keys(iconsObj).map((category) =>
-                <Filter
-                  // isCategryChecked={this.state.isCategryChecked}
-                  filterCategory={this.filterCategory}
-                  category={category}
-                />
-              )}
-            </div> */}
           </div>
+
           <br />
+
           <div className="scrollIcons">
-            <div className="row">
-              <div className="col-sm">
+            {/* <div className="row"> */}
+              {/* <div className="col-sm"> */}
                 <Icons
                   categoryFilter={this.state.categoryFilter}
                   setIcon={this.setIcon}
                   saveNewIcon={this.saveNewIcon}
                 />
-              </div>
-            </div>
+              {/* </div> */}
+            {/* </div> */}
           </div>
           <br />
           <Link to={`${this.props.match.params.id ? `/EditMessage/${this.props.match.params.id}` : '/NewMessage'}`}>
