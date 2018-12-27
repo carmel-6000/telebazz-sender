@@ -104,8 +104,6 @@ export class HomePage extends Component {
     localStorage.setItem(key, JSON.stringify(sendMsg));
   }
 
-
-
   render() {
     let favmessages = [];
     let regmessages = [];
@@ -113,38 +111,27 @@ export class HomePage extends Component {
 
     msgkeys.forEach(key => {
       let message = this.state.messages[key];
+
+      let getMessage = (
+        <Message
+          key={key}
+          isFav={message.isFav}
+          itemID={message.itemID}
+          header={message.header}
+          icon={message.icon}
+          color={message.color}
+          deletemessage={this.deletemessage}
+          editmessage={this.editmessage}
+          changelocation={this.changelocation}
+          sendMessage={this.sendMessage}
+        // codeRunning={this.state.codeRunning}
+        // setCodeRunning={this.setCodeRunning}
+        />);
+
       if (message.isFav) {
-        favmessages.push(
-          <Message
-            key={key}
-            isFav={message.isFav}
-            itemID={message.itemID}
-            header={message.header}
-            icon={message.icon}
-            color={message.color}
-            deletemessage={this.deletemessage}
-            editmessage={this.editmessage}
-            changelocation={this.changelocation}
-            sendMessage={this.sendMessage}
-            // codeRunning={this.state.codeRunning}
-            // setCodeRunning={this.setCodeRunning}
-          />);
+        favmessages.push(getMessage);
       } else {
-        regmessages.push(
-          <Message
-            key={key}
-            isFav={message.isFav}
-            itemID={message.itemID}
-            header={message.header}
-            icon={message.icon}
-            color={message.color}
-            deletemessage={this.deletemessage}
-            editmessage={this.editmessage}
-            changelocation={this.changelocation}
-            sendMessage={this.sendMessage}
-            // codeRunning={this.state.codeRunning}
-            // setCodeRunning={this.setCodeRunning}
-          />);
+        regmessages.push(getMessage);
       }
     });
 
@@ -152,16 +139,27 @@ export class HomePage extends Component {
       <div style={{ textAlign: "right" }}>
         {/* <Nav /> */}
         <NavBar pageName="HomePage" />
-        <p className="main-title-messages"> מועדפים </p>
-        <div style={{ textAlign: "center" }}>
-          {favmessages}
-        </div>
 
-        <p className="main-title-messages"> ההודעות שלי </p>
-        <div style={{ textAlign: "center" }} >
-          {regmessages}
-        </div>
+        {favmessages[0] ?
+          <div>
+            <p className="main-title-messages"> מועדפים </p>
+            <div style={{ textAlign: "center" }}>
+              {favmessages}
+            </div>
+          </div>
+          : <div></div>
+        }
 
+        {regmessages[0] ?
+          <div>
+            <p className="main-title-messages"> ההודעות שלי </p>
+            <div style={{ textAlign: "center" }} >
+              {regmessages}
+            </div>
+          </div>
+          : <div></div>
+        }
+        
         <div className="container">
           <Link to="/NewMessage">
             <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף/י הודעה</button>

@@ -58,7 +58,8 @@ export class Morse extends Component {
             // if (messageUpper[i] === " ") {
             //     codeArray.push(<br />);
             // } else {
-            codeArray.push(char_to_morse[messageUpper[i]]); //+ " ");
+            codeArray.push(char_to_morse[messageUpper[i]]);
+            codeArray.push(" ");
             // }
         }
         console.log("codeArray: ", codeArray);
@@ -93,6 +94,8 @@ export class Morse extends Component {
                     // Add inter element pause between characters
                     t += interElemTime;
                 }
+
+
             }
         }
     }
