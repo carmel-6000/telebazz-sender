@@ -10,7 +10,8 @@ export class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: ''
+      messages: '',
+      // codeRunning: false
     }
 
     this.deletemessage = this.deletemessage.bind(this);
@@ -83,7 +84,13 @@ export class HomePage extends Component {
     this.setState({ messages: updatemessages });
   }
 
+  // setCodeRunning = (value) => {
+  //   localStorage.setItem("codeRunning",value);
+  // }
+
   sendMessage = (itemID) => {
+    // this.setCodeRunning(true);
+    // console.log("sendMessage: ", this.state.codeRunning);
     let key = "SendMessage";
     let sendMsg = {};
 
@@ -95,6 +102,8 @@ export class HomePage extends Component {
 
     localStorage.setItem(key, JSON.stringify(sendMsg));
   }
+
+
 
   render() {
     let favmessages = [];
@@ -116,6 +125,8 @@ export class HomePage extends Component {
             editmessage={this.editmessage}
             changelocation={this.changelocation}
             sendMessage={this.sendMessage}
+            // codeRunning={this.state.codeRunning}
+            // setCodeRunning={this.setCodeRunning}
           />);
       } else {
         regmessages.push(
@@ -130,6 +141,8 @@ export class HomePage extends Component {
             editmessage={this.editmessage}
             changelocation={this.changelocation}
             sendMessage={this.sendMessage}
+            // codeRunning={this.state.codeRunning}
+            // setCodeRunning={this.setCodeRunning}
           />);
       }
     });
@@ -137,7 +150,7 @@ export class HomePage extends Component {
     return (
       <div style={{ textAlign: "right" }}>
         {/* <Nav /> */}
-        <NavBar pageName="HomePage"/>
+        <NavBar pageName="HomePage" />
         <p className="main-title-messages"> מועדפים </p>
         <div style={{ textAlign: "center" }}>
           {favmessages}

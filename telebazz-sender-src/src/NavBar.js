@@ -43,7 +43,8 @@ export class NavBar extends Component {
     if (this.props.history === undefined) {
       return (
         <div>
-          <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
+          <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation">
+           {/* data-sidebarClass="navbar-dark bg-dark"> */}
             <a className="navbar-brand" href="#">{displayPageName}</a>
           </nav>
         </div>
@@ -51,7 +52,8 @@ export class NavBar extends Component {
     } else {
       return (
         <div>
-          <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" data-sidebarClass="navbar-dark bg-dark">
+          <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" >
+          {/* data-sidebarClass="navbar-dark bg-dark"> */}
             <div className="navbar-brand" href="#">{displayPageName}</div>
             <button
               className="navbar-toggler leftNavbarToggler"

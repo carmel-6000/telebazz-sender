@@ -10,6 +10,7 @@ let spaceTime = dotTime;
 
 //initial delay before starting playing the morse code
 let initialDelay = 0.1;
+let codeArray = [];
 
 export class Morse extends Component {
     // The Morse Code tone to use, xHz sine wave
@@ -19,12 +20,13 @@ export class Morse extends Component {
         super(props);
         this.state = {
             textInput: this.props.header,
-            codeArray: [],
-            running: false // Track whether morse code is running
+            // codeArray: [],
+            // running: false // Track whether morse code is running
         }
 
         this.osc = new window.Tone.Oscillator(8000, "sine").toMaster();
         console.log("osc", this.osc);
+        //console.log("tone",window.Tone.Transport);
     }
 
     toneChar = (time, char) => {
@@ -36,18 +38,20 @@ export class Morse extends Component {
         }
         this.osc.start(time);
         this.osc.stop(time + charTime);
-        console.log("char", char, "time", time, "charTime", charTime);
+        // window.Tone.Transport.start();
+        // console.log("char", char, "time", time, "charTime", charTime);
     }
 
     stopMorse = () => {
+        codeArray = [];
         window.Tone.Transport.cancel();
-        this.setState({running: false, codeArray: []});
+        // this.setState({running: false, codeArray: []});
     }
 
     textToMorse = () => {
         let message = this.state.textInput;
         let messageUpper = message.toUpperCase();
-        let codeArray = this.state.codeArray;
+        // let codeArray = this.state.codeArray;
         console.log("messageUpper: ", messageUpper);
 
         for (let i = 0; i < messageUpper.length; i++) {
@@ -57,18 +61,18 @@ export class Morse extends Component {
             codeArray.push(char_to_morse[messageUpper[i]]); //+ " ");
             // }
         }
+        console.log("codeArray: ", codeArray);
 
-        this.setState({ codeArray });
+        // this.setState({ codeArray });
     }
 
     generateSequence = () => {
         let t = initialDelay; //the current time in the morse code sequence
-        let codeArray = this.state.codeArray;
+        // let codeArray = this.state.codeArray;
 
         for (let i = 0; i < codeArray.length; i++) {
             let codeChar = codeArray[i]; //morse char (dash and dots)
             if (codeChar === " ") {
-                console.log("t", t, "spaceTime", spaceTime);
                 t += spaceTime;
             } else {
                 for (let j = 0; j < codeChar.length; j++) {
@@ -94,14 +98,14 @@ export class Morse extends Component {
     }
 
     playMorseSequence = () => {
-        if (this.state.running) {
-            return;
-        }
+        // if (this.props.codeRunning) {
+        //     return;
+        // }
 
         // clear previous
         this.stopMorse();
 
-        this.setState({ running: true });
+        // this.setState({ running: true });
         this.textToMorse();
 
         //to update the progress bar
@@ -112,11 +116,11 @@ export class Morse extends Component {
     }
 
     render() {
+        this.playMorseSequence();
+
         return (
             <div>
-                {this.playMorseSequence()}
-                <br />
-                <h1>{this.state.running ? this.state.codeArray : ""}</h1>
+                {/* <h1>{this.props.codeRunning ? this.state.codeArray : ""}</h1> */}
             </div>
         );
     }

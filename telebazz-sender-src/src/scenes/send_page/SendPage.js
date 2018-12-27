@@ -39,9 +39,11 @@ export class SendPage extends Component {
                 <i style={{ color: this.state.color }} className={"fas fa-" + this.state.icon + " fa-3x"} />
                 <h4 className="mb-3 ">{this.state.header} </h4>
 
-                <div dir="ltr">
-                    <Morse header={this.state.header} />
-                </div>
+                <Morse header={this.state.header} />
+                {/* onFinish={()=>this.props.location.state.setCodeRunning(false)}/> */}
+
+                
+
             </div>
         );
     }
