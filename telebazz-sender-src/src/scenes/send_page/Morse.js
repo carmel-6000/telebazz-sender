@@ -44,7 +44,7 @@ export class Morse extends Component {
 
     stopMorse = () => {
         codeArray = [];
-        window.Tone.Transport.cancel();
+        // window.Tone.Transport.cancel();
         // this.setState({running: false, codeArray: []});
     }
 

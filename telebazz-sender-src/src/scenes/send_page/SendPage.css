@@ -1,0 +1,27 @@
+#message-icon {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 3%;
+}
+
+#message-text {
+    display: flex;
+    justify-content: center;
+    padding-top: 3%;
+}
+
+.message-info-container {
+    margin-top: 15%;
+    margin-bottom: 15%;
+}
+
+.loading-spinner {
+    font-size: 30vw;
+    color: rgb(40, 185, 173);
+    display: flex;
+    justify-content: center;
+}
+
+.fa-spin {
+    animation: fa-spin 5s infinite linear;
+}

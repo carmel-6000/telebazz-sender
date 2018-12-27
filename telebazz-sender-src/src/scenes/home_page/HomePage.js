@@ -36,6 +36,7 @@ export class HomePage extends Component {
 
     localStorage.setItem("EditMessage", JSON.stringify(""));
     localStorage.setItem("NewMessage", JSON.stringify({}));
+    localStorage.setItem("SendMessage", JSON.stringify(""));
   }
 
   deletemessage(event, itemID, isFav) {

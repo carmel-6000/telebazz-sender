@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavBar } from '../../NavBar.js';
 // import { MorseCode } from '../../encode_message/MorseCode.jsx';
 import { Morse } from './Morse.js';
+import "./SendPage.css";
 
 export class SendPage extends Component {
     constructor(props) {
@@ -36,13 +37,25 @@ export class SendPage extends Component {
         return (
             <div>
                 <NavBar pageName="SendPage" history={this.props.history} />
-                <i style={{ color: this.state.color }} className={"fas fa-" + this.state.icon + " fa-3x"} />
-                <h4 className="mb-3 ">{this.state.header} </h4>
+
+                <div className="message-info-container">
+                    <i
+                        style={{ color: this.state.color }}
+                        className={"fas fa-" + this.state.icon + " fa-3x"}
+                        id="message-icon"
+                    />
+                    <h4 className="mb-3" id="message-text">{this.state.header} </h4>
+                </div>
+
+                <div className="loading-spinner">
+                    <i className="fa fa-spinner fa-spin" />
+                </div>
+
 
                 <Morse header={this.state.header} />
                 {/* onFinish={()=>this.props.location.state.setCodeRunning(false)}/> */}
 
-                
+
 
             </div>
         );
