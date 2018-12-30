@@ -9,8 +9,13 @@
 }
 
 .dropdown-message-menu {
-    background-color: blue; 
+    background-color: rgb(255, 255, 255);
     position: fixed;
+    z-index: 1;
+    width: 40vw;
+    border: 1px solid rgb(218, 210, 210);
+    border-radius: 2%;
+    left: 1.25rem;
 }
 
 .main-title-messages {
@@ -32,4 +37,8 @@
     cursor: pointer;
     display: flex;
     /* justify-content: center; */
+}
+
+.dropdown-msg-control-item {
+    padding: 4%;   
 }

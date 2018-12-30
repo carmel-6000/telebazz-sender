@@ -42,14 +42,14 @@ export class MsgCtrlButtons extends Component {
                     ?
                     <div className="dropdown-message-menu">
                         <Link to={`/EditMessage/${this.props.itemID}`}>
-                            <button onClick={() => this.props.editmessage(this.props.itemID)} className="dropdown-item btn btn-primary" >ערוך/י</button>
+                            <button onClick={() => this.props.editmessage(this.props.itemID)} className="dropdown-item btn btn-primary dropdown-msg-control-item" >ערוך/י</button>
                         </Link>
 
-                        <button onClick={(e) => this.props.deletemessage(e, this.props.itemID, this.props.isFav)} className="dropdown-item btn btn-primary" >מחק/י</button>
+                        <button onClick={(e) => this.props.deletemessage(e, this.props.itemID, this.props.isFav)} className="dropdown-item btn btn-primary dropdown-msg-control-item" >מחק/י</button>
                         {this.props.isFav ?
-                            <button onClick={(e) => this.props.changelocation(e, this.props.itemID, this.props.isFav)} className="dropdown-item btn btn-primary" >הסר/י ממועדפים</button>
+                            <button onClick={(e) => this.props.changelocation(e, this.props.itemID, this.props.isFav)} className="dropdown-item btn btn-primary dropdown-msg-control-item" >הסר/י ממועדפים</button>
                             :
-                            <button onClick={(e) => this.props.changelocation(e, this.props.itemID, this.props.isFav)} className="dropdown-item btn btn-primary" >הוסף/י למועדפים</button>
+                            <button onClick={(e) => this.props.changelocation(e, this.props.itemID, this.props.isFav)} className="dropdown-item btn btn-primary dropdown-msg-control-item" >הוסף/י למועדפים</button>
                         }
                     </div>
                     : null
