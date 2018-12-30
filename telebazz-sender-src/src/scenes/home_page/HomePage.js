@@ -140,6 +140,19 @@ export class HomePage extends Component {
         {/* <Nav /> */}
         <NavBar pageName="HomePage" />
 
+        {/* if there are no messages at all */}
+        {!favmessages[0] && !regmessages[0] ?
+          <Link to="/NewMessage">
+            <button
+              type="button"
+              className="new-message-btn">
+              <i class="fas fa-plus" />
+            </button>
+          </Link>
+          : null
+        }
+
+        {/* if there are no favorite messages */}
         {favmessages[0] ?
           <div>
             <p className="main-title-messages"> מועדפים </p>
@@ -150,6 +163,7 @@ export class HomePage extends Component {
           : <div></div>
         }
 
+        {/* if there are no regular messages */}
         {regmessages[0] ?
           <div>
             <p className="main-title-messages"> ההודעות שלי </p>
@@ -159,10 +173,14 @@ export class HomePage extends Component {
           </div>
           : <div></div>
         }
-        
+
         <div className="container">
           <Link to="/NewMessage">
-            <button type="button" className="btn btn-secondary btn-lg fixed-bottom btn-block">הוסף/י הודעה</button>
+            <button
+              type="button"
+              className="btn btn-secondary btn-lg fixed-bottom btn-block">
+              הוסף/י הודעה
+            </button>
           </Link>
         </div>
       </div>

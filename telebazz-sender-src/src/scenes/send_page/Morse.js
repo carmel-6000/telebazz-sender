@@ -94,8 +94,6 @@ export class Morse extends Component {
                     // Add inter element pause between characters
                     t += interElemTime;
                 }
-
-
             }
         }
     }
