@@ -36,7 +36,6 @@ export class MsgCtrlButtons extends Component {
                     onClick={this.showMenu}
                     className="btn btn-secondary dropdown-toggle"
                     type="button"
-                    id="dropdownMessageCtrl"
                 />
 
                 {this.state.showMenu

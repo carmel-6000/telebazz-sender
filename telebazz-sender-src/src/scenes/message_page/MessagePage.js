@@ -219,6 +219,7 @@ export class MessagePage extends Component {
                         id="message-title"
                         placeholder="הכנס/י הודעה"
                         value={this.state.header}
+                        maxLength="30"
                     />
                     <small className="form-text text-muted">על ההודעה להיות קצרה ותמציתית.</small>
                     <br />
@@ -270,7 +271,7 @@ export class MessagePage extends Component {
                     <Link to="/">
                         <button
                             type="submit"
-                            className="btn btn-secondary btn-lg btn-block fixed-bottom"
+                            className="submit-message-button btn btn-secondary btn-lg btn-block fixed-bottom"
                             onClick={this.saveMessageData}>
                             {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                         </button>
@@ -278,7 +279,7 @@ export class MessagePage extends Component {
                     : <button
                         disabled
                         type="submit"
-                        className="btn btn-secondary btn-lg btn-block fixed-bottom">
+                        className="submit-message-button btn btn-secondary btn-lg btn-block fixed-bottom">
                         {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
                     </button>
                 }

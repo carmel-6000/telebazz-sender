@@ -110,3 +110,9 @@ input[type="color"]::-webkit-color-swatch {
   width: 25px;
   height: 25px;
 }
+
+@media only screen and (max-height: 320px) {
+  .submit-message-button {
+    visibility: hidden;
+  }
+}

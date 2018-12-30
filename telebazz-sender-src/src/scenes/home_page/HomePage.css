@@ -1,9 +1,11 @@
 .message-text {
-    margin-top: 4%;
+    width: 60vw;
+    word-wrap: break-word;
+    margin-bottom: 0% !important;
 }
 
-#dropdownMessageCtrl {
-    margin-top: 28%;
+.message-container {
+    align-items: center;
 }
 
 .dropdown-message-menu {

@@ -44,7 +44,7 @@ export class SendPage extends Component {
                         className={"fas fa-" + this.state.icon + " fa-3x"}
                         id="message-icon"
                     />
-                    <h4 className="mb-3" id="message-text">{this.state.header} </h4>
+                    <h4 className="mb-3" id="send-message-text">{this.state.header} </h4>
                 </div>
 
                 <div className="loading-spinner">
