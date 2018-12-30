@@ -211,7 +211,7 @@ export class MessagePage extends Component {
 
                 <div className="container">
 
-                    <label for="message-title text-right">ההודעה:</label>
+                    <label htmlFor="message-title text-right">ההודעה:</label>
                     <input
                         type="text"
                         onChange={(event) => this.updateInfoEvent("header", event)}

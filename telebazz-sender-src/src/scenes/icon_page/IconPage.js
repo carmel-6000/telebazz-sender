@@ -24,6 +24,8 @@ export class IconPage extends Component {
 
   updateCategoryFilter = (categoryFilter) => {
     this.setState({ categoryFilter });
+    console.log("categoryFilter: ", categoryFilter);
+    console.log("iconsObj: ", iconsObj);
   }
 
   saveNewIcon() {
@@ -83,15 +85,15 @@ export class IconPage extends Component {
                     this.dropdownMenu = element;
                   }}
                 >
-                  {Object.keys(iconsObj).map((category) =>
+                  {Object.keys(iconsObj).map((category, i) =>
                     <Filter
+                      key={i} //each child in an array or iterator should have a unique key prop
                       categoryFilter={this.state.categoryFilter}
                       updateCategoryFilter={this.updateCategoryFilter}
                       category={category}
                     />
                   )}
                 </div>
-
                 : null
               }
             </div>

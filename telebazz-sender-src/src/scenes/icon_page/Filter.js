@@ -27,7 +27,6 @@ export class Filter extends Component {
     }
 
     checkedCategory = () => {
-        console.log("checkedCategory");
         if(this.props.categoryFilter.includes(this.props.category)){
             return true;
         } 
@@ -54,8 +53,8 @@ export class Filter extends Component {
                 }
                 <label
                     className="custom-control-label pull-right"
-                    for={this.props.category}>
-                    <p className="icon-name" for={this.props.category}>
+                    htmlFor={this.props.category}>
+                    <p className="icon-name" htmlFor={this.props.category}>
                         {this.props.category}
                     </p>
                 </label>

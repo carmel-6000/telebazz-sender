@@ -146,7 +146,7 @@ export class HomePage extends Component {
             <button
               type="button"
               className="new-message-btn">
-              <i class="fas fa-plus" />
+              <i className="fas fa-plus" />
             </button>
           </Link>
           : null

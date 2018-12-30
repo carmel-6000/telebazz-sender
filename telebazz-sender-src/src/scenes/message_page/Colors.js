@@ -34,8 +34,9 @@ export class Colors extends Component {
   render() {
     return (
       <div className="colors">
-        {deafultcolors.map((currcolor) =>
+        {deafultcolors.map((currcolor, i) =>
           <Color
+            key={i} //each child in an array or iterator should have a unique key prop
             colorclass={currcolor.colorclass}
             colorvalue={currcolor.colorvalue}
             onclicker={() => this.props.updatecolor(currcolor.colorvalue)}
