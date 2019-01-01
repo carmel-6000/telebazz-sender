@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import './IconPage.css';
 import { Link } from 'react-router-dom';
 import { NavBar } from '../../NavBar.js';
 import iconsObj from './iconsObj';
 import { Filter } from './Filter';
 import { Icons } from './Icons';
+import './IconPage.css';
 
 export class IconPage extends Component {
   constructor(props) {

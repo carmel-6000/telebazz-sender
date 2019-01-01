@@ -47,16 +47,7 @@ export class SendPage extends Component {
                     <h4 className="mb-3" id="send-message-text">{this.state.header} </h4>
                 </div>
 
-                <div className="loading-spinner">
-                    <i className="fa fa-spinner fa-spin" />
-                </div>
-
-
-                <Morse header={this.state.header} />
-                {/* onFinish={()=>this.props.location.state.setCodeRunning(false)}/> */}
-
-
-
+                <Morse header={this.state.header} history={this.props.history}/>
             </div>
         );
     }

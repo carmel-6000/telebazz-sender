@@ -10,8 +10,7 @@ export class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: '',
-      // codeRunning: false
+      messages: ''
     }
 
     this.deletemessage = this.deletemessage.bind(this);
@@ -85,13 +84,7 @@ export class HomePage extends Component {
     this.setState({ messages: updatemessages });
   }
 
-  // setCodeRunning = (value) => {
-  //   localStorage.setItem("codeRunning",value);
-  // }
-
   sendMessage = (itemID) => {
-    // this.setCodeRunning(true);
-    // console.log("sendMessage: ", this.state.codeRunning);
     let key = "SendMessage";
     let sendMsg = {};
 
@@ -124,8 +117,6 @@ export class HomePage extends Component {
           editmessage={this.editmessage}
           changelocation={this.changelocation}
           sendMessage={this.sendMessage}
-        // codeRunning={this.state.codeRunning}
-        // setCodeRunning={this.setCodeRunning}
         />);
 
       if (message.isFav) {

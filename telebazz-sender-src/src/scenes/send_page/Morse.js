@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import char_to_morse from "./morse_code_dict";
+import { setTimeout } from "timers";
+
+import "./SendPage.css";
 
 //morse times in seconds
 let longerBy = 10;
@@ -20,13 +23,22 @@ export class Morse extends Component {
         super(props);
         this.state = {
             textInput: this.props.header,
+            messageEnded: false
             // codeArray: [],
-            // running: false // Track whether morse code is running
         }
 
+        //toMaster - the master output of the device (ex. speakers)
         this.osc = new window.Tone.Oscillator(8000, "sine").toMaster();
         console.log("osc", this.osc);
         //console.log("tone",window.Tone.Transport);
+    }
+
+    endedSendingMessage = () => {
+        console.log("endedSendingMessage");
+        this.setState({ messageEnded: true });
+        setTimeout(()=>{
+            this.props.history.push('/');
+        }, 2000);
     }
 
     toneChar = (time, char) => {
@@ -45,7 +57,6 @@ export class Morse extends Component {
     stopMorse = () => {
         codeArray = [];
         // window.Tone.Transport.cancel();
-        // this.setState({running: false, codeArray: []});
     }
 
     textToMorse = () => {
@@ -96,17 +107,13 @@ export class Morse extends Component {
                 }
             }
         }
+        setTimeout(this.endedSendingMessage, t * 1000);
     }
 
     playMorseSequence = () => {
-        // if (this.props.codeRunning) {
-        //     return;
-        // }
-
         // clear previous
         this.stopMorse();
 
-        // this.setState({ running: true });
         this.textToMorse();
 
         //to update the progress bar
@@ -121,7 +128,21 @@ export class Morse extends Component {
 
         return (
             <div>
-                {/* <h1>{this.props.codeRunning ? this.state.codeArray : ""}</h1> */}
+                {this.state.messageEnded ?
+                    <div>
+                        <div className="loading-spinner">
+                            <i className="fa fa-spinner" />
+                        </div>
+                        <p className="message-status">ההודעה נשלחה בהצלחה</p>
+                    </div>
+                    :
+                    <div>
+                        <div className="loading-spinner">
+                            <i className="fa fa-spinner fa-spin" />
+                        </div>
+                        <p className="message-status">ההודעה בשליחה</p>
+                    </div>
+                }
             </div>
         );
     }

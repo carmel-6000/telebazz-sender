@@ -2,8 +2,8 @@
 .dropdown-item {
     text-align:center !important ;
     padding-left: 50%;
-    padding-top: 4%;
-    padding-bottom: 4%;
+    /* padding-top: 4%;
+    padding-bottom: 4%; */
 }
 
 /* .checkboxer {
@@ -58,5 +58,6 @@
 }
 
 .icon-name {
-    margin-top: 8%;
+    margin-top: 6%;
+    margin-bottom: 0%;
 }
