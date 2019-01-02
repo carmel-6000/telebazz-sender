@@ -10,7 +10,7 @@
 
 .dropdown-message-menu {
     background-color: rgb(255, 255, 255);
-    position: fixed;
+    position: absolute;
     z-index: 1;
     width: 40vw;
     border: 1px solid rgb(218, 210, 210);

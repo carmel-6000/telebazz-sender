@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { NavBar } from '../../NavBar.js';
+import { NavBar } from '../NavBar';
 import iconsObj from './iconsObj';
 import { Filter } from './Filter';
 import { Icons } from './Icons';

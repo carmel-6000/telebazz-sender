@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavBar } from '../../NavBar.js';
+import { NavBar } from '../NavBar.js';
 // import { MorseCode } from '../../encode_message/MorseCode.jsx';
 import { Morse } from './Morse.js';
 import "./SendPage.css";

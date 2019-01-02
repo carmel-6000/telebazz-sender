@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import './MessagePage.css';
 import { Link } from 'react-router-dom';
-import { NavBar } from "../../NavBar";
+import { NavBar } from "../NavBar";
 import { Colors } from "./Colors";
 import { FavoriteButton } from "./FavoriteButton";
+import InternalStorage from "../InternalStorage.js";
+import HomePage from "./../home_page/HomePage";
 
 export class MessagePage extends Component {
     constructor(props) {
@@ -15,12 +17,13 @@ export class MessagePage extends Component {
             icon: 'ghost',
             favatfirst: false,
             itemID: Date.now(),
-            key: "", //"NewMessage" || "EditMessage"
-            messageExists: false
+            key: "" //"NewMessage" || "EditMessage"
         };
     }
 
+    // Gets the values from the Local Storage
     componentWillMount() {
+        console.log("in message page componentWillMount");
         let key = "NewMessage";
         if (this.props.match.params.id) {
             key = "EditMessage";
@@ -42,95 +45,39 @@ export class MessagePage extends Component {
     }
 
     //the storage will be updated also when reloading the page
+    // Adding Event Listener so the storage will be updated
+    // if the component will unmount
     componentDidMount() {
+        console.log("in message page componentDidMount");
         window.addEventListener("beforeunload", this.updateStorage);
     }
 
     componentWillUnmount() {
+        console.log("in message page componentWillUnmount");
         this.updateStorage();
         window.removeEventListener('beforeunload', this.updateStorage);
     }
 
+    // saveMessagesToInternalStorage = (updatemessages) => {
+    //     InternalStorage.saveFile({ Messages: updatemessages }, HomePage.SETTINGS_FILE);
+    // }
+
+    updateLocalStorage = (messageOB) => {
+        localStorage.setItem(this.state.key, JSON.stringify(messageOB));
+    }
+
+    // updateFileSystem = (messageOB) => {
+    //     InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
+    //         userData = JSON.parse(userData);
+    //         console.log("updateFileSystem" , userData, userData.Messages);
+    //         userData.Messages.push(messageOB);
+    //         this.saveMessagesToInternalStorage(userData.Messages);
+    //     });
+    // }
+
     updateStorage = () => {
         console.log("update storage");
-        this.updateLocalStorage();
-        //this.updateFileSystem();
-        //this.updateNativeStorage();
-    }
 
-    /*
-    errorHandler = (fileName, e) => {  
-        let msg = '';
-    
-        switch (e.code) {
-            case FileError.QUOTA_EXCEEDED_ERR:
-                msg = 'Storage quota exceeded';
-                break;
-            case FileError.NOT_FOUND_ERR:
-                msg = 'File not found';
-                break;
-            case FileError.SECURITY_ERR:
-                msg = 'Security error';
-                break;
-            case FileError.INVALID_MODIFICATION_ERR:
-                msg = 'Invalid modification';
-                break;
-            case FileError.INVALID_STATE_ERR:
-                msg = 'Invalid state';
-                break;
-            default:
-                msg = 'Unknown error';
-                break;
-        };
-    
-        console.log('Error (' + fileName + '): ' + msg);
-    }
-
-    readFromFile = (fileName, cb) => {
-        var pathToFile = cordova.file.dataDirectory + fileName;
-        window.resolveLocalFileSystemURL(pathToFile, function (fileEntry) {
-            fileEntry.file(function (file) {
-                var reader = new FileReader();
-
-                reader.onloadend = function (e) {
-                    cb(JSON.parse(this.result));
-                };
-
-                reader.readAsText(file);
-            }, this.errorHandler.bind(null, fileName));
-        }, this.errorHandler.bind(null, fileName));
-    }
-
-    onDeviceReady = () => {
-        let fileData;
-        this.readFromFile('data.json', (data) => {
-            fileData = data;
-        });
-    }
-
-    updateFileSystem = () => {
-        document.addEventListener('deviceready', this.onDeviceReady(), false);
-
-        if (localStorage.getItem("messages") != null) {
-            console.log("messages", localStorage.getItem("messages"));
-        }
-    }
-    */
-
-
-    /*
-    updateNativeStorage = () => {
-        if (localStorage.getItem("messages") != null) {
-            console.log("messages", localStorage.getItem("messages"));
-            window.NativeStorage.setItem("messages",
-                localStorage.getItem("messages"),
-                () => { console.log("native storage success") },
-                () => { console.log("native storage error") }
-            );
-        }
-    }*/
-
-    updateLocalStorage = () => {
         let messageOB = {
             header: this.state.header,
             color: this.state.color,
@@ -139,7 +86,78 @@ export class MessagePage extends Component {
             itemID: this.state.itemID
         };
 
-        localStorage.setItem(this.state.key, JSON.stringify(messageOB));
+        this.updateLocalStorage(messageOB);
+        // this.updateFileSystem(messageOB);
+    }
+
+    saveMessageData = () => {
+        // let key = "messages";
+        let msg = {
+            header: this.state.header,
+            isFav: this.state.isFav,
+            itemID: this.state.itemID,
+            icon: this.state.icon,
+            color: this.state.color
+        }
+        let messagesArr = [];
+        let tempmessage = [];
+        // let messageST = localStorage.getItem(key);
+
+        InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
+            userData = JSON.parse(userData);
+            console.log("userData.Messages", userData.Messages);
+            messagesArr = userData.Messages;
+
+
+            //....
+
+            // if (messageST) {
+            //     let messagesOB = JSON.parse(messageST);
+            //     messagesArr = Object.keys(messagesOB).map(obj => messagesOB[obj]);
+            // }
+
+            let messageExists = false;
+            //check if the message header already exists in the saved messages
+            messagesArr.map(currmsg => {
+                if (currmsg.header === this.state.header && this.state.key === "NewMessage") {
+                    messageExists = true;
+                }
+            });
+
+            //if the message exists - don't add it again
+            if (messageExists) {
+                alert("הודעה זו כבר קיימת במערכת");
+                this.props.history.push('/');
+            } else {
+                //if the message has an id then it is an "EditMessage" 
+                if (this.props.match.params.id) {
+                    messagesArr.map(currmsg => {
+                        if (currmsg.itemID == this.props.match.params.id) {
+                            tempmessage.push(msg);
+                        } else {
+                            tempmessage.push(currmsg);
+                        }
+                    });
+                    messagesArr = tempmessage;
+
+                    // localStorage.setItem(key, JSON.stringify(tempmessage));
+                } else { //new message
+                    console.log("messagesArr before push", messagesArr);
+                    messagesArr.push(msg);
+                    console.log("messagesArr after push", messagesArr);
+                    
+                    // localStorage.setItem(key, JSON.stringify(messagesArr));
+                }
+
+                InternalStorage.saveFile({ Messages: messagesArr }, HomePage.SETTINGS_FILE, (_a) => {
+                    console.log("in save file callback");
+                    this.props.history.push("/");
+                });
+
+                
+            }
+        })
+
     }
 
     updateInfoEvent = (key, event) => {
@@ -154,54 +172,7 @@ export class MessagePage extends Component {
         this.setState({ isFav: !this.state.isFav });
     }
 
-    saveMessageData = () => {
-        let key = "messages";
-        let msg = {
-            header: this.state.header,
-            isFav: this.state.isFav,
-            itemID: this.state.itemID,
-            icon: this.state.icon,
-            color: this.state.color
-        }
-        let messagesArr = [];
-        let tempmessage = [];
-        let messageST = localStorage.getItem(key);
-
-        if (messageST) {
-            let messagesOB = JSON.parse(messageST);
-            messagesArr = Object.keys(messagesOB).map(obj => messagesOB[obj]);
-        }
-
-        let messageExists = this.state.messageExists;
-        //check if the message header already exists in the saved messages
-        messagesArr.map(currmsg => {
-            if (currmsg.header === this.state.header && this.state.key === "NewMessage") {
-                messageExists = true;
-                this.setState({ messageExists });
-            }
-        });
-
-        //if the message exists - don't add it again
-        if (messageExists) {
-            alert("הודעה זו כבר קיימת במערכת");
-            return;
-        } else {
-            //if the message has an id then it is an "EditMessage" 
-            if (this.props.match.params.id) {
-                messagesArr.map(currmsg => {
-                    if (currmsg.itemID == this.props.match.params.id) {
-                        tempmessage.push(msg);
-                    } else {
-                        tempmessage.push(currmsg);
-                    }
-                });
-                localStorage.setItem(key, JSON.stringify(tempmessage));
-            } else { //new message
-                messagesArr.push(msg);
-                localStorage.setItem(key, JSON.stringify(messagesArr));
-            }
-        }
-    }
+  
 
     render() {
         return (
@@ -268,14 +239,14 @@ export class MessagePage extends Component {
                 </div>
 
                 {this.state.header ?
-                    <Link to="/">
-                        <button
-                            type="submit"
-                            className="submit-message-button btn btn-secondary btn-lg btn-block fixed-bottom"
-                            onClick={this.saveMessageData}>
-                            {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
-                        </button>
-                    </Link>
+                    // <Link to="/">
+                    <button
+                        type="submit"
+                        className="submit-message-button btn btn-secondary btn-lg btn-block fixed-bottom"
+                        onClick={this.saveMessageData}>
+                        {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
+                    </button>
+                    // </Link>
                     : <button
                         disabled
                         type="submit"

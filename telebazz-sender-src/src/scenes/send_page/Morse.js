@@ -10,6 +10,7 @@ let dotTime = 0.07 * longerBy;
 let dashTime = dotTime * 3;
 let interElemTime = 0.09 * longerBy;
 let spaceTime = dotTime;
+let totaltime=0;
 
 //initial delay before starting playing the morse code
 let initialDelay = 0.1;
@@ -28,14 +29,22 @@ export class Morse extends Component {
         }
 
         //toMaster - the master output of the device (ex. speakers)
-        this.osc = new window.Tone.Oscillator(8000, "sine").toMaster();
+this.osc = new window.Tone.Oscillator(8000, "sine").toMaster();
+        console.log("ended?",this.state.messageEnded,codeArray);
         console.log("osc", this.osc);
         //console.log("tone",window.Tone.Transport);
     }
+    componentWillMount(){
+       console.log( this.osc.state);
+       this.playMorseSequence();
 
-    endedSendingMessage = () => {
+    }
+
+    endedSendingMessage = (time) => {
         console.log("endedSendingMessage");
         this.setState({ messageEnded: true });
+        codeArray = [];
+        totaltime+=time;
         setTimeout(()=>{
             this.props.history.push('/');
         }, 2000);
@@ -48,9 +57,9 @@ export class Morse extends Component {
         } else if (char === "-") {
             charTime = dashTime;
         }
-        this.osc.start(time);
-        this.osc.stop(time + charTime);
-        // window.Tone.Transport.start();
+        this.osc.start(time+totaltime);
+        console.log("tonechar", this.osc.state);
+        this.osc.stop(time + charTime+totaltime);
         // console.log("char", char, "time", time, "charTime", charTime);
     }
 
@@ -107,7 +116,7 @@ export class Morse extends Component {
                 }
             }
         }
-        setTimeout(this.endedSendingMessage, t * 1000);
+        setTimeout(this.endedSendingMessage, t * 1000, t);
     }
 
     playMorseSequence = () => {
@@ -124,7 +133,7 @@ export class Morse extends Component {
     }
 
     render() {
-        this.playMorseSequence();
+        // this.playMorseSequence();
 
         return (
             <div>

@@ -3,14 +3,19 @@ import { Link } from 'react-router-dom';
 //import data from '../data.json';
 // import { Nav } from "./Nav";
 import { Message } from "./Message";
-import { NavBar } from '../../NavBar.js';
+import { NavBar } from '../NavBar.js';
+import InternalStorage from "../InternalStorage.js";
 import "./HomePage.css";
 
+
 export class HomePage extends Component {
+
+  static SETTINGS_FILE = "UserData.json"
+
   constructor(props) {
     super(props);
     this.state = {
-      messages: ''
+      messages: [] //""
     }
 
     this.deletemessage = this.deletemessage.bind(this);
@@ -18,29 +23,55 @@ export class HomePage extends Component {
     this.changelocation = this.changelocation.bind(this);
   }
 
-  componentDidMount() {
-    let key = "messages";
-    let messageST = localStorage.getItem(key);
+  initializeUserData = () => {
+    return {
+      Messages: []
+    };
+  }
 
-    if (messageST) {
-      let messagesOB = JSON.parse(messageST);
-      const messages = Object.keys(messagesOB).map(obj => messagesOB[obj]);
-      this.setState({ messages });
-    } /*else {
-      window.NativeStorage.getItem(key,
-        (arr) => { this.setState({ messages: arr }) },
-        (error) => { console.log("homepage: cant access native storage: ", error) }
-      );
-    }*/
+  saveMessagesToInternalStorage = (updatemessages) => {
+    InternalStorage.saveFile({ Messages: updatemessages }, HomePage.SETTINGS_FILE);
+  }
+
+  initializeInternalStorage = () => {
+    InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
+      if (userData == "") {
+        console.log("saving info to UserData.json");
+        userData = this.initializeUserData();
+        InternalStorage.saveFile(userData, HomePage.SETTINGS_FILE);
+      } else {
+        userData = JSON.parse(userData);
+        this.setState({ messages: userData.Messages });
+      }
+    });
 
     localStorage.setItem("EditMessage", JSON.stringify(""));
     localStorage.setItem("NewMessage", JSON.stringify({}));
     localStorage.setItem("SendMessage", JSON.stringify(""));
   }
 
+  componentWillMount() {
+    console.log("component will mount");
+    // let key = "messages";
+    // let messageST = localStorage.getItem(key);
+    // let messages, messagesOB;
+
+    // if (messageST) {
+    //   messagesOB = JSON.parse(messageST);
+    //   messages = Object.keys(messagesOB).map(obj => messagesOB[obj]);
+    //   this.setState({ messages });
+    //} else {
+    this.initializeInternalStorage();
+  }
+
+  componentDidMount(){
+    console.log("did mount");
+    this.initializeInternalStorage();
+  }
+
   deletemessage(event, itemID, isFav) {
     event.preventDefault();
-    let key = "messages";
+    // let key = "messages";
     let messages = this.state.messages;
     let updatemessages = [];
 
@@ -50,7 +81,8 @@ export class HomePage extends Component {
       }
     });
 
-    localStorage.setItem(key, JSON.stringify(updatemessages));
+    this.saveMessagesToInternalStorage(updatemessages);
+    // localStorage.setItem(key, JSON.stringify(updatemessages));
     this.setState({ messages: updatemessages });
   }
 
@@ -67,9 +99,11 @@ export class HomePage extends Component {
     localStorage.setItem(key, JSON.stringify(editMsg));
   }
 
+
+  //this function changes between favorite messages and regular messages
   changelocation(event, Itemid, isFav) {
     event.preventDefault();
-    let key = "messages";
+    // let key = "messages";
     let messages = this.state.messages;
     let updatemessages = [];
 
@@ -80,7 +114,8 @@ export class HomePage extends Component {
       }
     });
 
-    localStorage.setItem(key, JSON.stringify(updatemessages));
+    this.saveMessagesToInternalStorage(updatemessages);
+    // localStorage.setItem(key, JSON.stringify(updatemessages));
     this.setState({ messages: updatemessages });
   }
 
@@ -100,6 +135,7 @@ export class HomePage extends Component {
   render() {
     let favmessages = [];
     let regmessages = [];
+    console.log("home page: this.state.messages", this.state.messages);
     let msgkeys = Object.keys(this.state.messages)
 
     msgkeys.forEach(key => {
