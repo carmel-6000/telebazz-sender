@@ -51,27 +51,16 @@ export class HomePage extends Component {
   }
 
   componentWillMount() {
-    console.log("component will mount");
-    // let key = "messages";
-    // let messageST = localStorage.getItem(key);
-    // let messages, messagesOB;
-
-    // if (messageST) {
-    //   messagesOB = JSON.parse(messageST);
-    //   messages = Object.keys(messagesOB).map(obj => messagesOB[obj]);
-    //   this.setState({ messages });
-    //} else {
     this.initializeInternalStorage();
   }
 
   componentDidMount(){
-    console.log("did mount");
     this.initializeInternalStorage();
   }
 
   deletemessage(event, itemID, isFav) {
     event.preventDefault();
-    // let key = "messages";
+
     let messages = this.state.messages;
     let updatemessages = [];
 
@@ -82,7 +71,6 @@ export class HomePage extends Component {
     });
 
     this.saveMessagesToInternalStorage(updatemessages);
-    // localStorage.setItem(key, JSON.stringify(updatemessages));
     this.setState({ messages: updatemessages });
   }
 
@@ -103,7 +91,7 @@ export class HomePage extends Component {
   //this function changes between favorite messages and regular messages
   changelocation(event, Itemid, isFav) {
     event.preventDefault();
-    // let key = "messages";
+
     let messages = this.state.messages;
     let updatemessages = [];
 
@@ -115,7 +103,6 @@ export class HomePage extends Component {
     });
 
     this.saveMessagesToInternalStorage(updatemessages);
-    // localStorage.setItem(key, JSON.stringify(updatemessages));
     this.setState({ messages: updatemessages });
   }
 
@@ -135,7 +122,6 @@ export class HomePage extends Component {
   render() {
     let favmessages = [];
     let regmessages = [];
-    console.log("home page: this.state.messages", this.state.messages);
     let msgkeys = Object.keys(this.state.messages)
 
     msgkeys.forEach(key => {

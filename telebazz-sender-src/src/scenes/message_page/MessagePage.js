@@ -23,7 +23,6 @@ export class MessagePage extends Component {
 
     // Gets the values from the Local Storage
     componentWillMount() {
-        console.log("in message page componentWillMount");
         let key = "NewMessage";
         if (this.props.match.params.id) {
             key = "EditMessage";
@@ -44,36 +43,20 @@ export class MessagePage extends Component {
         }
     }
 
-    //the storage will be updated also when reloading the page
     // Adding Event Listener so the storage will be updated
     // if the component will unmount
     componentDidMount() {
-        console.log("in message page componentDidMount");
         window.addEventListener("beforeunload", this.updateStorage);
     }
 
     componentWillUnmount() {
-        console.log("in message page componentWillUnmount");
         this.updateStorage();
         window.removeEventListener('beforeunload', this.updateStorage);
     }
 
-    // saveMessagesToInternalStorage = (updatemessages) => {
-    //     InternalStorage.saveFile({ Messages: updatemessages }, HomePage.SETTINGS_FILE);
-    // }
-
     updateLocalStorage = (messageOB) => {
         localStorage.setItem(this.state.key, JSON.stringify(messageOB));
     }
-
-    // updateFileSystem = (messageOB) => {
-    //     InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
-    //         userData = JSON.parse(userData);
-    //         console.log("updateFileSystem" , userData, userData.Messages);
-    //         userData.Messages.push(messageOB);
-    //         this.saveMessagesToInternalStorage(userData.Messages);
-    //     });
-    // }
 
     updateStorage = () => {
         console.log("update storage");
@@ -87,11 +70,9 @@ export class MessagePage extends Component {
         };
 
         this.updateLocalStorage(messageOB);
-        // this.updateFileSystem(messageOB);
     }
 
     saveMessageData = () => {
-        // let key = "messages";
         let msg = {
             header: this.state.header,
             isFav: this.state.isFav,
@@ -101,22 +82,14 @@ export class MessagePage extends Component {
         }
         let messagesArr = [];
         let tempmessage = [];
-        // let messageST = localStorage.getItem(key);
 
         InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
             userData = JSON.parse(userData);
             console.log("userData.Messages", userData.Messages);
             messagesArr = userData.Messages;
 
-
-            //....
-
-            // if (messageST) {
-            //     let messagesOB = JSON.parse(messageST);
-            //     messagesArr = Object.keys(messagesOB).map(obj => messagesOB[obj]);
-            // }
-
             let messageExists = false;
+
             //check if the message header already exists in the saved messages
             messagesArr.map(currmsg => {
                 if (currmsg.header === this.state.header && this.state.key === "NewMessage") {
@@ -139,22 +112,13 @@ export class MessagePage extends Component {
                         }
                     });
                     messagesArr = tempmessage;
-
-                    // localStorage.setItem(key, JSON.stringify(tempmessage));
                 } else { //new message
-                    console.log("messagesArr before push", messagesArr);
                     messagesArr.push(msg);
-                    console.log("messagesArr after push", messagesArr);
-                    
-                    // localStorage.setItem(key, JSON.stringify(messagesArr));
                 }
 
                 InternalStorage.saveFile({ Messages: messagesArr }, HomePage.SETTINGS_FILE, (_a) => {
-                    console.log("in save file callback");
                     this.props.history.push("/");
                 });
-
-                
             }
         })
 
