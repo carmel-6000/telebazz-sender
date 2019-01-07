@@ -34,7 +34,7 @@ class InternalStorage {
                         }
                     };
                     fileWriter.onerror = e => {
-                        // console.log("Failed file write: " + e.toString());
+                        console.log("Failed file write: " + e.toString());
                     };
 
                     fileWriter.write(fileContent);
@@ -58,10 +58,11 @@ class InternalStorage {
             //get wanted file
 
             fs.root.getFile(fileName, { create: true, exclusive: false }, fileEntry => {
+                
+                //Do something with the file/image (ex. save to state)
+
                 // var self = this;
 
-
-                //ToDo: what to do with the file after getting it from the internal storage
                 //var displayImage = function (imageContent) {
                 //console.log("fileEntry on displayImage", fileEntry);
                 // localStorage.setItem("messages", JSON.stringify(imageContent));
@@ -88,8 +89,6 @@ class InternalStorage {
             });
 
         });
-        //...
-        // return cb();
     }
 }
 

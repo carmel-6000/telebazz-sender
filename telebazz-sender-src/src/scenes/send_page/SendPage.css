@@ -32,3 +32,10 @@
     text-align: center;
     margin: 15%;
 }
+
+.loading-check {
+    font-size: 30vw;
+    color: rgb(40, 185, 47);
+    display: flex;
+    justify-content: center;
+}

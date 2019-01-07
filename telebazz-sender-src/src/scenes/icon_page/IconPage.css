@@ -41,9 +41,9 @@
   
 .custom-control-label::before, 
 .custom-control-label::after {
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: -8px;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: -8px;
 }
 
 .dropdown-filter-menu {
@@ -55,6 +55,8 @@
     width: 35%;
     border: 1px solid rgb(218, 210, 210);
     border-radius: 2%;
+    overflow: auto;
+    height: 60vh;
 }
 
 .icon-name {
