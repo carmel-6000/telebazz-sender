@@ -41,7 +41,6 @@ export class IconPage extends Component {
 
     localStorage.setItem(key, JSON.stringify(currmessOB));
     this.setIcon("");
-    console.log("icon page" + localStorage.getItem(key));
   }
 
   setIcon(chosenIcon) {

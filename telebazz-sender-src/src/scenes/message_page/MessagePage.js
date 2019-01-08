@@ -6,6 +6,7 @@ import { Colors } from "./Colors";
 import { FavoriteButton } from "./FavoriteButton";
 import InternalStorage from "../InternalStorage.js";
 import HomePage from "./../home_page/HomePage";
+import { SSL_OP_TLS_ROLLBACK_BUG } from 'constants';
 
 export class MessagePage extends Component {
     constructor(props) {
@@ -59,8 +60,6 @@ export class MessagePage extends Component {
     }
 
     updateStorage = () => {
-        console.log("update storage");
-
         let messageOB = {
             header: this.state.header,
             color: this.state.color,
@@ -85,7 +84,6 @@ export class MessagePage extends Component {
 
         InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
             userData = JSON.parse(userData);
-            console.log("userData.Messages", userData.Messages);
             messagesArr = userData.Messages;
 
             let messageExists = false;
@@ -188,7 +186,8 @@ export class MessagePage extends Component {
                             <input
                                 id="color-picker"
                                 className="btn-circle"
-                                value={this.state.color}
+                                value="fff"
+                                // value={this.state.color}
                                 onChange={(event) => this.updateInfoEvent("color", event)}
                                 type="color"
                             />

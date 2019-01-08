@@ -19,7 +19,7 @@
 
 .loading-spinner {
     font-size: 30vw;
-    color: rgb(40, 185, 173);
+    color: #80d1d4;
     display: flex;
     justify-content: center;
 }
@@ -36,6 +36,13 @@
 .loading-check {
     font-size: 30vw;
     color: rgb(40, 185, 47);
+    display: flex;
+    justify-content: center;
+}
+
+.loading-times {
+    font-size: 30vw;
+    color: rgb(185, 45, 40);
     display: flex;
     justify-content: center;
 }

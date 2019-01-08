@@ -63,3 +63,9 @@
     margin-top: 6%;
     margin-bottom: 0%;
 }
+
+@media screen and (min-width: 576px) {
+    .btn-secondary.dropdown-toggle {
+        width: 15vw;
+    }
+  }
