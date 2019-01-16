@@ -1,23 +1,13 @@
 import React, { Component } from "react";
-import char_to_morse from "./morse_code_dict";
+import char_to_binary from "./char_to_binary";
 import { setTimeout } from "timers";
 
 import "./SendPage.css";
 
-//morse times in seconds
-const longerBy = 10;
-const dotTime = 0.07 * longerBy;
-const dashTime = dotTime * 3;
-const interElemTime = 0.09 * longerBy;
-const spaceTime = dotTime;
-const startTime = dotTime * 5;
-const initialDelay = 0.1; //initial delay before starting playing the morse code
-let codeArray = [];
-
-let toneCharCounter = 0;
-let onEndedCounter = 0;
-
 export class Morse extends Component {
+
+    static FREQUENCY_RATE = 700;
+    static TIME_INTERVAL = 100;
 
     constructor(props) {
         super(props);
@@ -25,163 +15,96 @@ export class Morse extends Component {
             textInput: this.props.header,
             messageEnded: false,
             messageError: false
-            // codeArray: [],
         }
 
-        //toMaster - the master output of the device (ex. speakers)
-        // this.osc = new window.Tone.Oscillator(8000, "sine").toMaster();
-        this.FREQUENCY = 440;
-        // this.osc = null;
-        console.log("ended?", this.state.messageEnded, codeArray);
-
-        // console.log("osc", this.osc); //osc = null
+        this.codeString = "";
     }
 
     componentWillMount() {
-        // this.osc = new window.Tone.Oscillator(this.FREQUENCY, "sine").toMaster();
-        // console.log("componentWillMount osc: ", this.osc); //osc = new .... 
-        this.playMorseSequence();
-    }
-
-    endedSendingMessage = () => {
-        console.log("endedSendingMessage");
-        if (!this.state.messageError) {
-            this.setState({ messageEnded: true });
-        }
-
-        codeArray = [];
-        toneCharCounter = 0;
-        onEndedCounter = 0;
-        // clearTimeout(this.timeout);
-        // this.osc = null;
-
-        setTimeout(() => {
-            this.props.history.push('/');
-        }, 2000);
-    }
-
-    toneChar = (time, char) => {
-        toneCharCounter++;
-        let charTime;
-        console.log("toneChar: time ", time, "char ", char);
-
-        switch (char) {
-            case ".":
-                charTime = dotTime;
-                break;
-            case "-":
-                charTime = dashTime;
-                break;
-            case "s":
-                charTime = startTime;
-                break;
-            default:
-                return;
-        }
-
-        try {
-            var AudioContext = window.AudioContext || window.webkitAudioContext;
-            var context = new AudioContext();
-
-            var osc = context.createOscillator();
-            osc.type = "sine"; //e.currentTarget.id;
-            osc.frequency.value = this.FREQUENCY;
-
-            //WHAT DOES gain DO ?!???! 
-            // var gain = context.createGain();
-            // gain.gain.value = 1;
-            // gain.connect(osc.frequency);
-
-            osc.connect(context.destination);
-
-            osc.start(time);
-            osc.stop(time + charTime);
-
-            // console.log("osc", osc);//, "gain", gain, "context", context);
-
-            osc.onended = () => {
-                onEndedCounter++;
-                if (onEndedCounter === toneCharCounter) {
-                    this.endedSendingMessage();
-                }
-            }
-
-        } catch (e) {
-            alert('Web Audio API is not supported in this browser');
-        }
-
-        // this.osc.start(time);
-        // this.osc.stop(time + charTime);
+        this.generateMorseSequence();
     }
 
     textToMorse = () => {
         let message = this.state.textInput;
         let messageUpper = message.toUpperCase();
-        // let codeArray = this.state.codeArray;
         console.log("messageUpper: ", messageUpper);
 
         for (let i = 0; i < messageUpper.length; i++) {
-            codeArray.push(char_to_morse[messageUpper[i]]);
-            codeArray.push(" ");
+            this.codeString += char_to_binary[messageUpper[i]] + "~";
         }
-
-        console.log("codeArray: ", codeArray);
-
-        // this.setState({ codeArray });
     }
 
-    generateHeader = () => {
-        let time = initialDelay;
-        this.toneChar(time, "s");
-        time += (startTime + spaceTime);
-        return time;
-    }
+    playBit = (currentChar, cb) => {
+        console.log("Playing bit:%s", currentChar);
+        if (currentChar == 1) {
+            var context = new AudioContext();
+            var osc = context.createOscillator();
+            osc.type = "sine";
+            osc.frequency.value = Morse.FREQUENCY_RATE;
+            osc.connect(context.destination);
+            osc.start(0);
+            osc.stop(Morse.TIME_INTERVAL / 1000);
+            osc.onended = () => {
+                //console.log("on ended is launched");
+                setTimeout(() => {
+                    cb();
+                }, Morse.TIME_INTERVAL);
 
-
-    generateSequence = () => {
-        let t = 0;
-        t += initialDelay; //the current time in the morse code sequence
-        // let codeArray = this.state.codeArray;
-
-        t += this.generateHeader();
-
-        for (let i = 0; i < codeArray.length; i++) {
-            let codeChar = codeArray[i]; //morse char (dash and dots)
-            if (codeChar === " ") {
-                t += spaceTime;
-            } else {
-                for (let j = 0; j < codeChar.length; j++) {
-                    let char = codeChar[j];
-
-                    switch (char) {
-                        case ".":
-                            this.toneChar(t, char);
-                            t += dotTime;
-                            break;
-                        case "-":
-                            this.toneChar(t, char);
-                            t += dashTime;
-                            break;
-                        default:
-                            console.log("Unexpected character in morse code message", char);
-                    }
-                    // Add inter element pause between characters
-                    t += interElemTime;
-                }
             }
+            return;
         }
+
         setTimeout(() => {
-            if (!this.state.messageEnded) {
-                this.setState({ messageError: true });
-                this.endedSendingMessage();
-                console.log("error sending message");
-            }
-        }, t * 1000);
+            cb();
+
+        }, Morse.TIME_INTERVAL * 2);
     }
 
+    fetchNextBit = (currentChar) => {
+        if (currentChar.length != 0) {
+
+        } else {
+            currentChar = this.charsArr.shift();
+            this.bitIndex = 0;
+
+        }
+
+        this.bitIndex++;
+    }
     playMorseSequence = () => {
+        console.log("playMorseSequence is launched");
+        let isDone = false;
+
+        let i = 0;
+        let currentBit = this.codeString[0];
+
+
+        let iterateChars = () => {
+
+            currentBit = this.codeString[i];
+            this.playBit(currentBit, () => {
+
+                if (this.codeString[i + 1]) {
+                    i++;
+                    return iterateChars();
+                } else {
+                    console.log("Done playing message");
+                    isDone = true;
+                }
+
+            });
+        }
+
+        if (!isDone) {
+            iterateChars();
+        }
+    }
+
+    generateMorseSequence = () => {
+        ///HERE
         this.textToMorse();
-        this.generateSequence();
+        console.log("this.codeString (binary message)", this.codeString);
+        this.playMorseSequence();
     }
 
     render() {
@@ -195,21 +118,12 @@ export class Morse extends Component {
                         <p className="message-status">ההודעה נשלחה בהצלחה</p>
                     </div>
                     :
-                    (this.state.messageError ?
-                        <div>
-                            <div className="loading-times">
-                                <i className="fa fa-times" />
-                            </div>
-                            <p className="message-status">ארעה תקלה בשליחת ההודעה, נסו שנית</p>
+                    <div>
+                        <div className="loading-spinner">
+                            <i className="fa fa-spinner fa-spin" />
                         </div>
-                        :
-                        <div>
-                            <div className="loading-spinner">
-                                <i className="fa fa-spinner fa-spin" />
-                            </div>
-                            <p className="message-status">ההודעה בשליחה</p>
-                        </div>
-                    )
+                        <p className="message-status">ההודעה בשליחה</p>
+                    </div>
                 }
             </div>
         );

@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-//import data from '../data.json';
-// import { Nav } from "./Nav";
 import { Message } from "./Message";
 import { NavBar } from '../NavBar.js';
 import InternalStorage from "../InternalStorage.js";
 import "./HomePage.css";
-
 
 export class HomePage extends Component {
 
@@ -15,7 +12,7 @@ export class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [] //""
+      messages: [] 
     }
 
     this.deletemessage = this.deletemessage.bind(this);
@@ -34,6 +31,7 @@ export class HomePage extends Component {
   }
 
   initializeInternalStorage = () => {
+    
     InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
       if (userData == "") {
         console.log("saving info to UserData.json");
@@ -51,12 +49,18 @@ export class HomePage extends Component {
   }
 
   componentWillMount() {
-    this.initializeInternalStorage();
+    
+    // this.initializeInternalStorage();
+
+    this.setState({messages:
+      [{header: "Lalala", isFav: false, itemID: 1546962908635, icon: "ghost"},
+      {header: "foo foo foo ", isFav: false, itemID: 1546962908635, icon: "ghost"}]
+  });
   }
 
-  componentDidMount(){
-    this.initializeInternalStorage();
-  }
+  // componentDidMount(){
+    // this.initializeInternalStorage();
+  // }
 
   deletemessage(event, itemID, isFav) {
     event.preventDefault();
@@ -107,6 +111,7 @@ export class HomePage extends Component {
   }
 
   sendMessage = (itemID) => {
+    console.log("is send message launched?!");
     let key = "SendMessage";
     let sendMsg = {};
 

@@ -46,7 +46,7 @@ export class SendPage extends Component {
                     />
                     <h4 className="mb-3" id="send-message-text">{this.state.header} </h4>
                 </div>
-
+            
                 <Morse header={this.state.header} history={this.props.history}/>
             </div>
         );

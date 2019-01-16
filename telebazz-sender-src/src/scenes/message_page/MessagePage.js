@@ -6,7 +6,6 @@ import { Colors } from "./Colors";
 import { FavoriteButton } from "./FavoriteButton";
 import InternalStorage from "../InternalStorage.js";
 import HomePage from "./../home_page/HomePage";
-import { SSL_OP_TLS_ROLLBACK_BUG } from 'constants';
 
 export class MessagePage extends Component {
     constructor(props) {

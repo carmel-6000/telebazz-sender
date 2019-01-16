@@ -53,7 +53,7 @@ export const char_to_morse = {
     'X': "-..-",
     'Y': "-.--",
     'Z': "--..",
-    ' ': " ",
+    ' ': "~~~~",
 }
 
 export default char_to_morse;
