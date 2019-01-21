@@ -4,17 +4,23 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+//mobx
+import stores from './stores';
+import { Provider } from 'mobx-react';
 
 function startApp() {
-  ReactDOM.render(<App />, document.getElementById('root'));
+  ReactDOM.render(
+    <Provider {...stores}>
+      <App />
+    </Provider>
+    , document.getElementById('root'));
 }
 
-
 if (window.cordova) {
-  document.addEventListener('deviceready', function(){
+  document.addEventListener('deviceready', function () {
     startApp();
   }, false);
-  
+
 } else {
   startApp();
 }
@@ -23,8 +29,4 @@ if (window.cordova) {
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
-
-
-
-
 

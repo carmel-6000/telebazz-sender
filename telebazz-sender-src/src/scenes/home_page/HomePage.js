@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Message } from "./Message";
+import  Message  from "./Message";
 import { NavBar } from '../NavBar.js';
 import InternalStorage from "../InternalStorage.js";
 import "./HomePage.css";
 
-export class HomePage extends Component {
+//mobx 
+import { observer } from 'mobx-react';
+
+@observer(['MessageSending'])
+class HomePage extends Component {
 
   static SETTINGS_FILE = "UserData.json"
 
   constructor(props) {
     super(props);
     this.state = {
-      messages: [] 
+      messages: [],
+      MessageSending: this.props.MessageSending.messageSending //true or false
     }
 
     this.deletemessage = this.deletemessage.bind(this);
@@ -53,7 +58,7 @@ export class HomePage extends Component {
     // this.initializeInternalStorage();
 
     this.setState({messages:
-      [{header: "Lalala", isFav: false, itemID: 1546962908635, icon: "ghost"},
+      [{header: "Lalala", isFav: false, itemID: 1546962908635111, icon: "ghost"},
       {header: "foo foo foo ", isFav: false, itemID: 1546962908635, icon: "ghost"}]
   });
   }

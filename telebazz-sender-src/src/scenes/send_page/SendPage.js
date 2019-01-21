@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { NavBar } from '../NavBar.js';
 // import { MorseCode } from '../../encode_message/MorseCode.jsx';
-import { Morse } from './Morse.js';
+import Morse from './Morse.js';
 import "./SendPage.css";
 
-export class SendPage extends Component {
+//mobx
+import { observer } from 'mobx-react';
+
+@observer(['MessageSending'])
+class SendPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,6 +37,17 @@ export class SendPage extends Component {
         }
     }
 
+    doneSendingMessage = () => {
+        //if the user in the 
+        if(window.location.href.indexOf("SendPage") != -1){
+            setTimeout(()=>{
+                this.props.history.push('/');
+            }, 2000);
+        }
+
+        this.props.MessageSending.messageSending = false;
+    }
+
     render() {
         return (
             <div>
@@ -46,8 +61,29 @@ export class SendPage extends Component {
                     />
                     <h4 className="mb-3" id="send-message-text">{this.state.header} </h4>
                 </div>
-            
-                <Morse header={this.state.header} history={this.props.history}/>
+
+                {!this.props.MessageSending.messageSending ?
+                    <div>
+                        <div className="loading-check">
+                            <i className="fa fa-check" />
+                        </div>
+                        <p className="message-status">ההודעה נשלחה בהצלחה</p>
+                    </div>
+                    :
+                    <div>
+                        <div className="loading-spinner">
+                            <i className="fa fa-spinner fa-spin" />
+                        </div>
+                        <p className="message-status">ההודעה בשליחה</p>
+                    </div>
+                }
+
+                <Morse
+                    header={this.state.header}
+                    // history={this.props.history}
+                    doneSendingMessage={this.doneSendingMessage}
+                />
+                
             </div>
         );
     }

@@ -2,21 +2,18 @@ import React, { Component } from "react";
 import char_to_binary from "./char_to_binary";
 import { setTimeout } from "timers";
 
+//css
 import "./SendPage.css";
 
-export class Morse extends Component {
+class Morse extends Component {
 
     static FREQUENCY_RATE = 700;
     static TIME_INTERVAL = 100;
 
     constructor(props) {
         super(props);
-        this.state = {
-            textInput: this.props.header,
-            messageEnded: false,
-            messageError: false
-        }
-
+    
+        this.textInput = this.props.header;
         this.codeString = "";
     }
 
@@ -24,8 +21,8 @@ export class Morse extends Component {
         this.generateMorseSequence();
     }
 
-    textToMorse = () => {
-        let message = this.state.textInput;
+    textToBinary = () => {
+        let message = this.textInput;
         let messageUpper = message.toUpperCase();
         console.log("messageUpper: ", messageUpper);
 
@@ -44,6 +41,9 @@ export class Morse extends Component {
             osc.connect(context.destination);
             osc.start(0);
             osc.stop(Morse.TIME_INTERVAL / 1000);
+
+            //context.close(); - works with 'npm start' but NOT with cordova!!!!
+
             osc.onended = () => {
                 //console.log("on ended is launched");
                 setTimeout(() => {
@@ -89,6 +89,7 @@ export class Morse extends Component {
                     return iterateChars();
                 } else {
                     console.log("Done playing message");
+                    this.props.doneSendingMessage();
                     isDone = true;
                 }
 
@@ -101,31 +102,14 @@ export class Morse extends Component {
     }
 
     generateMorseSequence = () => {
-        ///HERE
-        this.textToMorse();
+        this.textToBinary();
         console.log("this.codeString (binary message)", this.codeString);
         this.playMorseSequence();
     }
 
     render() {
         return (
-            <div>
-                {this.state.messageEnded ?
-                    <div>
-                        <div className="loading-check">
-                            <i className="fa fa-check" />
-                        </div>
-                        <p className="message-status">ההודעה נשלחה בהצלחה</p>
-                    </div>
-                    :
-                    <div>
-                        <div className="loading-spinner">
-                            <i className="fa fa-spinner fa-spin" />
-                        </div>
-                        <p className="message-status">ההודעה בשליחה</p>
-                    </div>
-                }
-            </div>
+            <div/>
         );
     }
 }
