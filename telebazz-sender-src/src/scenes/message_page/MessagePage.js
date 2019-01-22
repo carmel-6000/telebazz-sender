@@ -46,19 +46,15 @@ export class MessagePage extends Component {
     // Adding Event Listener so the storage will be updated
     // if the component will unmount
     componentDidMount() {
-        window.addEventListener("beforeunload", this.updateStorage);
+        window.addEventListener("beforeunload", this.updateLocalStorage);
     }
 
     componentWillUnmount() {
-        this.updateStorage();
-        window.removeEventListener('beforeunload', this.updateStorage);
+        this.updateLocalStorage();
+        window.removeEventListener('beforeunload', this.updateLocalStorage);
     }
 
-    updateLocalStorage = (messageOB) => {
-        localStorage.setItem(this.state.key, JSON.stringify(messageOB));
-    }
-
-    updateStorage = () => {
+    updateLocalStorage = () => {
         let messageOB = {
             header: this.state.header,
             color: this.state.color,
@@ -66,8 +62,8 @@ export class MessagePage extends Component {
             icon: this.state.icon,
             itemID: this.state.itemID
         };
-
-        this.updateLocalStorage(messageOB);
+        
+        localStorage.setItem(this.state.key, JSON.stringify(messageOB));
     }
 
     saveMessageData = () => {

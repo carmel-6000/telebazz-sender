@@ -33,6 +33,7 @@ export class MsgCtrlButtons extends Component {
         return (
             <div>
                 <button
+                    id="msg-ctrl-btn"
                     onClick={this.showMenu}
                     className="btn btn-secondary dropdown-toggle"
                     type="button"
@@ -78,3 +79,5 @@ export class MsgCtrlButtons extends Component {
         );
     }
 }
+
+export default MsgCtrlButtons;

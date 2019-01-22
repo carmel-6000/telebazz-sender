@@ -7,7 +7,7 @@ import "./SendPage.css";
 
 class Morse extends Component {
 
-    static FREQUENCY_RATE = 700;
+    static FREQUENCY_RATE = 440;
     static TIME_INTERVAL = 100;
 
     constructor(props) {
@@ -33,22 +33,21 @@ class Morse extends Component {
 
     playBit = (currentChar, cb) => {
         console.log("Playing bit:%s", currentChar);
-        if (currentChar == 1) {
+        if (currentChar == 1 || currentChar == "start") {
             var context = new AudioContext();
             var osc = context.createOscillator();
             osc.type = "sine";
             osc.frequency.value = Morse.FREQUENCY_RATE;
             osc.connect(context.destination);
             osc.start(0);
-            osc.stop(Morse.TIME_INTERVAL / 1000);
-
-            //context.close(); - works with 'npm start' but NOT with cordova!!!!
+            osc.stop(Morse.TIME_INTERVAL / 1000); //according to seconds
 
             osc.onended = () => {
                 //console.log("on ended is launched");
+                // context.close(); //works with 'npm start' but NOT with cordova!!!!
                 setTimeout(() => {
-                    cb();
-                }, Morse.TIME_INTERVAL);
+                    if(cb) cb();
+                }, Morse.TIME_INTERVAL); //according to miliseconds
 
             }
             return;
@@ -56,24 +55,23 @@ class Morse extends Component {
 
         setTimeout(() => {
             cb();
-
-        }, Morse.TIME_INTERVAL * 2);
+        }, Morse.TIME_INTERVAL * 2); //according to miliseconds
     }
 
-    fetchNextBit = (currentChar) => {
-        if (currentChar.length != 0) {
+    // fetchNextBit = (currentChar) => {
+    //     if (currentChar.length != 0) {
+    //     } else {
+    //         currentChar = this.charsArr.shift();
+    //         this.bitIndex = 0;
+    //     }
+    //     this.bitIndex++;
+    // }
 
-        } else {
-            currentChar = this.charsArr.shift();
-            this.bitIndex = 0;
-
-        }
-
-        this.bitIndex++;
-    }
     playMorseSequence = () => {
         console.log("playMorseSequence is launched");
         let isDone = false;
+
+        this.playBit("start");
 
         let i = 0;
         let currentBit = this.codeString[0];

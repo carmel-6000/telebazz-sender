@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import  Message  from "./Message";
+import Message from "./Message";
 import { NavBar } from '../NavBar.js';
 import InternalStorage from "../InternalStorage.js";
 import "./HomePage.css";
@@ -36,7 +36,7 @@ class HomePage extends Component {
   }
 
   initializeInternalStorage = () => {
-    
+
     InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
       if (userData == "") {
         console.log("saving info to UserData.json");
@@ -48,24 +48,27 @@ class HomePage extends Component {
       }
     });
 
-    localStorage.setItem("EditMessage", JSON.stringify(""));
-    localStorage.setItem("NewMessage", JSON.stringify({}));
-    localStorage.setItem("SendMessage", JSON.stringify(""));
+    // localStorage.setItem("EditMessage", JSON.stringify(""));
+    // localStorage.setItem("NewMessage", JSON.stringify(""));
+    // localStorage.setItem("SendMessage", JSON.stringify(""));
   }
 
   componentWillMount() {
-    
+
     // this.initializeInternalStorage();
 
-    this.setState({messages:
-      [{header: "Lalala", isFav: false, itemID: 1546962908635111, icon: "ghost"},
-      {header: "foo foo foo ", isFav: false, itemID: 1546962908635, icon: "ghost"}]
-  });
+    this.setState({
+      messages:
+        [{ header: "a", isFav: false, itemID: 1546962908635111, icon: "ghost" },
+        { header: "foo foo foo", isFav: false, itemID: 1546962908635, icon: "ghost" }]
+    });
   }
 
-  // componentDidMount(){
-    // this.initializeInternalStorage();
-  // }
+  componentDidMount(){
+    localStorage.setItem("EditMessage", JSON.stringify(""));
+    localStorage.setItem("NewMessage", JSON.stringify(""));
+    localStorage.setItem("SendMessage", JSON.stringify(""));
+  }
 
   deletemessage(event, itemID, isFav) {
     event.preventDefault();
@@ -116,7 +119,7 @@ class HomePage extends Component {
   }
 
   sendMessage = (itemID) => {
-    console.log("is send message launched?!");
+    console.log("is send message launched?!", itemID);
     let key = "SendMessage";
     let sendMsg = {};
 
@@ -200,6 +203,7 @@ class HomePage extends Component {
         <div className="container">
           <Link to="/NewMessage">
             <button
+              id="bottom-new-message-btn"
               type="button"
               className="btn btn-secondary btn-lg fixed-bottom btn-block">
               הוסף/י הודעה
