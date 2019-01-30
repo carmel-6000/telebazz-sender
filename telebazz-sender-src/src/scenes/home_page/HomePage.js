@@ -55,13 +55,15 @@ class HomePage extends Component {
 
   componentWillMount() {
 
-    // this.initializeInternalStorage();
+    this.initializeInternalStorage();
 
-    this.setState({
-      messages:
-        [{ header: "a", isFav: false, itemID: 1546962908635111, icon: "ghost" },
-        { header: "foo foo foo", isFav: false, itemID: 1546962908635, icon: "ghost" }]
-    });
+    // this.setState({
+    //   messages:
+    //     [{ header: "a", isFav: false, itemID: 1546962908635111, icon: "ghost" },
+    //     { header: "foo foo foo", isFav: false, itemID: 1546962908635, icon: "ghost" },
+    //     { header: "lets check this out", isFav: false, itemID: 1546162908635, icon: "ghost" }
+    //   ]
+    // });
   }
 
   componentDidMount(){

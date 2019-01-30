@@ -26,7 +26,9 @@ export const char_to_binary = {
     'X': "11000",
     'Y': "11001",
     'Z': "11010",
-    ' ': "@@@@@"
+    ' ': "@@@@@",
+    '*': '11111',
+    '#': '00000'
 }
 
 export default char_to_binary;

@@ -5,16 +5,59 @@ import { setTimeout } from "timers";
 //css
 import "./SendPage.css";
 
+
+class Sound {
+
+    constructor(context) {
+      this.context = context;
+    }
+  
+    init() {
+
+      this.oscillator = this.context.createOscillator();
+      this.gainNode = this.context.createGain();
+      this.oscillator.connect(this.gainNode);
+      this.gainNode.connect(this.context.destination);
+      this.oscillator.type = 'sine';
+    }
+  
+    onEnded(cb){
+        
+        this.oscillator.onended = () => {
+            cb();
+        }
+        
+    }
+    play(value, time) {
+      
+      this.init();
+      this.oscillator.frequency.value = value;
+      //this.gainNode.gain.setValueAtTime(1, this.context.currentTime);        
+      this.oscillator.start(time);
+      this.stop(time);
+  
+    }
+  
+    stop(time) {
+      //this.gainNode.gain.exponentialRampToValueAtTime(0.001, time + 1);
+      this.oscillator.stop(time + Morse.TIME_INTERVAL/1000);
+    }
+  
+  }
+
+
 class Morse extends Component {
 
-    static FREQUENCY_RATE = 440;
-    static TIME_INTERVAL = 100;
+    static FREQUENCY_RATE = 18000;
+    static TIME_INTERVAL = 1000;
 
     constructor(props) {
         super(props);
-    
+
         this.textInput = this.props.header;
         this.codeString = "";
+        //this.audioContext = new AudioContext();
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
 
     componentWillMount() {
@@ -32,23 +75,50 @@ class Morse extends Component {
     }
 
     playBit = (currentChar, cb) => {
-        console.log("Playing bit:%s", currentChar);
         if (currentChar == 1 || currentChar == "start") {
-            var context = new AudioContext();
-            var osc = context.createOscillator();
+            
+            let note = new Sound(this.audioContext);
+            let now = this.audioContext.currentTime;
+            console.log("Playing a 1 signal");
+            note.play(Morse.FREQUENCY_RATE, now);
+            note.onEnded(()=>{
+                console.log("note on ended is launched"); 
+                setTimeout(() => {
+                    if (cb) cb();
+                }, Morse.TIME_INTERVAL); //according to miliseconds
+            })
+            return;
+            
+        
+        }
+
+        console.log("Playing a 0 signal");
+        setTimeout(() => {
+            cb();
+        }, Morse.TIME_INTERVAL * 2); //according to miliseconds
+    }
+    xplayBit = (currentChar, cb) => {
+        
+        if (currentChar == 1 || currentChar == "start") {
+            
+            var osc = this.audioContext.createOscillator();
+            let note=new Sound(this.audioContext);
             osc.type = "sine";
             osc.frequency.value = Morse.FREQUENCY_RATE;
-            osc.connect(context.destination);
+            console.log("osc.connect");
+            osc.connect(this.audioContext.destination);
+            console.log("Playing bit:%s", currentChar);
             osc.start(0);
             osc.stop(Morse.TIME_INTERVAL / 1000); //according to seconds
 
             osc.onended = () => {
-                //console.log("on ended is launched");
+                 console.log("on ended is launched");
                 // context.close(); //works with 'npm start' but NOT with cordova!!!!
+                // osc.disconnect(); //gets stuck
+                
                 setTimeout(() => {
-                    if(cb) cb();
+                    if (cb) cb();
                 }, Morse.TIME_INTERVAL); //according to miliseconds
-
             }
             return;
         }
@@ -58,15 +128,16 @@ class Morse extends Component {
         }, Morse.TIME_INTERVAL * 2); //according to miliseconds
     }
 
-    // fetchNextBit = (currentChar) => {
-    //     if (currentChar.length != 0) {
-    //     } else {
-    //         currentChar = this.charsArr.shift();
-    //         this.bitIndex = 0;
-    //     }
-    //     this.bitIndex++;
-    // }
-
+    xplayMorseSequence=()=>{
+        let context = new (window.AudioContext || window.webkitAudioContext)();
+        let note = new Sound(context);
+        let now = context.currentTime;
+        note.play(440, now);
+        note.play(440, now + 2);
+        note.play(440, now + 4);
+        
+        this.props.doneSendingMessage();
+    }
     playMorseSequence = () => {
         console.log("playMorseSequence is launched");
         let isDone = false;
@@ -75,7 +146,6 @@ class Morse extends Component {
 
         let i = 0;
         let currentBit = this.codeString[0];
-
 
         let iterateChars = () => {
 
@@ -90,7 +160,6 @@ class Morse extends Component {
                     this.props.doneSendingMessage();
                     isDone = true;
                 }
-
             });
         }
 
@@ -106,9 +175,7 @@ class Morse extends Component {
     }
 
     render() {
-        return (
-            <div/>
-        );
+        return (<div />);
     }
 }
 
