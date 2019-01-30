@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { NavBar } from '../NavBar';
+import NavBar from '../NavBar';
 import iconsObj from './iconsObj';
-import { Filter } from './Filter';
+import Filter from './Filter';
 import { Icons } from './Icons';
 import './IconPage.css';
 
-export class IconPage extends Component {
+//mobx 
+import { observer } from 'mobx-react';
+
+const languages = require('./../Languages.json');
+
+@observer(['Settings'])
+class IconPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -68,14 +74,14 @@ export class IconPage extends Component {
       <div>
         <NavBar pageName="IconPage" history={this.props.history} />
         <div className="container">
-          <h3>איזה אייקון תרצו להציג?</h3>
+          <h3>{languages[this.props.Settings.language].iconQuestionTitle}</h3>
           <div className="dropdown show text-center">
             <div>
               <button
                 className="btn btn-secondary dropdown-toggle "
                 id="dropdownFilterIcon"
                 onClick={this.showMenu}>
-                סנן/י
+                {languages[this.props.Settings.language].filterIcons}
               </button>
 
               {this.state.showMenu
@@ -117,7 +123,7 @@ export class IconPage extends Component {
               type="button"
               className="btn btn-info btn-lg btn-block"
               onClick={this.saveNewIcon}>
-              המשך
+              {languages[this.props.Settings.language].continue}
             </button>
           </Link>
         </div>

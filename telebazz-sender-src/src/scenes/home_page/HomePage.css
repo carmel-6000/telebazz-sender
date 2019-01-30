@@ -62,3 +62,7 @@
     width: fit-content;
     height: auto;
 }
+
+/* .dropdown-toggle::after {
+    display: none;
+} */

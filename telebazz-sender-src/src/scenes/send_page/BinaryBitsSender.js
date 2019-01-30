@@ -5,7 +5,7 @@ import Sound from "./Sound";
 //css
 import "./SendPage.css";
 
-class Morse extends Component {
+class BinaryBitsSender extends Component {
 
     static FREQUENCY_RATE = 440;
     static TIME_INTERVAL = 50;
@@ -19,7 +19,7 @@ class Morse extends Component {
     }
 
     componentWillMount() {
-        this.generateMorseSequence();
+        this.generateBinarySequence();
     }
 
     textToBinary = () => {
@@ -37,12 +37,12 @@ class Morse extends Component {
             let note = new Sound(this.audioContext);
             let now = this.audioContext.currentTime;
             console.log("Playing a 1 signal");
-            note.play(Morse.FREQUENCY_RATE, now);
-            note.onEnded(()=>{
-                console.log("note on ended is launched"); 
+            note.play(BinaryBitsSender.FREQUENCY_RATE, now);
+            note.onEnded(() => {
+                console.log("note on ended is launched");
                 setTimeout(() => {
                     if (cb) cb();
-                }, Morse.TIME_INTERVAL); //according to miliseconds
+                }, BinaryBitsSender.TIME_INTERVAL); //according to miliseconds
             })
             return;
         }
@@ -50,11 +50,11 @@ class Morse extends Component {
         console.log("Playing a 0 signal");
         setTimeout(() => {
             cb();
-        }, Morse.TIME_INTERVAL * 2); //according to miliseconds
+        }, BinaryBitsSender.TIME_INTERVAL * 2); //according to miliseconds
     }
 
-    playMorseSequence = () => {
-        console.log("playMorseSequence is launched");
+    playBinarySequence = () => {
+        console.log("playBinarySequence is launched");
         let isDone = false;
 
         this.playBit("start");
@@ -82,15 +82,13 @@ class Morse extends Component {
         }
     }
 
-    generateMorseSequence = () => {
+    generateBinarySequence = () => {
         this.textToBinary();
         console.log("this.codeString (binary message)", this.codeString);
-        this.playMorseSequence();
+        this.playBinarySequence();
     }
 
-    render() {
-        return (<div />);
-    }
+    render() { return (<div />); }
 }
 
-export default Morse;
+export default BinaryBitsSender;

@@ -1,3 +1,4 @@
 import MessageSending from './MessageSending.store.js';
+import Settings from './Settings.store.js';
 
-export default {MessageSending};
+export default {MessageSending, Settings};

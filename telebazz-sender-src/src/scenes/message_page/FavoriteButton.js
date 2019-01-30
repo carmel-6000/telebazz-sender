@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import './MessagePage.css';
 
-export class FavoriteButton extends Component {
+//mobx 
+import { observer } from 'mobx-react';
+
+const languages = require('./../Languages.json');
+
+@observer(['Settings'])
+class FavoriteButton extends Component {
 
   render() {
     return (
@@ -20,10 +26,12 @@ export class FavoriteButton extends Component {
           className="custom-control-label pull-right"
           htmlFor="defaultUnchecked">
           <p className="add-to-favorites-lable">
-            הוספה למועדפים:
+            {languages[this.props.Settings.language].addToFavs}
           </p>
         </label>
       </div>
     );
   }
 }
+
+export default FavoriteButton;

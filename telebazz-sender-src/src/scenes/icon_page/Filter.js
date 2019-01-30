@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import './IconPage.css';
 
-export class Filter extends Component {
+//mobx 
+import { observer } from 'mobx-react';
+
+const languages = require('./../Languages.json');
+
+@observer(['Settings'])
+class Filter extends Component {
     
     filterCategory = (event) => {
         let checked = event.target.checked;
@@ -55,7 +61,8 @@ export class Filter extends Component {
                     className="custom-control-label pull-right"
                     htmlFor={this.props.category}>
                     <p className="icon-name" htmlFor={this.props.category}>
-                        {this.props.category}
+                        {languages[this.props.Settings.language][this.props.category]}
+                        {/* {this.props.category} */}
                     </p>
                 </label>
             </div>

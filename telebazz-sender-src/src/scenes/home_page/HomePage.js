@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Message from "./Message";
-import { NavBar } from '../NavBar.js';
+import NavBar from '../NavBar.js';
 import InternalStorage from "../InternalStorage.js";
+import LanguageSettings from './LanguageSettings.js';
+
+//css
 import "./HomePage.css";
 
 //mobx 
 import { observer } from 'mobx-react';
 
-@observer(['MessageSending'])
+const languages = require('./../Languages.json');
+
+@observer(['MessageSending', 'Settings'])
 class HomePage extends Component {
 
-  static SETTINGS_FILE = "UserData.json"
+  static MESSAGES_FILE = "UserData.json"
 
   constructor(props) {
     super(props);
@@ -32,16 +37,16 @@ class HomePage extends Component {
   }
 
   saveMessagesToInternalStorage = (updatemessages) => {
-    InternalStorage.saveFile({ Messages: updatemessages }, HomePage.SETTINGS_FILE);
+    InternalStorage.saveFile({ Messages: updatemessages }, HomePage.MESSAGES_FILE);
   }
 
   initializeInternalStorage = () => {
 
-    InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
+    InternalStorage.readFile(HomePage.MESSAGES_FILE, (userData) => {
       if (userData == "") {
         console.log("saving info to UserData.json");
         userData = this.initializeUserData();
-        InternalStorage.saveFile(userData, HomePage.SETTINGS_FILE);
+        InternalStorage.saveFile(userData, HomePage.MESSAGES_FILE);
       } else {
         userData = JSON.parse(userData);
         this.setState({ messages: userData.Messages });
@@ -60,13 +65,13 @@ class HomePage extends Component {
     // this.setState({
     //   messages:
     //     [{ header: "a", isFav: false, itemID: 1546962908635111, icon: "ghost" },
-    //     { header: "foo foo foo", isFav: false, itemID: 1546962908635, icon: "ghost" },
+    //     { header: "foo foo foo", isFav: true, itemID: 1546962908635, icon: "ghost" },
     //     { header: "lets check this out", isFav: false, itemID: 1546162908635, icon: "ghost" }
-    //   ]
+    //     ]
     // });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     localStorage.setItem("EditMessage", JSON.stringify(""));
     localStorage.setItem("NewMessage", JSON.stringify(""));
     localStorage.setItem("SendMessage", JSON.stringify(""));
@@ -164,9 +169,12 @@ class HomePage extends Component {
     });
 
     return (
-      <div style={{ textAlign: "right" }}>
+      // <div style={{ textAlign: "right" }}>
+      <div>
         {/* <Nav /> */}
         <NavBar pageName="HomePage" />
+
+        <LanguageSettings />
 
         {/* if there are no messages at all */}
         {!favmessages[0] && !regmessages[0] ?
@@ -183,7 +191,9 @@ class HomePage extends Component {
         {/* if there are no favorite messages */}
         {favmessages[0] ?
           <div>
-            <p className="main-title-messages"> מועדפים </p>
+            <p className="main-title-messages">
+              {languages[this.props.Settings.language].myFavsTitle}
+            </p>
             <div style={{ textAlign: "center" }}>
               {favmessages}
             </div>
@@ -194,7 +204,9 @@ class HomePage extends Component {
         {/* if there are no regular messages */}
         {regmessages[0] ?
           <div>
-            <p className="main-title-messages"> ההודעות שלי </p>
+            <p className="main-title-messages">
+              {languages[this.props.Settings.language].myMessagesTitle}
+            </p>
             <div style={{ textAlign: "center" }} >
               {regmessages}
             </div>
@@ -208,7 +220,8 @@ class HomePage extends Component {
               id="bottom-new-message-btn"
               type="button"
               className="btn btn-secondary btn-lg fixed-bottom btn-block">
-              הוסף/י הודעה
+              {/* הוסף/י הודעה */}
+              {languages[this.props.Settings.language].createMessage}
             </button>
           </Link>
         </div>

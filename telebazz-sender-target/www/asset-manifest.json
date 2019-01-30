@@ -1,14 +1,14 @@
 {
-  "main.css": "./static/css/main.c7405e14.chunk.css",
-  "main.js": "./static/js/main.7f61586e.chunk.js",
-  "main.js.map": "./static/js/main.7f61586e.chunk.js.map",
-  "static/js/1.7e62b0c9.chunk.js": "./static/js/1.7e62b0c9.chunk.js",
-  "static/js/1.7e62b0c9.chunk.js.map": "./static/js/1.7e62b0c9.chunk.js.map",
+  "main.css": "./static/css/main.387cc032.chunk.css",
+  "main.js": "./static/js/main.9b594d68.chunk.js",
+  "main.js.map": "./static/js/main.9b594d68.chunk.js.map",
+  "static/js/1.312aef2c.chunk.js": "./static/js/1.312aef2c.chunk.js",
+  "static/js/1.312aef2c.chunk.js.map": "./static/js/1.312aef2c.chunk.js.map",
   "runtime~main.js": "./static/js/runtime~main.4a686d48.js",
   "runtime~main.js.map": "./static/js/runtime~main.4a686d48.js.map",
   "static/media/color-picker.png": "./static/media/color-picker.0fc36b2a.png",
-  "static/css/main.c7405e14.chunk.css.map": "./static/css/main.c7405e14.chunk.css.map",
+  "static/css/main.387cc032.chunk.css.map": "./static/css/main.387cc032.chunk.css.map",
   "index.html": "./index.html",
-  "precache-manifest.17a726f22fe24558757aee4fc4265427.js": "./precache-manifest.17a726f22fe24558757aee4fc4265427.js",
+  "precache-manifest.7c7d9234ef0ef8eb49136efcb65f6c34.js": "./precache-manifest.7c7d9234ef0ef8eb49136efcb65f6c34.js",
   "service-worker.js": "./service-worker.js"
 }

@@ -1,0 +1,92 @@
+{
+    "Hebrew": {
+        "createMessage": "הוסף/י הודעה",
+        "myMessagesTitle": "ההודעות שלי",
+        "myFavsTitle": "מועדפים",
+
+        "editMsgBtn": "ערוך/י",
+        "deleteMsgBtn": "מחק/י",
+        "removeFavsBtn": "הסרה ממועדפים",
+        "addFavsBtn": "הוספה למועדפים",
+
+        "theMsgSubtitle": "ההודעה",
+        "enterMsgPlaceholder": "הכנס/י הודעה",
+        "msgRequirements": "על ההודעה להיות קצרה ותמציתית.",
+        "changeIcon": "שנה/י אייקון",
+        "colorSmallText": "ביכולתך לבחור צבע מוכן מראש או לחילופין לבחור צבע מותאם אישית.",
+        "addToFavs": "הוספה למועדפים",
+        "addMsg": "הוסף/י",
+        "updateMsg": "עדכן/י",
+        "msgExistsAlert": "הודעה זו כבר קיימת במערכת",
+
+        "iconQuestionTitle": "איזה אייקון תרצו להציג?",
+        "filterIcons": "סנן/י",
+        "continue": "המשך/י",
+
+        "msgSendingText": "ההודעה בשליחה",
+        "msgSentText": "ההודעה נשלחה בהצלחה",
+
+        "newMsgTitle":"הודעה חדשה",
+        "editMsgTitle": "עריכת הודעה",
+        "chooseIconTitle": "בחירת אייקון",
+        "sendingMsgTitle": "שליחת הודעה",
+
+        "animals": "בעלי חיים",
+        "dangers": "סכנות",
+        "religion": "דת",
+        "medicine": "רפואה",
+        "food": "אוכל",
+        "places": "מקומות",
+        "people": "אנשים",
+        "objects": "חפצים",
+        "hobbies": "תחביבים",
+        "time": "זמן",
+        "vehicles": "כלי תחבורה",
+        "chores": "מטלות"
+    },
+    "English": {
+        "createMessage": "Add Message",
+        "myMessagesTitle": "My Messages",
+        "myFavsTitle": "Favorites",
+
+        "editMsgBtn": "Edit",
+        "deleteMsgBtn": "Delete",
+        "removeFavsBtn": "Remove From Favs",
+        "addFavsBtn": "Add To Favorites",
+
+        "theMsgSubtitle": "The Message",
+        "enterMsgPlaceholder": "Enter Message",
+        "msgRequirements": "The message should be short and concise.",
+        "changeIcon": "Change Icon",
+        "colorSmallText": "Choose a pre-defined color or create your own.",
+        "addToFavs": "Add to Favorites",
+        "addMsg": "Add Message",
+        "updateMsg": "Update Message",
+        "msgExistsAlert": "This message already exists",
+
+        "iconQuestionTitle": "What icon would you like to use?",
+        "filterIcons": "Filter",
+        "continue": "continue",
+
+        "msgSendingText": "Sending message",
+        "msgSentText": "Message successfully sent",
+
+        "newMsgTitle":"New Message",
+        "editMsgTitle": "Edit Message",
+        "chooseIconTitle": "Choose Icon",
+        "sendingMsgTitle": "Sending Message",
+
+        "animals": "Animals",
+        "dangers": "Dangers",
+        "religion": "Religion",
+        "medicine": "Medicine",
+        "food": "Food",
+        "places": "Places",
+        "people": "People",
+        "objects": "Objects",
+        "hobbies": "Hobbies",
+        "time": "Time",
+        "vehicles": "Vehicles",
+        "chores": "Chores"
+    }
+}

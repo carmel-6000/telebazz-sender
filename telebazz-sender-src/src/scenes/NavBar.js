@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
-export class NavBar extends Component {
+//mobx 
+import { observer } from 'mobx-react';
+
+const languages = require('./Languages.json');
+
+@observer(['MessageSending', 'Settings'])
+class NavBar extends Component {
   constructor(props) {
     super(props);
     this.click = this.click.bind(this);
@@ -25,16 +31,16 @@ export class NavBar extends Component {
         displayPageName = "Telebuzz";
         break;
       case "NewMessage":
-        displayPageName = "הודעה חדשה";
+        displayPageName = languages[this.props.Settings.language].newMsgTitle;
         break;
       case "EditMessage":
-        displayPageName = "עריכת הודעה";
+        displayPageName = languages[this.props.Settings.language].editMsgTitle;
         break;
       case "IconPage":
-        displayPageName = "בחירת אייקון";
+        displayPageName = languages[this.props.Settings.language].chooseIconTitle;
         break;
       case "SendPage":
-        displayPageName = "שולח הודעה";
+        displayPageName = languages[this.props.Settings.language].sendingMsgTitle;
         break;
       default:
         displayPageName = "";
@@ -77,3 +83,5 @@ export class NavBar extends Component {
     }
   }
 }
+
+export default NavBar;

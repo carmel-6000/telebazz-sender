@@ -1,4 +1,4 @@
-import Morse from "./Morse";
+import BinaryBitsSender from "./BinaryBitsSender";
 
 class Sound {
     constructor(context) {
@@ -29,7 +29,7 @@ class Sound {
 
     stop(time) {
         //this.gainNode.gain.exponentialRampToValueAtTime(0.001, time + 1);
-        this.oscillator.stop(time + Morse.TIME_INTERVAL / 1000);
+        this.oscillator.stop(time + BinaryBitsSender.TIME_INTERVAL / 1000);
     }
 }
 

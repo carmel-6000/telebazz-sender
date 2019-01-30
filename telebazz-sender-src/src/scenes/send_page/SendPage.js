@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { NavBar } from '../NavBar.js';
-// import { MorseCode } from '../../encode_message/MorseCode.jsx';
-import Morse from './Morse.js';
+import NavBar from '../NavBar.js';
+import BinaryBitsSender from './BinaryBitsSender.js';
 import "./SendPage.css";
 
-//mobx
+//mobx 
 import { observer } from 'mobx-react';
 
-@observer(['MessageSending'])
+const languages = require('./../Languages.json');
+
+@observer(['MessageSending', 'Settings'])
 class SendPage extends Component {
     constructor(props) {
         super(props);
@@ -39,8 +40,8 @@ class SendPage extends Component {
 
     doneSendingMessage = () => {
         //if the user in the 
-        if(window.location.href.indexOf("SendPage") != -1){
-            setTimeout(()=>{
+        if (window.location.href.indexOf("SendPage") != -1) {
+            setTimeout(() => {
                 this.props.history.push('/');
             }, 2000);
         }
@@ -67,23 +68,26 @@ class SendPage extends Component {
                         <div className="loading-check">
                             <i className="fa fa-check" />
                         </div>
-                        <p className="message-status">ההודעה נשלחה בהצלחה</p>
+                        <p className="message-status">
+                            {languages[this.props.Settings.language].msgSentText}
+                        </p>
                     </div>
                     :
                     <div>
                         <div className="loading-spinner">
                             <i className="fa fa-spinner fa-spin" />
                         </div>
-                        <p className="message-status">ההודעה בשליחה</p>
+                        <p className="message-status">
+                            {languages[this.props.Settings.language].msgSendingText}
+                        </p>
                     </div>
                 }
 
-                <Morse
+                <BinaryBitsSender
                     header={this.state.header}
-                    // history={this.props.history}
                     doneSendingMessage={this.doneSendingMessage}
                 />
-                
+
             </div>
         );
     }

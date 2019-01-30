@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import './MessagePage.css';
 import { Link } from 'react-router-dom';
-import { NavBar } from "../NavBar";
+import NavBar from "../NavBar";
 import { Colors } from "./Colors";
-import { FavoriteButton } from "./FavoriteButton";
+import FavoriteButton from "./FavoriteButton";
 import InternalStorage from "../InternalStorage.js";
 import HomePage from "./../home_page/HomePage";
 
-export class MessagePage extends Component {
+//mobx 
+import { observer } from 'mobx-react';
+
+const languages = require('./../Languages.json');
+
+@observer(['Settings'])
+class MessagePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -62,7 +68,7 @@ export class MessagePage extends Component {
             icon: this.state.icon,
             itemID: this.state.itemID
         };
-        
+
         localStorage.setItem(this.state.key, JSON.stringify(messageOB));
     }
 
@@ -77,7 +83,7 @@ export class MessagePage extends Component {
         let messagesArr = [];
         let tempmessage = [];
 
-        InternalStorage.readFile(HomePage.SETTINGS_FILE, (userData) => {
+        InternalStorage.readFile(HomePage.MESSAGES_FILE, (userData) => {
             userData = JSON.parse(userData);
             messagesArr = userData.Messages;
 
@@ -92,7 +98,7 @@ export class MessagePage extends Component {
 
             //if the message exists - don't add it again
             if (messageExists) {
-                alert("הודעה זו כבר קיימת במערכת");
+                alert(languages[this.props.Settings.language].msgExistsAlert);
                 this.props.history.push('/');
             } else {
                 //if the message has an id then it is an "EditMessage" 
@@ -109,7 +115,7 @@ export class MessagePage extends Component {
                     messagesArr.push(msg);
                 }
 
-                InternalStorage.saveFile({ Messages: messagesArr }, HomePage.SETTINGS_FILE, (_a) => {
+                InternalStorage.saveFile({ Messages: messagesArr }, HomePage.MESSAGES_FILE, (_a) => {
                     this.props.history.push("/");
                 });
             }
@@ -129,7 +135,7 @@ export class MessagePage extends Component {
         this.setState({ isFav: !this.state.isFav });
     }
 
-  
+
 
     render() {
         return (
@@ -139,17 +145,21 @@ export class MessagePage extends Component {
 
                 <div className="container">
 
-                    <label htmlFor="message-title text-right">ההודעה:</label>
+                    <label htmlFor="message-title text-right">
+                        {languages[this.props.Settings.language].theMsgSubtitle}
+                    </label>
                     <input
                         type="text"
                         onChange={(event) => this.updateInfoEvent("header", event)}
                         className="form-control"
                         id="message-title"
-                        placeholder="הכנס/י הודעה"
+                        placeholder={languages[this.props.Settings.language].enterMsgPlaceholder}
                         value={this.state.header}
                         maxLength="30"
                     />
-                    <small className="form-text text-muted">על ההודעה להיות קצרה ותמציתית.</small>
+                    <small className="form-text text-muted">
+                        {languages[this.props.Settings.language].msgRequirements}
+                    </small>
                     <br />
 
                     <div className="row">
@@ -162,7 +172,7 @@ export class MessagePage extends Component {
                                     type="button"
                                     className="btn btn-info ">
                                     <i className="fas fa-pencil-alt"></i>
-                                    שנה/י אייקון
+                                    {languages[this.props.Settings.language].changeIcon}
                                 </button>
                             </Link>
                         </div>
@@ -188,7 +198,9 @@ export class MessagePage extends Component {
                             />
                         </div>
                     </div>
-                    <small className="form-text text-muted text-center ">ביכולתך לבחור בצבע מוכן מראש או לחילופין לבחור צבע מותאם אישית.</small>
+                    <small className="form-text text-muted text-center ">
+                        {languages[this.props.Settings.language].colorSmallText}
+                    </small>
 
                     <br />
 
@@ -197,19 +209,25 @@ export class MessagePage extends Component {
                 </div>
 
                 {this.state.header ?
-                    // <Link to="/">
                     <button
                         type="submit"
                         className="submit-message-button btn btn-secondary btn-lg btn-block fixed-bottom"
                         onClick={this.saveMessageData}>
-                        {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
+                        {this.state.key === "NewMessage" ?
+                            languages[this.props.Settings.language].addMsg
+                            :
+                            languages[this.props.Settings.language].updateMsg
+                        }
                     </button>
-                    // </Link>
                     : <button
                         disabled
                         type="submit"
                         className="submit-message-button btn btn-secondary btn-lg btn-block fixed-bottom">
-                        {this.state.key === "NewMessage" ? "הוסף/י" : "עדכן/י"}
+                        {this.state.key === "NewMessage" ?
+                            languages[this.props.Settings.language].addMsg
+                            :
+                            languages[this.props.Settings.language].updateMsg
+                        }
                     </button>
                 }
             </div>
