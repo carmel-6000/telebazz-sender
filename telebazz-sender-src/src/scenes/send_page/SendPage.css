@@ -8,6 +8,11 @@
     display: flex;
     justify-content: center;
     padding-top: 3%;
+    width: 80%;
+    word-break: break-all;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
 }
 
 .message-info-container {

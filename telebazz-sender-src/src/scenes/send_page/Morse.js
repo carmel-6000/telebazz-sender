@@ -7,8 +7,8 @@ import "./SendPage.css";
 
 class Morse extends Component {
 
-    static FREQUENCY_RATE = 18000;
-    static TIME_INTERVAL = 1000;
+    static FREQUENCY_RATE = 440;
+    static TIME_INTERVAL = 50;
 
     constructor(props) {
         super(props);

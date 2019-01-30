@@ -1,8 +1,12 @@
 .message-text {
-    width: 80vw;
+    /* width: 80vw;
     word-wrap: break-word;
     margin-bottom: 0% !important;
-    margin-left: 10.8%;
+    margin-left: 10.8%; */
+    width: 65vw;
+    word-wrap: break-word;
+    margin-bottom: 0% !important;
+    margin-left: 11vw;
 }
 
 .message-container {
