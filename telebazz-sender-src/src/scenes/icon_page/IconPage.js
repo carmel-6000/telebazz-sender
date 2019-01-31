@@ -16,7 +16,7 @@ class IconPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryFilter: [],
+      categoryFilter: [], //the icons that were chosen in the filter are added to this array
       chosenIcon: "",
       showMenu: false
     }
