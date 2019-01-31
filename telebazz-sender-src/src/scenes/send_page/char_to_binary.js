@@ -27,8 +27,16 @@ export const char_to_binary = {
     'Y': "11001",
     'Z': "11010",
     ' ': "@@@@@",
+
+    //The numbers 31 and 0 (for * and #)
     '*': '11111',
     '#': '00000'
+
+    //The numbers 27-30 in binary (for 1-4)
+    // '1': '11011',
+    // '2': '11100',
+    // '3': '11101',
+    // '4': '11110'
 }
 
 export default char_to_binary;

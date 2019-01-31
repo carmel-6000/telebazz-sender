@@ -135,6 +135,22 @@ class MessagePage extends Component {
         this.setState({ isFav: !this.state.isFav });
     }
 
+    onChangeTextInput = (event) => {
+        if (!this.allLetter(event.target.value)) {
+            event.target.value = '';
+        } else {
+            this.updateInfoEvent("header", event);
+            event.target.value = this.state.header;
+        }
+    }
+
+    allLetter = (value) => {
+        var letters = /^\s*[A-Za-z]+\s*$/;
+        
+        return letters.test(value)
+            ? true
+            : false;
+    }
 
 
     render() {
@@ -150,7 +166,10 @@ class MessagePage extends Component {
                     </label>
                     <input
                         type="text"
-                        onChange={(event) => this.updateInfoEvent("header", event)}
+                        onChange={(event) => {
+                            // this.onChangeTextInput(event); //only letters in english - theres a problem with it
+                            this.updateInfoEvent("header", event);
+                        }}
                         className="form-control"
                         id="message-title"
                         placeholder={languages[this.props.Settings.language].enterMsgPlaceholder}

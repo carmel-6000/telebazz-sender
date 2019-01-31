@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Message from "./Message";
 import NavBar from '../NavBar.js';
 import InternalStorage from "../InternalStorage.js";
-import LanguageSettings from './LanguageSettings.js';
+// import LanguageSettings from './LanguageSettings.js';
 
 //css
 import "./HomePage.css";
@@ -174,7 +174,7 @@ class HomePage extends Component {
         {/* <Nav /> */}
         <NavBar pageName="HomePage" />
 
-        <LanguageSettings />
+        {/* <LanguageSettings /> */}
 
         {/* if there are no messages at all */}
         {!favmessages[0] && !regmessages[0] ?
