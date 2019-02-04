@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Message from "./Message";
 import NavBar from '../NavBar.js';
 import InternalStorage from "../InternalStorage.js";
-// import LanguageSettings from './LanguageSettings.js';
 
 //css
 import "./HomePage.css";
@@ -60,15 +59,15 @@ class HomePage extends Component {
 
   componentWillMount() {
 
-    this.initializeInternalStorage();
+    // this.initializeInternalStorage();
 
-    // this.setState({
-    //   messages:
-    //     [{ header: "a", isFav: false, itemID: 1546962908635111, icon: "ghost" },
-    //     { header: "foo foo foo", isFav: true, itemID: 1546962908635, icon: "ghost" },
-    //     { header: "lets check this out", isFav: false, itemID: 1546162908635, icon: "ghost" }
-    //     ]
-    // });
+    this.setState({
+      messages:
+        [{ header: "a", isFav: false, itemID: 1546962908635111, icon: "ghost" },
+        { header: "foo foo foo", isFav: true, itemID: 1546962908635, icon: "ghost" },
+        { header: "lets check this out", isFav: false, itemID: 1546162908635, icon: "ghost" }
+        ]
+    });
   }
 
   componentDidMount() {
@@ -173,8 +172,6 @@ class HomePage extends Component {
       <div>
         {/* <Nav /> */}
         <NavBar pageName="HomePage" />
-
-        {/* <LanguageSettings /> */}
 
         {/* if there are no messages at all */}
         {!favmessages[0] && !regmessages[0] ?

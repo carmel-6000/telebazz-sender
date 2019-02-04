@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router-dom'
 import HomePage from './scenes/home_page/HomePage.js';
 import MessagePage from './scenes/message_page/MessagePage.js';
 import SendPage from "./scenes/send_page/SendPage.js";
+// import LanguageSettings from './scenes/LanguageSettings';
+
 import { HashRouter } from 'react-router-dom';
 
 import './App.css';
@@ -20,6 +22,7 @@ class App extends Component {
             <Route exact path="/EditMessage/:id" component={MessagePage} />
             <Route exact path="/EditMessage/IconPage/:id" component={IconPage} />
             <Route exact path="/SendPage/:id" component={SendPage} />
+            {/* <Route exact path="/LanguageSettings" component={LanguageSettings} /> */}
           </Switch>
         </HashRouter>
       </div>

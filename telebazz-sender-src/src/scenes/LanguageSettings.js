@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import NavBar from "./NavBar.js";
 //mobx 
 import { observer } from 'mobx-react';
 
@@ -8,16 +8,21 @@ class LanguageSettings extends Component {
     updateLanguage = (event) => {
         this.props.Settings.language = event.target.value;
     }
-    
+
     render() {
         return (
             <div>
+                <NavBar pageName={"LanguageSettings"} history={this.props.history} />
+
                 <select onChange={this.updateLanguage} value={this.props.Settings.language}>
-                    <option value="English">
+                    <option value="en">
                         English
                     </option>
-                    <option value="Hebrew">
+                    <option value="he">
                         עברית
+                    </option>
+                    <option value="arabic">
+                        عربيه
                     </option>
                 </select>
             </div>

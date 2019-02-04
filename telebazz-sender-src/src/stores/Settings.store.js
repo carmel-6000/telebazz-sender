@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 
 class Settings {
-    @observable language = "Hebrew";
+    @observable language = "he";
 }
 
 export default new Settings;

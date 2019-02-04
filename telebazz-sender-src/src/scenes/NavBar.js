@@ -9,18 +9,26 @@ const languages = require('./Languages.json');
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.click = this.click.bind(this);
+    this.backClick = this.backClick.bind(this);
+    // this.settingsClick = this.settingsClick.bind(this);
   }
 
-  click() {
+  backClick() {
     if (this.props.history.location.pathname.includes("IconPage")) {
       this.props.history.goBack();
-    } else if (this.props.history.location.pathname.includes("NewMessage") || this.props.history.location.pathname.includes("EditMessage")) {
+    } else if (this.props.history.location.pathname.includes("NewMessage")
+      || this.props.history.location.pathname.includes("EditMessage")
+      // || this.props.history.location.pageName.includes("LanguageSettings")
+    ) {
       this.props.history.replace("/");
     } else {
       this.props.history.goBack();
     }
   }
+
+  // settingsClick() {
+  //   window.location = "/#/LanguageSettings";
+  // }
 
   render() {
     //define the name of the page to show on the top navigation bar
@@ -42,6 +50,9 @@ class NavBar extends Component {
       case "SendPage":
         displayPageName = languages[this.props.Settings.language].sendingMsgTitle;
         break;
+      // case "LanguageSettings":
+      //   displayPageName = "Language Settings";
+      //   break;
       default:
         displayPageName = "";
     }
@@ -50,8 +61,19 @@ class NavBar extends Component {
       return (
         <div>
           <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation">
-           {/* data-sidebarClass="navbar-dark bg-dark"> */}
-            <a className="navbar-brand" href="#">{displayPageName}</a>
+            {/* data-sidebarClass="navbar-dark bg-dark"> */}
+            <div className="navbar-brand" href="#">{displayPageName}</div>
+
+            {/* <button
+              className="navbar-toggler leftNavbarToggler"
+              type="button">
+              <div
+                onClick={this.settingsClick}
+                className="text-light">
+                <i className="fas fa-cog" />
+              </div>
+            </button> */}
+
           </nav>
         </div>
       );
@@ -59,7 +81,7 @@ class NavBar extends Component {
       return (
         <div>
           <nav className="navbar navbar-expand-md navbar-dark bg-dark sidebarNavigation" >
-          {/* data-sidebarClass="navbar-dark bg-dark"> */}
+            {/* data-sidebarClass="navbar-dark bg-dark"> */}
             <div className="navbar-brand" href="#">{displayPageName}</div>
             <button
               className="navbar-toggler leftNavbarToggler"
@@ -71,7 +93,7 @@ class NavBar extends Component {
               aria-label="Toggle navigation">
               <span>
                 <div
-                  onClick={this.click}
+                  onClick={this.backClick}
                   className="text-light">
                   <i className="fas fa-arrow-left" />
                 </div>

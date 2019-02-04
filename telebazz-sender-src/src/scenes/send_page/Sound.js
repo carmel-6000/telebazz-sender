@@ -19,7 +19,7 @@ class Sound {
         }
     }
 
-    play(value, time) {
+    play(value, time) { //value- frequency, time- start time
         this.init();
         this.oscillator.frequency.value = value;
         //this.gainNode.gain.setValueAtTime(1, this.context.currentTime);        

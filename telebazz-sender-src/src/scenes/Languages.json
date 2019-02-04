@@ -1,5 +1,5 @@
 {
-    "Hebrew": {
+    "he": {
         "createMessage": "הוסף/י הודעה",
         "myMessagesTitle": "ההודעות שלי",
         "myFavsTitle": "מועדפים",
@@ -44,7 +44,7 @@
         "vehicles": "כלי תחבורה",
         "chores": "מטלות"
     },
-    "English": {
+    "en": {
         "createMessage": "Add Message",
         "myMessagesTitle": "My Messages",
         "myFavsTitle": "Favorites",
@@ -66,7 +66,7 @@
 
         "iconQuestionTitle": "What icon would you like to use?",
         "filterIcons": "Filter",
-        "continue": "continue",
+        "continue": "Continue",
 
         "msgSendingText": "Sending message",
         "msgSentText": "Message successfully sent",
@@ -88,5 +88,50 @@
         "time": "Time",
         "vehicles": "Vehicles",
         "chores": "Chores"
+    },
+    "arabic": {
+        "createMessage": "اضافة رسالة",
+        "myMessagesTitle": "رسائلي",
+        "myFavsTitle": "المفضلة",
+
+        "editMsgBtn": "تصحيح",
+        "deleteMsgBtn": "حذف",
+        "removeFavsBtn": "إزالة من المفضلة",
+        "addFavsBtn": "اضافة الى المفضلة",
+
+        "theMsgSubtitle": "الرسالة",
+        "enterMsgPlaceholder": "أدخل رسالة",
+        "msgRequirements": "يجب أن تكون الرسالة قصيرة وموجزة.",
+        "changeIcon": "تغيير الايقونة",
+        "colorSmallText": "اختر لونًا محددًا مسبقًا أو قم بإنشاء لونك الخاص.",
+        "addToFavs": "اضافة الى المفضلة",
+        "addMsg": "اضافة رسالة",
+        "updateMsg": "رسالة التحديث",
+        "msgExistsAlert": "هذه الرسالة موجودة بالفعل",
+
+        "iconQuestionTitle": "ما الرمز الذي ترغب في استخدامه؟",
+        "filterIcons": "منقي",
+        "continue": "استمر",
+
+        "msgSendingText": "ارسال رسالة",
+        "msgSentText": "تم ارسال الرسالة بنجاح",
+
+        "newMsgTitle":"رسالة جديدة",
+        "editMsgTitle": "تحرير الرسالة",
+        "chooseIconTitle": "اختر الرمز",
+        "sendingMsgTitle": "ارسال رسالة",
+
+        "animals": "الحيوانات",
+        "dangers": "مخاطر",
+        "religion": "دين",
+        "medicine": "دواء",
+        "food": "طعام",
+        "places": "أماكن",
+        "people": "اشخاص",
+        "objects": "شاء",
+        "hobbies": "الهوايات",
+        "time": "زمن",
+        "vehicles": "المركبات",
+        "chores": "تعيينات"
     }
 }
