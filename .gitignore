@@ -2,10 +2,10 @@
 telebazz-sender-src/deploy-cordova.sh
 
 
-#telebazz-sender-target/platforms/
-#telebazz-sender-target/node_modules/
-#telebazz-sender-target/package-lock.json
-#telebazz-sender-traget/www
+telebazz-sender-target/platforms/
+telebazz-sender-target/node_modules/
+telebazz-sender-target/package-lock.json
+telebazz-sender-traget/www
 
 # Project source (react.js) .gitignore files
 #See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
