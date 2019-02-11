@@ -7,11 +7,11 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.carmel.niceapp"
-    },
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "com.carmel.niceapp"
+      "PACKAGE_NAME": "com.carmel6000.telebuzz_sender"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.carmel6000.telebuzz_sender"
     }
   },
   "dependent_plugins": {}

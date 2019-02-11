@@ -8,7 +8,7 @@ import "./SendPage.css";
 class BinaryBitsSender extends Component {
 
     static FREQUENCY_RATE = 18000;
-    static TIME_INTERVAL = 1000;
+    static TIME_INTERVAL = 200;
 
     constructor(props) {
         super(props);
